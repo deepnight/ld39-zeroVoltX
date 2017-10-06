@@ -1,0 +1,8 @@
+-cp src
+-main Boot
+-lib heaps
+-dce full
+-D standalone
+-swf bin/client.swf
+-swf-version 15
+-D windowSize=1280x720

@@ -1,0 +1,8 @@
+-cp src
+-main Boot
+-lib hlsdl
+-lib heaps
+-dce full
+-D standalone
+-hl bin/client.hl
+-D windowSize=1280x720
