@@ -38,7 +38,7 @@ class Game extends mt.Process {
 
 		hero = new en.Hero();
 		var e = Assets.tiles.h_get("logo",0,0.5,0.5);
-		e.setPos(Const.VWID*Const.GRID*0.5, lvl.hei*Const.GRID - Const.VHEI*Const.GRID*0.5);
+		e.setPosition(Const.VWID*Const.GRID*0.5, lvl.hei*Const.GRID - Const.VHEI*Const.GRID*0.5);
 		scroller.add(e, Const.DP_UI);
 
 		// Add waves
@@ -168,7 +168,7 @@ class Game extends mt.Process {
 			var tf = new h2d.Text(Assets.font);
 			scroller.add(tf, Const.DP_UI);
 			tf.text = ""+v;
-			tf.setPos(e.centerX-tf.textWidth*0.5, e.centerY-tf.textHeight*0.5);
+			tf.setPosition(e.centerX-tf.textWidth*0.5, e.centerY-tf.textHeight*0.5);
 			tw.createMs(tf.alpha, 500|0, TEaseIn, 400).end( tf.remove );
 		}
 	}
@@ -261,7 +261,7 @@ class Game extends mt.Process {
 			vp.elapsedDistCase+=scPixel;
 			scFrame = true;
 		}
-		scroller.y = -lvl.hei*Const.GRID + MLib.ceil(Boot.ME.cached.height) + vp.elapsedDistCase*Const.GRID;
+		scroller.y = -lvl.hei*Const.GRID + MLib.ceil(h()/Const.SCALE) + vp.elapsedDistCase*Const.GRID;
 
 		// LD bullets
 		for( pt in lvl.getPixels(0x7cffe8) ) {

@@ -1,4 +1,4 @@
-import h2d.Sprite;
+import h2d.Object;
 import mt.heaps.HParticle;
 import mt.deepnight.Lib;
 import mt.deepnight.Color;
@@ -123,7 +123,7 @@ class Fx extends mt.Process {
 		p.fadeOutSpeed = 0.4;
 		p.onKill = tf.remove;
 
-		tf.setPos(p.x-tf.textWidth*0.5, p.y-tf.textHeight*0.5);
+		tf.setPosition(p.x-tf.textWidth*0.5, p.y-tf.textHeight*0.5);
 	}
 
 	public function hit(x,y) {
@@ -333,7 +333,7 @@ class Fx extends mt.Process {
 	function _trackEntity(p:HParticle) {
 		var e : Entity = p.userData;
 		if( !Math.isNaN(p.data0) )
-			p.setPos( p.x + e.centerX-p.data0, p.y + e.centerY-p.data1 );
+			p.setPosition( p.x + e.centerX-p.data0, p.y + e.centerY-p.data1 );
 
 		p.data0 = e.centerX;
 		p.data1 = e.centerY;

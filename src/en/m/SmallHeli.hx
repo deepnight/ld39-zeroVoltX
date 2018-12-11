@@ -10,7 +10,7 @@ class SmallHeli extends en.Mob {
 
 	var waitDones : Map<Int,Bool>;
 
-	var pWrapper : h2d.Sprite;
+	var pWrapper : h2d.Object;
 	var propel : HSprite;
 	var propelBack : HSprite;
 	public function new(x,y) {
@@ -24,7 +24,7 @@ class SmallHeli extends en.Mob {
 
 		cd.setS("shoot", rnd(0,2));
 
-		pWrapper = new h2d.Sprite();
+		pWrapper = new h2d.Object();
 		pWrapper.scaleY = 0.7;
 		game.scroller.add(pWrapper, Const.DP_ENT);
 		propel = Assets.tiles.h_get("heliPropel",0, 0.5,0.5, pWrapper);
@@ -54,11 +54,11 @@ class SmallHeli extends en.Mob {
 	override public function postUpdate() {
 		super.postUpdate();
 		spr.y += Math.sin(id + ftime*0.06)*3;
-		pWrapper.setPos(spr.x, spr.y-7);
+		pWrapper.setPosition(spr.x, spr.y-7);
 		propel.alpha = 0.5;
 		propel.rotate(-0.8);
 
-		//propelBack.setPos(propel.x, propel.y);
+		//propelBack.setPosition(propel.x, propel.y);
 		propelBack.alpha = 0.4;
 		propelBack.rotate(0.05);
 		dir = dx>0 ? -1 : 1;

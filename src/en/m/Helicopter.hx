@@ -52,11 +52,11 @@ class Helicopter extends en.Mob {
 	override public function postUpdate() {
 		super.postUpdate();
 		spr.y += Math.sin(id + ftime*0.06)*3;
-		propel.setPos(spr.x, spr.y-2);
+		propel.setPosition(spr.x, spr.y-2);
 		propel.alpha = 0.5;
 		propel.rotate(-0.8);
 
-		propelBack.setPos(propel.x, propel.y);
+		propelBack.setPosition(propel.x, propel.y);
 		propelBack.alpha = 0.4;
 		propelBack.rotate(0.05);
 	}

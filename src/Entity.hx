@@ -229,7 +229,7 @@ class Entity {
 		if( shadow!=null ) {
 			shadow.set(spr.lib, spr.groupName, spr.frame);
 			shadow.pivot.copyFrom(spr.pivot);
-			shadow.setPos(spr.x, spr.y+12);
+			shadow.setPosition(spr.x, spr.y+12);
 			shadow.rotation = spr.rotation;
 			shadow.scaleX = spr.scaleX*0.8;
 			shadow.scaleY = spr.scaleY*0.8;
@@ -243,11 +243,11 @@ class Entity {
 		if( debug!=null ) {
 			if( invalidateDebug && Boot.ME.debugEnt )
 				renderDebug();
-			debug.setPos(centerX, centerY);
+			debug.setPosition(centerX, centerY);
 		}
 
 		if( label!=null )
-			label.setPos( centerX-label.textWidth*0.5, centerY+radius+1 );
+			label.setPosition( centerX-label.textWidth*0.5, centerY+radius+1 );
 	}
 
 	public function preUpdate() {

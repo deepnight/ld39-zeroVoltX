@@ -129,7 +129,7 @@ class Level extends mt.Process {
 		for(cy in 0...hei) {
 			if( cx%2==0 && cy%2==0 ) {
 				var e = Assets.tiles.hbe_getRandom(sb, "cityGround", rseed.random);
-				//e.setPos(
+				//e.setPosition(
 				e.x = cx*Const.GRID;
 				e.y = cy*Const.GRID;
 			}

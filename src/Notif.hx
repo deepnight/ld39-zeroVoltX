@@ -3,7 +3,7 @@ import mt.deepnight.Tweenie;
 import hxd.Key;
 
 class Notif extends mt.Process {
-	var win : h2d.Sprite;
+	var win : h2d.Object;
 
 	public function new(?short=false, txt:mt.data.GetText.LocaleString) {
 		super(Main.ME);
@@ -12,7 +12,7 @@ class Notif extends mt.Process {
 		txt = cast StringTools.replace(txt,"\n","<br>");
 		createRootInLayers(Game.ME.root, Const.DP_TOP);
 
-		win = new h2d.Sprite(root);
+		win = new h2d.Object(root);
 		var px = 6;
 		var py = 3;
 
@@ -27,8 +27,8 @@ class Notif extends mt.Process {
 		bg.width = tf.textWidth + px*2;
 		bg.height = tf.textHeight + py*2;
 
-		win.x = Std.int( Boot.ME.cached.width*0.5 - bg.width*0.5 );
-		win.y = Std.int( Boot.ME.cached.height - bg.height - 10 );
+		win.x = Std.int( w()/Const.SCALE*0.5 - bg.width*0.5 );
+		win.y = Std.int( h()/Const.SCALE - bg.height - 10 );
 		tw.createS(win.x, win.x+200>win.x, 0.2);
 		cd.setS("alive", short?2:4.3);
 	}

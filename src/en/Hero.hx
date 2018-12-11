@@ -229,7 +229,7 @@ class Hero extends Entity {
 
 		spr.x+=xOff;
 
-		flame.setPos(spr.x, spr.y+6);
+		flame.setPosition(spr.x, spr.y+6);
 		flame.scaleY = dy<0 ? 1.25 : dy>0 ? 0.5 : 1;
 
 		//heatBar.set(heat+rnd(0,0.1));
@@ -262,26 +262,26 @@ class Hero extends Entity {
 			}
 
 		}
-		jauges[0].setPos(centerX-16, centerY);
+		jauges[0].setPosition(centerX-16, centerY);
 		jauges[0].rotation = -1.57;
-		jauges[1].setPos(centerX, centerY-16);
-		jauges[2].setPos(centerX+16, centerY);
+		jauges[1].setPosition(centerX, centerY-16);
+		jauges[2].setPosition(centerX+16, centerY);
 		jauges[2].rotation = -1.57;
 
-		iShield.setPos(centerX-24, centerY);
+		iShield.setPosition(centerX-24, centerY);
 		iShield.colorize(getJaugeColor(shield));
 		iShield.alpha = shield*.75;
 
-		iGun.setPos(centerX, centerY-26);
+		iGun.setPosition(centerX, centerY-26);
 		iGun.colorize(getJaugeColor(power));
 		iGun.alpha = power*.75;
 
-		iMiss.setPos(centerX+24, centerY);
+		iMiss.setPosition(centerX+24, centerY);
 		iMiss.colorize(getJaugeColor(missile));
 		iMiss.alpha = missile*.75;
 
 
-		//bRefill.setPos(bSpr.x, bSpr.y);
+		//bRefill.setPosition(bSpr.x, bSpr.y);
 		//var r = barriers - Std.int(barriers);
 		//bRefill.setScale(1.25 - 0.25 * r);
 		//bRefill.visible = barriers<3 && shield>0;
@@ -353,8 +353,8 @@ class Hero extends Entity {
 
 			// Movement
 			if( MOUSE ) {
-				var mx = hxd.Stage.getInstance().mouseX / Const.SCALE - game.scroller.x;
-				var my = hxd.Stage.getInstance().mouseY / Const.SCALE - game.scroller.y;
+				var mx = hxd.Window.getInstance().mouseX / Const.SCALE - game.scroller.x;
+				var my = hxd.Window.getInstance().mouseY / Const.SCALE - game.scroller.y;
 
 				var a = Math.atan2(my-centerY, mx-centerX);
 				if( dist(mx,my)>=2 ) {

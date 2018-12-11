@@ -21,7 +21,7 @@ class LazerBeam extends Entity {
 
 	var wid = 12;
 
-	private function new(e:Entity, ox:Float, oy:Float, ang:Float) {
+	public function new(e:Entity, ox:Float, oy:Float, ang:Float) {
 		super(0,0);
 		if( LOOP==null ) {
 			CHARGE = Assets.SBANK.charge03();
@@ -65,7 +65,7 @@ class LazerBeam extends Entity {
 
 	override public function postUpdate() {
 		super.postUpdate();
-		glow.setPos(spr.x, spr.y);
+		glow.setPosition(spr.x, spr.y);
 		glow.rotation = spr.rotation;
 	}
 

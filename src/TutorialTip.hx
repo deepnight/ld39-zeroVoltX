@@ -6,7 +6,7 @@ class TutorialTip extends mt.Process {
 	static var CUR : TutorialTip;
 	//var x : Float;
 	//var y : Float;
-	var win : h2d.Sprite;
+	var win : h2d.Object;
 	var pointer : h2d.Graphics;
 	var waitKeys : Array<Int>;
 	var locking : Bool;
@@ -29,9 +29,9 @@ class TutorialTip extends mt.Process {
 		pointer.drawCircle(0,0,16);
 		pointer.visible = x!=null;
 		if( pointer.visible )
-			pointer.setPos(sx,sy);
+			pointer.setPosition(sx,sy);
 
-		win = new h2d.Sprite(root);
+		win = new h2d.Object(root);
 		var px = 6;
 		var py = 3;
 

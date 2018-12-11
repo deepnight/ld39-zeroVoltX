@@ -18,7 +18,7 @@ class Wall extends en.Mob {
 
 		var e = Assets.tiles.hbe_get(lvl.sb,"wallBase");
 		e.setCenterRatio(0.5,0);
-		e.setPos(centerX, centerY-2);
+		e.setPosition(centerX, centerY-2);
 	}
 
 	override function hitSound() {
