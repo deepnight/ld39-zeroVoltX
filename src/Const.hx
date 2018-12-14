@@ -1,10 +1,5 @@
 class Const {
-	#if !debug
 	public static var GIF_MODE = false;
-	#else
-	//public static var GIF_MODE = false;
-	public static var GIF_MODE = true;
-	#end
 	public static var FPS = 60;
 	public static var GRID = 18;
 	public static var SCALE = 1;
