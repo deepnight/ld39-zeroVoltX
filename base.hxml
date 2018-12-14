@@ -1,0 +1,4 @@
+-cp src
+-main Boot
+-lib heaps
+-dce full

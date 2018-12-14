@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "HL",
+            "name": "HL debug",
             "request": "launch",
             "type": "hl",
-            "hxml": "ld39.hxml",
+            "hxml": "hl.hxml",
             "cwd": "${workspaceRoot}",
             "preLaunchTask": "HL debug"
         }

@@ -1,7 +1,0 @@
--cp src
--main Boot
--lib heaps
--dce full
--D standalone
--js bin/client.js
--D windowSize=1280x720

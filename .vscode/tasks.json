@@ -6,7 +6,7 @@
         {
             "label": "HL debug",
             "type": "hxml",
-            "file": "ld39.hxml",
+            "file": "hl.debug.hxml",
             "presentation": {
                 "reveal": "never",
                 "panel": "dedicated",
@@ -21,9 +21,35 @@
             }
         },
         {
+            "label": "HL release",
+            "type": "hxml",
+            "file": "hl.hxml",
+            "presentation": {
+                "reveal": "never",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": [
+                "$haxe"
+            ],
+        },
+        {
             "label": "JS release",
             "type": "hxml",
-            "file": "ld39.js.hxml",
+            "file": "js.hxml",
+            "presentation": {
+                "reveal": "never",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": [
+                "$haxe"
+            ]
+        },
+        {
+            "label": "SWF release",
+            "type": "hxml",
+            "file": "swf.hxml",
             "presentation": {
                 "reveal": "never",
                 "panel": "dedicated",
