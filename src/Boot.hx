@@ -10,7 +10,7 @@ class Boot extends hxd.App {
 
 	// Boot
 	static function main() {
-		hxd.Res.initEmbed({compressSounds:true});
+
 		new Boot();
 	}
 
@@ -22,6 +22,13 @@ class Boot extends hxd.App {
 		@:privateAccess hxd.Window.getInstance().window.vsync = true;
 		@:privateAccess hxd.Window.getInstance().window.displayMode = Borderless;
 		#end
+
+		// Resources
+		#if debug
+		hxd.Res.initLocal();
+        #else
+        hxd.Res.initEmbed({compressSounds:true});
+        #end
 
 		delayer = new mt.Delayer(Const.FPS);
 		tw = new mt.deepnight.Tweenie(Const.FPS);
