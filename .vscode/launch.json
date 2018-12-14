@@ -8,7 +8,7 @@
             "name": "HL debug",
             "request": "launch",
             "type": "hl",
-            "hxml": "hl.hxml",
+            "hxml": "hl.debug.hxml",
             "cwd": "${workspaceRoot}",
             "preLaunchTask": "HL debug"
         }
