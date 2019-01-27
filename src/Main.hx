@@ -7,6 +7,7 @@ class Main extends mt.Process {
 		super();
 		ME = this;
 		createRoot(p);
+		new mt.deepnight.GameFocusHelper(Boot.ME.s2d, Assets.font);
 
 		transition( function() return new Game() );
 		onResize();
