@@ -46396,6 +46396,9 @@ mt_heaps_ParticlePool.prototype = {
 								tmp1 = __map_reserved[k3] != null ? _this11.getReserved(k3) : _this11.h[k3];
 							}
 							_this8.animCursor = _this9 - tmp1.anim.length;
+						} else if(_this.animStop) {
+							_this.animId = null;
+							_this.animLib = null;
 						} else {
 							_this.animId = null;
 							_this.animLib = null;
