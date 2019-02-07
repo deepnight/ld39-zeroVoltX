@@ -1,4 +1,0 @@
-base.hxml
--swf bin/client.swf
--swf-version 24
--swf-header 1280:720:60:000000
