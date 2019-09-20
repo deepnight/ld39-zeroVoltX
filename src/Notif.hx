@@ -1,14 +1,10 @@
-import mt.MLib;
-import mt.deepnight.Tweenie;
-import hxd.Key;
-
-class Notif extends mt.Process {
+class Notif extends dn.Process {
 	var win : h2d.Object;
 
-	public function new(?short=false, txt:mt.data.GetText.LocaleString) {
+	public function new(?short=false, txt:dn.data.GetText.LocaleString) {
 		super(Main.ME);
 
-		txt = cast mt.deepnight.Lib.replaceTag(txt,"*","<font color='#FFBF00'>","</font>");
+		txt = cast dn.Lib.replaceTag(txt,"*","<font color='#FFBF00'>","</font>");
 		txt = cast StringTools.replace(txt,"\n","<br>");
 		createRootInLayers(Game.ME.root, Const.DP_TOP);
 

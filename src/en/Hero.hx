@@ -1,10 +1,5 @@
 package en;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Hero extends Entity {
 	static var MOUSE = false;
 	static var BASE = 4;
@@ -155,7 +150,7 @@ class Hero extends Entity {
 		if( stacks[id]==MAX )
 			return false;
 
-		var v = MLib.min(2, MAX-stacks[id]);
+		var v = M.imin(2, MAX-stacks[id]);
 		stacks[id]+=v;
 		if( v==2 ) {
 			var a = id==0 ? 1 : id==1 ? 2 : 0;
@@ -307,7 +302,7 @@ class Hero extends Entity {
 
 		if( !controlsLocked() ) {
 			if( game.sSpeed>0 && game.vp.elapsedDistCase>=5 && !cd.has("lazer") ) {
-				var n = isOverheat() ? 1 : MLib.ceil(power*6);
+				var n = isOverheat() ? 1 : M.ceil(power*6);
 				if( power>=0.75 )
 					n+=3;
 				var range = 16 + power*5;
@@ -326,7 +321,7 @@ class Hero extends Entity {
 			// Missiles
 			missileCdF++;
 			if( game.sSpeed>0 && game.vp.elapsedDistCase>=5 && missileCdF >= Const.FPS * (1.5 - missile*0.6) ) {
-				var n = isOverheat() ? 0 : MLib.ceil(missile*2);
+				var n = isOverheat() ? 0 : M.ceil(missile*2);
 				if( missile>=1 )
 					n+=3;
 				else if( missile>=0.75 )
@@ -358,7 +353,7 @@ class Hero extends Entity {
 
 				var a = Math.atan2(my-centerY, mx-centerX);
 				if( dist(mx,my)>=2 ) {
-					var mul = MLib.fmin(1, dist(mx,my)/10);
+					var mul = M.fmin(1, dist(mx,my)/10);
 					dx+=Math.cos(a)*s * mul;
 					dy+=Math.sin(a)*s * mul;
 				}

@@ -1,6 +1,3 @@
-import mt.MLib;
-import mt.deepnight.Lib;
-
 typedef WaveInstruction = {
 	var nextCursor : Int;
 	var cmd:String;
@@ -100,7 +97,7 @@ class Plan {
 				//case "U" : y-=i.a;
 				//case "D" : y+=i.a;
 			//}
-			//minY = MLib.fmin(minY, y);
+			//minY = M.fmin(minY, y);
 			//i = getInstructionAt(i.nextCursor);
 		//}
 //

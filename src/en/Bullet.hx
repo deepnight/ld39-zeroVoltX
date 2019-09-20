@@ -1,10 +1,5 @@
 package en;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Bullet extends Entity {
 	public var dmg : Int;
 	private function new(x,y) {

@@ -1,13 +1,8 @@
 package en;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class LazerBeam extends Entity {
-	static var CHARGE : mt.deepnight.Sfx;
-	static var LOOP : mt.deepnight.Sfx;
+	static var CHARGE : dn.heaps.Sfx;
+	static var LOOP : dn.heaps.Sfx;
 
 	var owner : Entity;
 	public var dmg : Int;
@@ -71,7 +66,7 @@ class LazerBeam extends Entity {
 
 	public function isHitting(e:Entity) {
 		if( !e.destroyed && cd.has("alive") && !cd.has("charge") ) {
-			var da = Lib.angularDistanceRad(ang, Math.atan2(e.centerY-centerY,e.centerX-centerX));
+			var da = M.radDistance(ang, Math.atan2(e.centerY-centerY,e.centerX-centerX));
 			if( da>=1.57 )
 				return false;
 			return dist(e) * Math.sin(da) <= wid-2;
@@ -100,7 +95,7 @@ class LazerBeam extends Entity {
 			spr.visible = true;
 			glow.visible = false;
 			spr.alpha = rnd(0.15,0.4);
-			spr.scaleY = 0.2 + 0.1*MLib.fabs(Math.cos(ftime*0.2));
+			spr.scaleY = 0.2 + 0.1*M.fabs(Math.cos(ftime*0.2));
 		}
 		else if( cd.has("alive") ) {
 			if( !LOOP.isPlaying() )

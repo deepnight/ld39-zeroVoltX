@@ -1,10 +1,5 @@
 package en.m;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Wall extends en.Mob {
 	public function new(x,y) {
 		super(x,y);

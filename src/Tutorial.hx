@@ -1,7 +1,4 @@
-import hxd.Key;
-import mt.MLib;
-
-class Tutorial extends mt.Process {
+class Tutorial extends dn.Process {
 	static var DONES : Map<String,Bool> = new Map();
 	public static var ME : Tutorial;
 

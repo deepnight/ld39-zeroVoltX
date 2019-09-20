@@ -1,10 +1,5 @@
 package en.m;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class SmallHeli extends en.Mob {
 	static var ALL : Array<SmallHeli> = [];
 
@@ -33,7 +28,7 @@ class SmallHeli extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new mt.RandList( wave.makeRand().random );
+		var rlist = new dn.RandList( wave.makeRand().random );
 		rlist.add("R12 D2 L10 D2 R10 D1",1);
 		return rlist.draw();
 	}
@@ -87,7 +82,7 @@ class SmallHeli extends en.Mob {
 		//if( !isOnScreen(0) )
 			//spr.rotation = ta;
 		//else
-			//spr.rotation += Lib.angularSubstractionRad(ta,spr.rotation)*0.2;
+			//spr.rotation += M.radSubstract(ta,spr.rotation)*0.2;
 	}
 
 	override public function update() {

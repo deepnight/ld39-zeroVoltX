@@ -1,8 +1,5 @@
 package en.bu;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
 import hxd.Key;
 
 class Homing extends en.Bullet {
@@ -89,10 +86,10 @@ class Homing extends en.Bullet {
 		if( !cd.has("launch") ) {
 			// Track
 			precision-=0.01;
-			precision = MLib.fclamp(precision-0.01, 0, 1);
+			precision = M.fclamp(precision-0.01, 0, 1);
 			if( target!=null ) {
 				var ta = Math.atan2(target.centerY-centerY, target.centerX-centerX);
-				ang += Lib.angularSubstractionRad(ta,ang) * ( 0.01 + precision*0.35 );
+				ang += M.radSubstract(ta,ang) * ( 0.01 + precision*0.35 );
 			}
 			// Move
 			var s = 0.04;

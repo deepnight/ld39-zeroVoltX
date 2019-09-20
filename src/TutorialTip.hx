@@ -1,8 +1,4 @@
-import mt.MLib;
-import mt.deepnight.Tweenie;
-import hxd.Key;
-
-class TutorialTip extends mt.Process {
+class TutorialTip extends dn.Process {
 	static var CUR : TutorialTip;
 	//var x : Float;
 	//var y : Float;
@@ -11,7 +7,7 @@ class TutorialTip extends mt.Process {
 	var waitKeys : Array<Int>;
 	var locking : Bool;
 
-	public function new(?x:Float,?y:Float, txt:mt.data.GetText.LocaleString, ?wk:Array<Int>) {
+	public function new(?x:Float,?y:Float, txt:dn.data.GetText.LocaleString, ?wk:Array<Int>) {
 		super(Main.ME);
 
 		CUR = this;
@@ -19,7 +15,7 @@ class TutorialTip extends mt.Process {
 		var sx = x==null ? 0 : Std.int( x+Game.ME.scroller.x );
 		var sy = y==null ? 0 : Std.int( y+Game.ME.scroller.y );
 
-		txt = cast mt.deepnight.Lib.replaceTag(txt,"*","<font color='#FFBF00'>","</font>");
+		txt = cast dn.Lib.replaceTag(txt,"*","<font color='#FFBF00'>","</font>");
 		txt = cast StringTools.replace(txt,"\n","<br>");
 		waitKeys = wk;
 		createRootInLayers(Game.ME.root, Const.DP_TOP);
@@ -101,7 +97,7 @@ class TutorialTip extends mt.Process {
 		if( cd.has("lock") )
 			return;
 
-		pointer.scaleX = 0.6 + MLib.fabs(0.4*Math.cos(ftime*0.1));
+		pointer.scaleX = 0.6 + M.fabs(0.4*Math.cos(ftime*0.1));
 		pointer.scaleY = pointer.scaleX;
 
 		if( waitKeys==null && Key.isDown(Key.SPACE) )

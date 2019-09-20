@@ -1,11 +1,11 @@
-import mt.deepnight.Tweenie;
+import dn.Tweenie;
 
 class Boot extends hxd.App {
 	public static var ME : Boot;
 	public var gameWrapper : h2d.Object;
 	public var mask : h2d.Mask;
-	var tw : mt.deepnight.Tweenie;
-	var delayer : mt.Delayer;
+	var tw : dn.Tweenie;
+	var delayer : dn.Delayer;
 	public var debugEnt = false;
 
 	// Boot
@@ -30,8 +30,8 @@ class Boot extends hxd.App {
         hxd.Res.initEmbed({compressSounds:true});
         #end
 
-		delayer = new mt.Delayer(Const.FPS);
-		tw = new mt.deepnight.Tweenie(Const.FPS);
+		delayer = new dn.Delayer(Const.FPS);
+		tw = new dn.Tweenie(Const.FPS);
 		Lang.init("en");
 		Assets.init();
 		hxd.Timer.wantedFPS = Const.FPS;
@@ -42,7 +42,7 @@ class Boot extends hxd.App {
 
 		var c = new h2d.Console(Assets.font, s2d);
 		h2d.Console.HIDE_LOG_TIMEOUT = 60;
-		mt.deepnight.Lib.redirectTracesToH2dConsole(c);
+		dn.Lib.redirectTracesToH2dConsole(c);
 		c.addCommand("d", [], function() {
 			debugEnt = !debugEnt;
 			for(e in Entity.ALL)
@@ -59,15 +59,15 @@ class Boot extends hxd.App {
 		var w = hxd.Window.getInstance().width;
 		var h = hxd.Window.getInstance().height;
 		if( !Const.GIF_MODE )
-			Const.SCALE = Std.int( mt.MLib.fmin( w/(Const.VWID*Const.GRID), h/(Const.VHEI*Const.GRID) ) );
+			Const.SCALE = Std.int( M.fmin( w/(Const.VWID*Const.GRID), h/(Const.VHEI*Const.GRID) ) );
 		mask.setScale(Const.SCALE);
 		// cached.width = Const.VWID*Const.GRID;
 		// cached.height = Const.VHEI*Const.GRID;
 		mask.x = Std.int( w*0.5 - (Const.VWID*Const.GRID)*Const.SCALE*0.5 );
 		mask.y = Std.int( h*0.5 - (Const.VHEI*Const.GRID)*Const.SCALE*0.5 );
-		//cached.width = mt.MLib.ceil( w / Const.SCALE );
-		//cached.height = mt.MLib.ceil( h / Const.SCALE );
-		mt.Process.resizeAll();
+		//cached.width = M.ceil( w / Const.SCALE );
+		//cached.height = M.ceil( h / Const.SCALE );
+		dn.Process.resizeAll();
 	}
 
 	var accu = 0.;
@@ -99,7 +99,7 @@ class Boot extends hxd.App {
 
 		while( accu>=1 ) {
 			accu-=1;
-			mt.Process.updateAll(1);
+			dn.Process.updateAll(1);
 		}
 	}
 }

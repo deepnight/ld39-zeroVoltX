@@ -1,10 +1,5 @@
 package en;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Mob extends Entity {
 	public static var ALL : Array<Mob> = [];
 
@@ -121,14 +116,14 @@ class Mob extends Entity {
 					//onFollowPlan(-1,0);
 					//dx += -spd;
 					//dy += spd*Math.sin(ftime*0.1);
-					//if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					//if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						//nextPlanInstruction();
 
 				case "sinD" :
 					onFollowPlan(0,1);
 					dx += spd*Math.sin(ftime*0.045);
 					dy += spd*0.35;
-					if( MLib.fabs(cy+yr-lastStartY)>=plan.inst.a )
+					if( M.fabs(cy+yr-lastStartY)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "_":
@@ -137,52 +132,52 @@ class Mob extends Entity {
 				case "L" :
 					onFollowPlan(-1,0);
 					dx += -spd;
-					if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "R" :
 					onFollowPlan(1,0);
 					dx += spd;
-					if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "RD" :
 					onFollowPlan(1,1);
 					dx += spd * plan.inst.a/(plan.inst.a+plan.inst.b);
 					dy += spd * plan.inst.b/(plan.inst.a+plan.inst.b);
-					if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "LD" :
 					onFollowPlan(1,1);
 					dx -= spd * plan.inst.a/(plan.inst.a+plan.inst.b);
 					dy += spd * plan.inst.b/(plan.inst.a+plan.inst.b);
-					if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "RU" :
 					onFollowPlan(1,-1);
 					dx += spd * plan.inst.a/(plan.inst.a+plan.inst.b);
 					dy -= spd * plan.inst.b/(plan.inst.a+plan.inst.b);
-					if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "LU" :
 					onFollowPlan(1,-1);
 					dx -= spd * plan.inst.a/(plan.inst.a+plan.inst.b);
 					dy -= spd * plan.inst.b/(plan.inst.a+plan.inst.b);
-					if( MLib.fabs(cx+xr-lastStartX)>=plan.inst.a )
+					if( M.fabs(cx+xr-lastStartX)>=plan.inst.a )
 						nextPlanInstruction();
 
 				case "U" :
 					onFollowPlan(0,-1);
 					dy -= spd;
-					if( MLib.fabs(cy+yr-lastStartY)>=plan.inst.a )
+					if( M.fabs(cy+yr-lastStartY)>=plan.inst.a )
 						nextPlanInstruction();
 				case "D" :
 					onFollowPlan(0,1);
 					dy += spd;
-					if( MLib.fabs(cy+yr-lastStartY)>=plan.inst.a )
+					if( M.fabs(cy+yr-lastStartY)>=plan.inst.a )
 						nextPlanInstruction();
 
 				default : trace(this+" unknown cmd "+plan.inst);

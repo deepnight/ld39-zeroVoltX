@@ -1,10 +1,5 @@
 package en.m;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Helicopter extends en.Mob {
 	static var ALL : Array<Helicopter> = [];
 
@@ -29,7 +24,7 @@ class Helicopter extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new mt.RandList( wave.makeRand().random );
+		var rlist = new dn.RandList( wave.makeRand().random );
 		rlist.add("s1.5 R8 s1 LD6/5 _4 R10 LU6/5 _4 L1",1);
 		rlist.add("RU2/2 RD10/2 _4 D2 LU10/2 _4 D1",1);
 		return rlist.draw();
@@ -84,7 +79,7 @@ class Helicopter extends en.Mob {
 		//if( !isOnScreen(0) )
 			//spr.rotation = ta;
 		//else
-			//spr.rotation += Lib.angularSubstractionRad(ta,spr.rotation)*0.2;
+			//spr.rotation += M.radSubstract(ta,spr.rotation)*0.2;
 	}
 
 	var side = 1;
@@ -92,7 +87,7 @@ class Helicopter extends en.Mob {
 	override public function update() {
 		super.update();
 
-		if( MLib.fabs(dx)+MLib.fabs(dy)<=0.01 ) {
+		if( M.fabs(dx)+M.fabs(dy)<=0.01 ) {
 			if( isOnScreen(-1) && !cd.has("shoot") ) {
 				var e = en.bu.MobBullet.linear(this, 1.57, 2);
 				e.setPosPixel(centerX+side*5, centerY);

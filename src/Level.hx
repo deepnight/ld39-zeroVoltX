@@ -1,10 +1,6 @@
- import mt.heaps.slib.*;
-import mt.deepnight.Tweenie;
-import mt.MLib;
-import mt.deepnight.Color;
-import mt.heaps.HParticle;
+import dn.heaps.HParticle;
 
-class Level extends mt.Process {
+class Level extends dn.Process {
 	var coll : haxe.ds.Vector<Bool>;
 	var roads : haxe.ds.Vector<Bool>;
 	var walls : haxe.ds.Vector<Bool>;
@@ -77,7 +73,7 @@ class Level extends mt.Process {
 				isCity = false;
 			if( cMarks.exists(cy) )
 				isCity = true;
-			f = MLib.fclamp(f + (isCity?0.1:-0.1), 0, 1);
+			f = M.fclamp(f + (isCity?0.1:-0.1), 0, 1);
 			cityFactor.set(cy, f);
 			cy--;
 		}
@@ -117,7 +113,7 @@ class Level extends mt.Process {
 	inline function hasWall(x,y) return isValid(x,y-2) ? walls.get(coordId(x,y-2))==true : true;
 
 	public function render() {
-		var rseed = new mt.Rand(1);
+		var rseed = new dn.Rand(1);
 
 		if( sb!=null )
 			sb.remove();
@@ -214,7 +210,7 @@ class Level extends mt.Process {
 		}
 	}
 
-	function createFire(rseed:mt.Rand, x:Float, y:Float) {
+	function createFire(rseed:dn.Rand, x:Float, y:Float) {
 		var e = Assets.tiles.hbe_getRandom(sb, "burnt", rseed.random);
 		e.alpha = rnd(0.6,0.8);
 		e.setCenterRatio(0.5,0.5);
@@ -224,7 +220,7 @@ class Level extends mt.Process {
 		e.scaleY = rnd(1,2,true);
 		e.rotation = rnd(0,0.2,true);
 
-		var em = new mt.heaps.HParticle.Emitter(Const.FPS);
+		var em = new dn.heaps.HParticle.Emitter(Const.FPS);
 		em.tickS = 0.10;
 		var fx = Game.ME.fx;
 		em.activeCond = function() return Game.ME.vp.isOnScreen(x,y);
@@ -248,7 +244,7 @@ class Level extends mt.Process {
 		emitters.push(em);
 	}
 
-	function createEmber(rseed:mt.Rand, x:Float, y:Float) {
+	function createEmber(rseed:dn.Rand, x:Float, y:Float) {
 		var e = Assets.tiles.hbe_getRandom(sb, "burnt", rseed.random);
 		e.alpha = rnd(0.6,0.8);
 		e.setCenterRatio(0.5,0.5);
@@ -258,7 +254,7 @@ class Level extends mt.Process {
 		e.scaleY = rnd(1,2,true);
 		e.rotation = rnd(0,0.2,true);
 
-		var em = new mt.heaps.HParticle.Emitter(Const.FPS);
+		var em = new dn.heaps.HParticle.Emitter(Const.FPS);
 		em.tickS = 0.4;
 		var fx = Game.ME.fx;
 		em.activeCond = function() return Game.ME.vp.isOnScreen(x,y);
@@ -273,7 +269,7 @@ class Level extends mt.Process {
 	}
 
 	public function createCrater(x:Float,y:Float, s:Float) {
-		var rseed = new mt.Rand(1866);
+		var rseed = new dn.Rand(1866);
 		var e = Assets.tiles.hbe_getRandom(sb, "crater", rseed.random);
 		e.setCenterRatio(0.5,0.5);
 		e.rotation = rseed.range(0,0.7,true);
@@ -301,7 +297,7 @@ class Level extends mt.Process {
 			e.rotation = rnd(0,0.2,true);
 			//e.setScale(rnd(0.6,1));
 			e.scaleX = rnd(0.6,1,true);
-			e.scaleY = MLib.fabs( e.scaleX * rnd(0.8,1.1) );
+			e.scaleY = M.fabs( e.scaleX * rnd(0.8,1.1) );
 			e.setCenterRatio(0.5,1);
 			Game.ME.scroller.add(e, Const.DP_FX_BG);
 			if( Std.random(100)<80 ) {

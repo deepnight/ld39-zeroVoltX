@@ -1,8 +1,5 @@
 package en;
 
-import mt.MLib;
-import mt.deepnight.Lib;
-
 typedef WaveInstruction = {
 	var cmd:String;
 	var val:Int;
@@ -28,7 +25,7 @@ class WaveEmitter extends Entity {
 		spr.set("red");
 	}
 
-	public inline function makeRand() return new mt.Rand(seed);
+	public inline function makeRand() return new dn.Rand(seed);
 
 
 	function getTriggerY() {

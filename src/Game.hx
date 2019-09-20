@@ -1,9 +1,6 @@
-import mt.Process;
-import mt.deepnight.Tweenie;
-import mt.MLib;
-import hxd.Key;
+import dn.Process;
 
-class Game extends mt.Process {
+class Game extends dn.Process {
 	static var CHECKPOINT = -1.;
 
 	public static var ME : Game;
@@ -152,7 +149,7 @@ class Game extends mt.Process {
 		tf.text = Lang.untranslated("Thank you for playing!!");
 
 
-		mt.Process.resizeAll();
+		dn.Process.resizeAll();
 
 		if( CHECKPOINT<=0 )
 			CHECKPOINT = vp.elapsedDistCase;
@@ -163,7 +160,7 @@ class Game extends mt.Process {
 
 	public function addScore(?e:Entity, v) {
 		score+=v;
-		scoreTf.text = "SCORE: "+ mt.deepnight.Lib.leadingZeros(score, 6);
+		scoreTf.text = "SCORE: "+ dn.Lib.leadingZeros(score, 6);
 		if( e!=null ) {
 			var tf = new h2d.Text(Assets.font);
 			scroller.add(tf, Const.DP_UI);
@@ -187,7 +184,7 @@ class Game extends mt.Process {
 
 	override function onResize() {
 		super.onResize();
-		//hei = MLib.ceil( h()/Const.SCALE/Const.GRID );
+		//hei = M.ceil( h()/Const.SCALE/Const.GRID );
 	}
 
 	public function restart(resetCheck=false) {
@@ -219,13 +216,13 @@ class Game extends mt.Process {
 			restart( Key.isDown(Key.SHIFT) );
 
 		if( Key.isPressed(Key.K) ) {
-			mt.deepnight.Sfx.toggleMuteGroup(0);
-			new Notif(true, Lang.untranslated("Sounds: "+(mt.deepnight.Sfx.isMuted(0)?"Off":"ON")));
+			dn.heaps.Sfx.toggleMuteGroup(0);
+			new Notif(true, Lang.untranslated("Sounds: "+(dn.heaps.Sfx.isMuted(0)?"Off":"ON")));
 		}
 
 		if( Key.isPressed(Key.M) ) {
-			mt.deepnight.Sfx.toggleMuteGroup(1);
-			new Notif(true, Lang.untranslated("Music: "+(mt.deepnight.Sfx.isMuted(1)?"Off":"ON")));
+			dn.heaps.Sfx.toggleMuteGroup(1);
+			new Notif(true, Lang.untranslated("Music: "+(dn.heaps.Sfx.isMuted(1)?"Off":"ON")));
 		}
 
 		if( Key.isPressed(Key.ESCAPE) ) {
@@ -261,7 +258,7 @@ class Game extends mt.Process {
 			vp.elapsedDistCase+=scPixel;
 			scFrame = true;
 		}
-		scroller.y = -lvl.hei*Const.GRID + MLib.ceil(h()/Const.SCALE) + vp.elapsedDistCase*Const.GRID;
+		scroller.y = -lvl.hei*Const.GRID + M.ceil(h()/Const.SCALE) + vp.elapsedDistCase*Const.GRID;
 
 		// LD bullets
 		for( pt in lvl.getPixels(0x7cffe8) ) {

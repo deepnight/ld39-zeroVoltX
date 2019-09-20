@@ -1,10 +1,5 @@
 package en.m;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Hammer extends en.Mob {
 	var beam0 : en.LazerBeam;
 	var beam1 : en.LazerBeam;
@@ -36,7 +31,7 @@ class Hammer extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new mt.RandList( wave.makeRand().random );
+		var rlist = new dn.RandList( wave.makeRand().random );
 		rlist.add("D4 _4 R2 _5 L4 _5 R4 _5 D1",1);
 		return rlist.draw();
 	}

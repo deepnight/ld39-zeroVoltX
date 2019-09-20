@@ -1,10 +1,5 @@
 package en.m;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class LolBall extends en.Mob {
 	var beams : Array<en.LazerBeam>;
 	var ang : Float;
@@ -35,7 +30,7 @@ class LolBall extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new mt.RandList( wave.makeRand().random );
+		var rlist = new dn.RandList( wave.makeRand().random );
 		rlist.add("s2 D7 _1 s1 (R4 _1 L4 _1)x4 D1",1);
 		return rlist.draw();
 	}

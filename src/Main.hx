@@ -1,28 +1,28 @@
-import mt.deepnight.Tweenie;
+import dn.Tweenie;
 
-class Main extends mt.Process {
+class Main extends dn.Process {
 	public static var ME : Main;
 
 	public function new(p) {
 		super();
 		ME = this;
 		createRoot(p);
-		new mt.deepnight.GameFocusHelper(Boot.ME.s2d, Assets.font);
+		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
 
 		transition( function() return new Game() );
 		onResize();
 	}
 
 
-	var curProcess : mt.Process;
-	public function transition(cb:Void->mt.Process) {
+	var curProcess : dn.Process;
+	public function transition(cb:Void->dn.Process) {
 		var d = 0.8;
 		if( curProcess!=null && curProcess.root!=null ) {
 			tw.createS(curProcess.root.alpha, 0, d).end( function() {
 				curProcess.destroy();
 				delayer.addS(function() {
 					curProcess = cb();
-					mt.Process.resizeAll();
+					dn.Process.resizeAll();
 					tw.createS(curProcess.root.alpha, 0>1, d);
 				}, 0.3);
 			} );

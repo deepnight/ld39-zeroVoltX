@@ -1,10 +1,5 @@
 package en.m;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
-import hxd.Key;
-
 class Bee extends en.Mob {
 	public function new(x,y) {
 		super(x,y);
@@ -15,7 +10,7 @@ class Bee extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new mt.RandList( wave.makeRand().random );
+		var rlist = new dn.RandList( wave.makeRand().random );
 		rlist.add("R14 U2 L1",1);
 		rlist.add("R12 (D3 L8 D3 R8)x2 D1",1);
 		rlist.add("s1 R10 s2 U3 s1 L6 D1",1);
@@ -40,7 +35,7 @@ class Bee extends en.Mob {
 		if( !isOnScreen(0) )
 			spr.rotation = ta;
 		else
-			spr.rotation += Lib.angularSubstractionRad(ta,spr.rotation)*0.2;
+			spr.rotation += M.radSubstract(ta,spr.rotation)*0.2;
 	}
 
 	override public function update() {

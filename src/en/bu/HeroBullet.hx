@@ -1,8 +1,5 @@
 package en.bu;
 
-import mt.MLib;
-import mt.heaps.slib.*;
-import mt.deepnight.Lib;
 import hxd.Key;
 
 class HeroBullet extends en.Bullet {

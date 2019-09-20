@@ -1,15 +1,14 @@
-import mt.deepnight.Sfx;
-import mt.heaps.slib.*;
+import dn.heaps.Sfx;
 
 class Assets {
 	public static var SBANK = Sfx.importDirectory("sfx");
 	public static var font : h2d.Font;
 	public static var tiles : SpriteLib;
-	public static var music : mt.deepnight.Sfx;
+	public static var music : dn.heaps.Sfx;
 
 	public static function init() {
 		font = hxd.Res.minecraftiaOutline.toFont();
-		tiles = mt.heaps.slib.assets.Atlas.load("tiles.atlas");
+		tiles = dn.heaps.slib.assets.Atlas.load("tiles.atlas");
 
 		Sfx.setGroupVolume(0,1);
 		Sfx.setGroupVolume(1,0.2);

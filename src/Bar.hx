@@ -1,8 +1,4 @@
-import mt.MLib;
-import mt.deepnight.Color;
-import mt.heaps.slib.*;
-
-class Bar extends mt.Process {
+class Bar extends dn.Process {
 	var bg : h2d.Graphics;
 	var outline : h2d.Graphics;
 	var bar : h2d.Graphics;
@@ -50,7 +46,7 @@ class Bar extends mt.Process {
 	inline function get_y() return root.y;
 
 	public function set(v:Float) {
-		value = MLib.fclamp(v,0,1);
+		value = M.fclamp(v,0,1);
 	}
 
 	override function onDispose() {

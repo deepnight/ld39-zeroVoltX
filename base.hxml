@@ -1,4 +1,5 @@
 -cp src
 -main Boot
 -lib heaps
+-lib deepnightLibs
 -dce full
