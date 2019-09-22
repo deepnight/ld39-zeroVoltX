@@ -45,19 +45,6 @@
             "problemMatcher": [
                 "$haxe"
             ]
-        },
-        {
-            "label": "SWF release",
-            "type": "hxml",
-            "file": "swf.hxml",
-            "presentation": {
-                "reveal": "never",
-                "panel": "dedicated",
-                "clear": true
-            },
-            "problemMatcher": [
-                "$haxe"
-            ]
         }
     ]
 }
