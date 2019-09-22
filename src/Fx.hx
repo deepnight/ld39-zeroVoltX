@@ -303,7 +303,7 @@ class Fx extends dn.Process {
 		p.colorize(c);
 		p.setFadeS(rnd(0.1,0.2), 0.1, rnd(0.2,0.4));
 		p.rotation = Math.atan2(y-ly, x-lx);
-		p.scaleX = Lib.distance(lx, ly, x, y) / p.t.width;
+		p.scaleX = M.dist(lx, ly, x, y) / p.t.width;
 		p.scaleY = rnd(1,2);
 		p.scaleYMul = rnd(0.97,0.99);
 		p.lifeS = rnd(0.3, 0.6);

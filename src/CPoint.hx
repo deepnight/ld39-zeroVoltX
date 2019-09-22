@@ -19,7 +19,7 @@ class CPoint {
 	public inline function distCase(?e:Entity, ?x:Int, ?y:Int) {
 		return e!=null
 			? e.distCase(cx,cy)
-			: Lib.distance(centerX, centerY, (x+0.5)*Const.GRID, (y+0.5)*Const.GRID) / Const.GRID;
+			: M.dist(centerX, centerY, (x+0.5)*Const.GRID, (y+0.5)*Const.GRID) / Const.GRID;
 	}
 }
 

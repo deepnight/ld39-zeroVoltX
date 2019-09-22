@@ -149,10 +149,10 @@ class Entity {
 
 	public inline function dirTo(e:Entity) return e.centerX>centerX ? 1 : -1;
 	public inline function dist(?e:Entity, ?x:Float, ?y:Float) {
-		return Lib.distance(centerX, centerY, e!=null ? e.centerX : x, e!=null ? e.centerY : y);
+		return M.dist(centerX, centerY, e!=null ? e.centerX : x, e!=null ? e.centerY : y);
 	}
 	public inline function distCase(?e:Entity, ?x:Int, ?y:Int) {
-		return ( e!=null ? dist(e) : Lib.distance(centerX, centerY, (x+0.5)*Const.GRID, (y+0.5)*Const.GRID) ) / Const.GRID;
+		return ( e!=null ? dist(e) : M.dist(centerX, centerY, (x+0.5)*Const.GRID, (y+0.5)*Const.GRID) ) / Const.GRID;
 	}
 	public inline function sightCheck(?e:Entity, ?x:Int, ?y:Int) {
 		return dn.Bresenham.checkThinLine(cx,cy, e!=null?e.cx:x, e!=null?e.cy:y, function(x,y) return !lvl.hasColl(x,y) );
