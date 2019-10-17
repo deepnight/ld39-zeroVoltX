@@ -21,7 +21,10 @@ class Main extends dn.Process {
 		controller.bind(A, Key.S);
 		controller.bind(SELECT, Key.R);
 
-		transition( function() return new Game() );
+		delayer.addF(function() {
+			Assets.music.playOnGroup(1,true);
+			transition( function() return new Game() );
+		}, 1);
 		onResize();
 	}
 

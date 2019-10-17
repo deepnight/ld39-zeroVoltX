@@ -78,8 +78,6 @@ class Boot extends hxd.App {
 		delayer.update(1);
 		tw.update(1);
 
-		Game.ME.updateKeys();
-
 		#if debug
 		if( hxd.Key.isPressed(hxd.Key.NUMPAD_SUB) ) {
 			slowMo = slowMo==0 ? 1 : 0;

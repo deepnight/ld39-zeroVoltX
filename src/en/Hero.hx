@@ -106,6 +106,7 @@ class Hero extends Entity {
 
 	override public function dispose() {
 		super.dispose();
+		ca.dispose();
 		//heatBar.destroy();
 		flame.remove();
 		bSpr.remove();

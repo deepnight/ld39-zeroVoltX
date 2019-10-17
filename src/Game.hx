@@ -16,9 +16,11 @@ class Game extends dn.Process {
 	var ldBulletMap : Map<Int,Bool>;
 	var scoreTf : h2d.Text;
 	public var score : Int;
+	var ca : dn.heaps.Controller.ControllerAccess;
 
 	public function new() {
 		super();
+		ca = Main.ME.controller.createAccess("game");
 		ME = this;
 		createRoot(Main.ME.root);
 		cd.setS("noCrash",1); // macro fix
@@ -198,6 +200,7 @@ class Game extends dn.Process {
 
 	override function onDispose() {
 		super.onDispose();
+		ca.dispose();
 		for(e in Entity.ALL)
 			e.destroy();
 		gc();
@@ -208,30 +211,6 @@ class Game extends dn.Process {
 			for(e in Entity.GC)
 				e.dispose();
 			Entity.GC = [];
-		}
-	}
-
-	public function updateKeys() {
-		if( Key.isPressed(Key.R) )
-			restart( Key.isDown(Key.SHIFT) );
-
-		if( Key.isPressed(Key.K) ) {
-			dn.heaps.Sfx.toggleMuteGroup(0);
-			new Notif(true, Lang.untranslated("Sounds: "+(dn.heaps.Sfx.isMuted(0)?"Off":"ON")));
-		}
-
-		if( Key.isPressed(Key.M) ) {
-			dn.heaps.Sfx.toggleMuteGroup(1);
-			new Notif(true, Lang.untranslated("Music: "+(dn.heaps.Sfx.isMuted(1)?"Off":"ON")));
-		}
-
-		if( Key.isPressed(Key.ESCAPE) ) {
-			if( cd.has("escapeKey") )
-				hxd.System.exit();
-			else {
-				cd.setS("escapeKey",4);
-				new Notif(Lang.untranslated("Press ESCAPE again to quit"));
-			}
 		}
 	}
 
@@ -289,6 +268,33 @@ class Game extends dn.Process {
 			}
 		}
 
+		// Restart
+		if( ca.isKeyboardPressed(Key.R) )
+			restart( Key.isDown(Key.SHIFT) );
+
+		// Toggle sounds
+		if( ca.isKeyboardPressed(Key.K) ) {
+			dn.heaps.Sfx.toggleMuteGroup(0);
+			new Notif(true, Lang.untranslated("Sounds: "+(dn.heaps.Sfx.isMuted(0)?"Off":"ON")));
+		}
+
+		// Toggle music
+		if( ca.isKeyboardPressed(Key.M) ) {
+			dn.heaps.Sfx.toggleMuteGroup(1);
+			new Notif(true, Lang.untranslated("Music: "+(dn.heaps.Sfx.isMuted(1)?"Off":"ON")));
+		}
+
+		// Exit
+		#if !js
+		if( ca.isKeyboardPressed(Key.ESCAPE) ) {
+			if( cd.has("escapeKey") )
+				hxd.System.exit();
+			else {
+				cd.setS("escapeKey",4);
+				new Notif(Lang.untranslated("Press ESCAPE again to quit"));
+			}
+		}
+		#end
 
 		// Update
 		for(e in Entity.ALL)
