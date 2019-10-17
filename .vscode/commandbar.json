@@ -9,7 +9,7 @@
         "command": "haxelib run redistHelper hl.hxml js.hxml -p ZeroVoltX -o redist.$",
         "alignment": "right",
         "skipTerminateQuickPick": false,
-        "priority": 10
+        "priority": 0
       },
       {
         "text": "✪ Build HL",
