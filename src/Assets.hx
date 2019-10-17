@@ -14,9 +14,5 @@ class Assets {
 		Sfx.setGroupVolume(1,0.2);
 		music = Assets.SBANK.music();
 		music.playOnGroup(1,true);
-		#if js
-		Sfx.muteGroup(0);
-		Sfx.muteGroup(1);
-		#end
 	}
 }
