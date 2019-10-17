@@ -34,7 +34,7 @@ class TutorialTip extends dn.Process {
 		var bg = new h2d.ScaleGrid(Assets.tiles.getTile("win"), 16,16, win);
 
 		var f = new h2d.Flow(win);
-		f.isVertical = true;
+		f.layout = Vertical;
 		f.verticalSpacing = py*2;
 		f.minHeight = 16;
 		f.verticalAlign = Middle;

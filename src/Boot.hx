@@ -27,7 +27,7 @@ class Boot extends hxd.App {
 		#if debug
 		hxd.Res.initLocal();
         #else
-        hxd.Res.initEmbed({compressSounds:true});
+        hxd.Res.initEmbed();
         #end
 
 		delayer = new dn.Delayer(Const.FPS);

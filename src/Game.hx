@@ -98,7 +98,7 @@ class Game extends dn.Process {
 
 		// Intro
 		var f = new h2d.Flow();
-		f.isVertical = true;
+		f.layout = Vertical;
 		f.horizontalAlign = Middle;
 		f.minWidth = Const.VWID*Const.GRID;
 		scroller.add(f, Const.DP_TOP);
@@ -121,7 +121,7 @@ class Game extends dn.Process {
 
 		// Credits
 		var f = new h2d.Flow();
-		f.isVertical = true;
+		f.layout = Vertical;
 		f.verticalSpacing = 20;
 		f.horizontalAlign = Middle;
 		f.minWidth = Const.VWID*Const.GRID;
