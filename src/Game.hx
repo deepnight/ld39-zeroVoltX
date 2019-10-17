@@ -16,7 +16,7 @@ class Game extends dn.Process {
 	var ldBulletMap : Map<Int,Bool>;
 	var scoreTf : h2d.Text;
 	public var score : Int;
-	var ca : dn.heaps.Controller.ControllerAccess;
+	public var ca : dn.heaps.Controller.ControllerAccess;
 
 	public function new() {
 		super();
