@@ -11,7 +11,7 @@ class Assets {
 		tiles = dn.heaps.slib.assets.Atlas.load("tiles.atlas");
 
 		Sfx.setGroupVolume(0,1);
-		Sfx.setGroupVolume(1,0.2);
+		Sfx.setGroupVolume(1,0.55);
 		music = Assets.SBANK.music();
 		music.playOnGroup(1,true);
 	}

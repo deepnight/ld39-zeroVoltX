@@ -1,0 +1,7 @@
+{
+	"fs.convert" : {
+		"fbx" : "hmd",
+		"fnt" : "bfnt",
+		"wav" : "mp3"
+	}
+}
