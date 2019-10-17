@@ -13,6 +13,7 @@ class Hero extends Entity {
 
 	public var maxBarriers : Int;
 	public var barriers : Float;
+	var ca : dn.heaps.Controller.ControllerAccess;
 	var bSpr : HSprite;
 
 	//public var heat : Float;
@@ -28,6 +29,8 @@ class Hero extends Entity {
 	public function new() {
 		super(0,0);
 		setPosAtColor(0x00FF00);
+
+		ca = Main.ME.controller.createAccess("hero");
 
 		//heat = 0;
 		xOff = 0;
@@ -136,15 +139,15 @@ class Hero extends Entity {
 	inline function controlsLocked() return cd.has("lockControl");
 
 
-	function keyPressed(k:Int) {
-		if( Key.isDown(k) && !cd.has("klock"+k) ) {
-			cd.setS("klock"+k,99);
-			return true;
-		}
-		if( !Key.isDown(k) )
-			cd.unset("klock"+k);
-		return false;
-	}
+	// function keyPressed(k:Int) {
+	// 	if( Key.isDown(k) && !cd.has("klock"+k) ) {
+	// 		cd.setS("klock"+k,99);
+	// 		return true;
+	// 	}
+	// 	if( !Key.isDown(k) )
+	// 		cd.unset("klock"+k);
+	// 	return false;
+	// }
 
 	public function sendToStack(id:Int) {
 		if( stacks[id]==MAX )
@@ -334,16 +337,20 @@ class Hero extends Entity {
 			}
 
 			// Stack controls
-			if( ( keyPressed(Key.Q) || keyPressed(Key.A) ) && Tutorial.ME.isDoingOrDone("shield") )
+			// if( ( keyPressed(Key.Q) || keyPressed(Key.A) ) && Tutorial.ME.isDoingOrDone("shield") )
+			if( ca.xPressed() && Tutorial.ME.isDoingOrDone("shield") )
 				sendToStack(0);
 
-			if( ( keyPressed(Key.Z) || keyPressed(Key.W) ) && Tutorial.ME.isDoingOrDone("lazer") )
+			// if( ( keyPressed(Key.Z) || keyPressed(Key.W) ) && Tutorial.ME.isDoingOrDone("lazer") )
+			if( ca.yPressed() && Tutorial.ME.isDoingOrDone("lazer") )
 				sendToStack(1);
 
-			if( keyPressed(Key.D) && Tutorial.ME.isDoingOrDone("missile") )
+			// if( keyPressed(Key.D) && Tutorial.ME.isDoingOrDone("missile") )
+			if( ca.bPressed() && Tutorial.ME.isDoingOrDone("missile") )
 				sendToStack(2);
 
-			if( keyPressed(Key.S) && Tutorial.ME.isDoingOrDone("balance") )
+			// if( keyPressed(Key.S) && Tutorial.ME.isDoingOrDone("balance") )
+			if( ca.aPressed() && Tutorial.ME.isDoingOrDone("balance") )
 				resetStacks(true);
 
 			// Movement
@@ -359,32 +366,19 @@ class Hero extends Entity {
 				}
 			}
 			else {
-				if( Key.isDown(Key.LEFT) ) {
-					dx-=s;
-					cd.setS("l", 999);
-				}
-				if( Key.isDown(Key.RIGHT) ) {
-					dx+=s;
-					cd.setS("r", 999);
-				}
+				if( M.fabs(ca.lxValue())>=0.25 )
+					dx+=ca.lxValue() * s;
 
-				if( Key.isDown(Key.UP) ) {
-					cd.setS("u", 999);
-					dy-=s;
-				}
-				if( Key.isDown(Key.DOWN) ) {
-					cd.setS("d", 999);
-					dy+=s;
-				}
+				if( M.fabs(ca.lyValue())>=0.25 )
+					dy+=-ca.lyValue() * s;
 			}
-			//fx.markerFree(mx,my,true);
 		}
 
 		if( shield>0.5 )
 			fx.shieldFeedback(this, shield, getBarrierColor(Std.int(barriers)));
 
 		#if debug
-		if( keyPressed(Key.SPACE) ) {
+		if( ca.isKeyboardPressed(Key.SPACE) ) {
 			//game.loadCheckPoint(240);
 			//new en.WaveEmitter(lvl.wid-1, game.vp.topCy+5, 6, function() return new en.m.LolBall(0,0));
 			new en.m.LolBall(cx,game.vp.topCy+3);
@@ -393,7 +387,7 @@ class Hero extends Entity {
 			//new en.LazerBeam(this, 0,-10, -1.57);
 		}
 
-		if( keyPressed(Key.K) ) {
+		if( ca.isKeyboardPressed(Key.K) ) {
 			for(e in Entity.ALL)
 			if( e.is(en.Mob) && !e.is(en.m.Wall) || e.is(en.Bullet) || e.is(en.WaveEmitter) ) {
 				e.destroy();

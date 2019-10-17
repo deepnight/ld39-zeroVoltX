@@ -2,12 +2,24 @@ import dn.Tweenie;
 
 class Main extends dn.Process {
 	public static var ME : Main;
+	public var controller : dn.heaps.Controller;
 
 	public function new(p) {
 		super();
 		ME = this;
 		createRoot(p);
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
+
+		controller = new dn.heaps.Controller(Boot.ME.s2d);
+		controller.bind(AXIS_LEFT_X_NEG, Key.LEFT);
+		controller.bind(AXIS_LEFT_X_POS, Key.RIGHT);
+		controller.bind(AXIS_LEFT_Y_NEG, Key.UP);
+		controller.bind(AXIS_LEFT_Y_POS, Key.DOWN);
+		controller.bind(Y, Key.Z, Key.W);
+		controller.bind(X, Key.Q, Key.A);
+		controller.bind(B, Key.D);
+		controller.bind(A, Key.S);
+		controller.bind(SELECT, Key.R);
 
 		transition( function() return new Game() );
 		onResize();
@@ -31,6 +43,11 @@ class Main extends dn.Process {
 			curProcess = cb();
 			tw.createS(curProcess.root.alpha, 0>1, d);
 		}
+	}
+
+	override function update() {
+		super.update();
+		dn.heaps.Controller.beforeUpdate();
 	}
 }
 
