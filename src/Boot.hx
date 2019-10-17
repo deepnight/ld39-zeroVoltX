@@ -18,9 +18,8 @@ class Boot extends hxd.App {
 	override function init() {
 		ME = this;
 		engine.backgroundColor = 0xff<<24|0x0;
-		#if hl
-		@:privateAccess hxd.Window.getInstance().window.vsync = true;
-		@:privateAccess hxd.Window.getInstance().window.displayMode = Borderless;
+		#if( hl && !debug )
+		engine.fullScreen = true;
 		#end
 
 		// Resources
