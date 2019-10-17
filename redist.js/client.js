@@ -5415,7 +5415,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 		}
 		var dist = Game.ME.vp.elapsedDistCase;
 		if(this.tryToStart("controls")) {
-			new TutorialTip(null,null,"Use *ARROWS* to move.");
+			new TutorialTip(null,null,"Use keyboard *ARROWS* or GamePad to move.");
 		}
 		if(Game.ME.hero.cy <= (Game.ME.lvl.hei - 1 - Game.ME.vp.elapsedDistCase | 0) - 8) {
 			this.tryToComplete("controls");
@@ -5427,36 +5427,389 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 			}
 			if(this.tryToStart("lazer")) {
 				Game.ME.pause();
-				var _this = Game.ME.hero;
-				var _this1 = Game.ME.hero;
-				new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID - 19,"Invest more energy to your *machine gun* by pressing *W two times*!",[87,90]);
+				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
+					var _this = Game.ME.hero;
+					var _this1 = Game.ME.hero;
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID - 19,"Invest more energy to your *machine gun* by pressing *Y (gamepad) two times*!",function() {
+						var _this2 = Game.ME.ca;
+						var k = 3;
+						if(!(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer)) {
+							var tmp;
+							var tmp1;
+							var k1 = _this2.parent.primary.h[k];
+							if(!(k1 != null && !(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer) && hxd_Key.isPressed(k1))) {
+								var k2 = _this2.parent.secondary.h[k];
+								tmp1 = k2 != null && !(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer) && hxd_Key.isPressed(k2);
+							} else {
+								tmp1 = true;
+							}
+							if(!tmp1) {
+								var k3 = _this2.parent.third.h[k];
+								tmp = k3 != null && !(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer) && hxd_Key.isPressed(k3);
+							} else {
+								tmp = true;
+							}
+							if(!tmp) {
+								return _this2.parent.gc.isPressed(k);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				} else {
+					var _this3 = Game.ME.hero;
+					var _this4 = Game.ME.hero;
+					new TutorialTip((_this3.cx + _this3.xr) * Const.GRID,(_this4.cy + _this4.yr) * Const.GRID - 19,"Invest more energy to your *machine gun* by pressing *W two times*!",function() {
+						var _this5 = Game.ME.ca;
+						var k4 = 3;
+						if(!(_this5.manualLock || _this5.parent.isLocked || _this5.parent.exclusiveId != null && _this5.parent.exclusiveId != _this5.id || Date.now() / 1000 < _this5.parent.suspendTimer)) {
+							var tmp2;
+							var tmp3;
+							var k5 = _this5.parent.primary.h[k4];
+							if(!(k5 != null && !(_this5.manualLock || _this5.parent.isLocked || _this5.parent.exclusiveId != null && _this5.parent.exclusiveId != _this5.id || Date.now() / 1000 < _this5.parent.suspendTimer) && hxd_Key.isPressed(k5))) {
+								var k6 = _this5.parent.secondary.h[k4];
+								tmp3 = k6 != null && !(_this5.manualLock || _this5.parent.isLocked || _this5.parent.exclusiveId != null && _this5.parent.exclusiveId != _this5.id || Date.now() / 1000 < _this5.parent.suspendTimer) && hxd_Key.isPressed(k6);
+							} else {
+								tmp3 = true;
+							}
+							if(!tmp3) {
+								var k7 = _this5.parent.third.h[k4];
+								tmp2 = k7 != null && !(_this5.manualLock || _this5.parent.isLocked || _this5.parent.exclusiveId != null && _this5.parent.exclusiveId != _this5.id || Date.now() / 1000 < _this5.parent.suspendTimer) && hxd_Key.isPressed(k7);
+							} else {
+								tmp2 = true;
+							}
+							if(!tmp2) {
+								return _this5.parent.gc.isPressed(k4);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				}
 			}
 			if(Game.ME.vp.elapsedDistCase >= 14 && this.tryToStart("missile")) {
 				Game.ME.pause();
-				var _this2 = Game.ME.hero;
-				var _this3 = Game.ME.hero;
-				new TutorialTip((_this2.cx + _this2.xr) * Const.GRID + 16,(_this3.cy + _this3.yr) * Const.GRID,"MOVE power to your *missiles* by pressing *D* multiple times!",[68]);
+				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
+					var _this6 = Game.ME.hero;
+					var _this7 = Game.ME.hero;
+					new TutorialTip((_this6.cx + _this6.xr) * Const.GRID + 16,(_this7.cy + _this7.yr) * Const.GRID,"MOVE power to your *missiles* by pressing *B (gamepad) * multiple times!",function() {
+						var _this8 = Game.ME.ca;
+						var k8 = 1;
+						if(!(_this8.manualLock || _this8.parent.isLocked || _this8.parent.exclusiveId != null && _this8.parent.exclusiveId != _this8.id || Date.now() / 1000 < _this8.parent.suspendTimer)) {
+							var tmp4;
+							var tmp5;
+							var k9 = _this8.parent.primary.h[k8];
+							if(!(k9 != null && !(_this8.manualLock || _this8.parent.isLocked || _this8.parent.exclusiveId != null && _this8.parent.exclusiveId != _this8.id || Date.now() / 1000 < _this8.parent.suspendTimer) && hxd_Key.isPressed(k9))) {
+								var k10 = _this8.parent.secondary.h[k8];
+								tmp5 = k10 != null && !(_this8.manualLock || _this8.parent.isLocked || _this8.parent.exclusiveId != null && _this8.parent.exclusiveId != _this8.id || Date.now() / 1000 < _this8.parent.suspendTimer) && hxd_Key.isPressed(k10);
+							} else {
+								tmp5 = true;
+							}
+							if(!tmp5) {
+								var k11 = _this8.parent.third.h[k8];
+								tmp4 = k11 != null && !(_this8.manualLock || _this8.parent.isLocked || _this8.parent.exclusiveId != null && _this8.parent.exclusiveId != _this8.id || Date.now() / 1000 < _this8.parent.suspendTimer) && hxd_Key.isPressed(k11);
+							} else {
+								tmp4 = true;
+							}
+							if(!tmp4) {
+								return _this8.parent.gc.isPressed(k8);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				} else {
+					var _this9 = Game.ME.hero;
+					var _this10 = Game.ME.hero;
+					new TutorialTip((_this9.cx + _this9.xr) * Const.GRID + 16,(_this10.cy + _this10.yr) * Const.GRID,"MOVE power to your *missiles* by pressing *D* multiple times!",function() {
+						var _this11 = Game.ME.ca;
+						var k12 = 1;
+						if(!(_this11.manualLock || _this11.parent.isLocked || _this11.parent.exclusiveId != null && _this11.parent.exclusiveId != _this11.id || Date.now() / 1000 < _this11.parent.suspendTimer)) {
+							var tmp6;
+							var tmp7;
+							var k13 = _this11.parent.primary.h[k12];
+							if(!(k13 != null && !(_this11.manualLock || _this11.parent.isLocked || _this11.parent.exclusiveId != null && _this11.parent.exclusiveId != _this11.id || Date.now() / 1000 < _this11.parent.suspendTimer) && hxd_Key.isPressed(k13))) {
+								var k14 = _this11.parent.secondary.h[k12];
+								tmp7 = k14 != null && !(_this11.manualLock || _this11.parent.isLocked || _this11.parent.exclusiveId != null && _this11.parent.exclusiveId != _this11.id || Date.now() / 1000 < _this11.parent.suspendTimer) && hxd_Key.isPressed(k14);
+							} else {
+								tmp7 = true;
+							}
+							if(!tmp7) {
+								var k15 = _this11.parent.third.h[k12];
+								tmp6 = k15 != null && !(_this11.manualLock || _this11.parent.isLocked || _this11.parent.exclusiveId != null && _this11.parent.exclusiveId != _this11.id || Date.now() / 1000 < _this11.parent.suspendTimer) && hxd_Key.isPressed(k15);
+							} else {
+								tmp6 = true;
+							}
+							if(!tmp6) {
+								return _this11.parent.gc.isPressed(k12);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				}
 			}
 			if(dist >= 21 && this.tryToStart("shield")) {
 				Game.ME.pause();
-				var _this4 = Game.ME.hero;
-				var _this5 = Game.ME.hero;
-				new TutorialTip((_this4.cx + _this4.xr) * Const.GRID - 17,(_this5.cy + _this5.yr) * Const.GRID,"Accelerate your *shield regen* by moving energy to the shield system: press *A*.",[65,81]);
+				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
+					var _this12 = Game.ME.hero;
+					var _this13 = Game.ME.hero;
+					new TutorialTip((_this12.cx + _this12.xr) * Const.GRID - 17,(_this13.cy + _this13.yr) * Const.GRID,"Accelerate your *shield regen* by moving energy to the shield system: press *X (gamepad)*.",function() {
+						var _this14 = Game.ME.ca;
+						var k16 = 2;
+						if(!(_this14.manualLock || _this14.parent.isLocked || _this14.parent.exclusiveId != null && _this14.parent.exclusiveId != _this14.id || Date.now() / 1000 < _this14.parent.suspendTimer)) {
+							var tmp8;
+							var tmp9;
+							var k17 = _this14.parent.primary.h[k16];
+							if(!(k17 != null && !(_this14.manualLock || _this14.parent.isLocked || _this14.parent.exclusiveId != null && _this14.parent.exclusiveId != _this14.id || Date.now() / 1000 < _this14.parent.suspendTimer) && hxd_Key.isPressed(k17))) {
+								var k18 = _this14.parent.secondary.h[k16];
+								tmp9 = k18 != null && !(_this14.manualLock || _this14.parent.isLocked || _this14.parent.exclusiveId != null && _this14.parent.exclusiveId != _this14.id || Date.now() / 1000 < _this14.parent.suspendTimer) && hxd_Key.isPressed(k18);
+							} else {
+								tmp9 = true;
+							}
+							if(!tmp9) {
+								var k19 = _this14.parent.third.h[k16];
+								tmp8 = k19 != null && !(_this14.manualLock || _this14.parent.isLocked || _this14.parent.exclusiveId != null && _this14.parent.exclusiveId != _this14.id || Date.now() / 1000 < _this14.parent.suspendTimer) && hxd_Key.isPressed(k19);
+							} else {
+								tmp8 = true;
+							}
+							if(!tmp8) {
+								return _this14.parent.gc.isPressed(k16);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				} else {
+					var _this15 = Game.ME.hero;
+					var _this16 = Game.ME.hero;
+					new TutorialTip((_this15.cx + _this15.xr) * Const.GRID - 17,(_this16.cy + _this16.yr) * Const.GRID,"Accelerate your *shield regen* by moving energy to the shield system: press *A*.",function() {
+						var _this17 = Game.ME.ca;
+						var k20 = 2;
+						if(!(_this17.manualLock || _this17.parent.isLocked || _this17.parent.exclusiveId != null && _this17.parent.exclusiveId != _this17.id || Date.now() / 1000 < _this17.parent.suspendTimer)) {
+							var tmp10;
+							var tmp11;
+							var k21 = _this17.parent.primary.h[k20];
+							if(!(k21 != null && !(_this17.manualLock || _this17.parent.isLocked || _this17.parent.exclusiveId != null && _this17.parent.exclusiveId != _this17.id || Date.now() / 1000 < _this17.parent.suspendTimer) && hxd_Key.isPressed(k21))) {
+								var k22 = _this17.parent.secondary.h[k20];
+								tmp11 = k22 != null && !(_this17.manualLock || _this17.parent.isLocked || _this17.parent.exclusiveId != null && _this17.parent.exclusiveId != _this17.id || Date.now() / 1000 < _this17.parent.suspendTimer) && hxd_Key.isPressed(k22);
+							} else {
+								tmp11 = true;
+							}
+							if(!tmp11) {
+								var k23 = _this17.parent.third.h[k20];
+								tmp10 = k23 != null && !(_this17.manualLock || _this17.parent.isLocked || _this17.parent.exclusiveId != null && _this17.parent.exclusiveId != _this17.id || Date.now() / 1000 < _this17.parent.suspendTimer) && hxd_Key.isPressed(k23);
+							} else {
+								tmp10 = true;
+							}
+							if(!tmp10) {
+								return _this17.parent.gc.isPressed(k20);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				}
 			}
 			if(dist >= 26 && this.tryToStart("balance")) {
 				Game.ME.pause();
-				var _this6 = Game.ME.hero;
-				var _this7 = Game.ME.hero;
-				new TutorialTip((_this6.cx + _this6.xr) * Const.GRID,(_this7.cy + _this7.yr) * Const.GRID,"You can't have full power in all 3 systems at the same time. Press *S* to balance energy *evenly*.",[83]);
+				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
+					var _this18 = Game.ME.hero;
+					var _this19 = Game.ME.hero;
+					new TutorialTip((_this18.cx + _this18.xr) * Const.GRID,(_this19.cy + _this19.yr) * Const.GRID,"You can't have full power in all 3 systems at the same time. Press *A (gamepad)* to balance energy *evenly*.",function() {
+						var _this20 = Game.ME.ca;
+						var k24 = 0;
+						if(!(_this20.manualLock || _this20.parent.isLocked || _this20.parent.exclusiveId != null && _this20.parent.exclusiveId != _this20.id || Date.now() / 1000 < _this20.parent.suspendTimer)) {
+							var tmp12;
+							var tmp13;
+							var k25 = _this20.parent.primary.h[k24];
+							if(!(k25 != null && !(_this20.manualLock || _this20.parent.isLocked || _this20.parent.exclusiveId != null && _this20.parent.exclusiveId != _this20.id || Date.now() / 1000 < _this20.parent.suspendTimer) && hxd_Key.isPressed(k25))) {
+								var k26 = _this20.parent.secondary.h[k24];
+								tmp13 = k26 != null && !(_this20.manualLock || _this20.parent.isLocked || _this20.parent.exclusiveId != null && _this20.parent.exclusiveId != _this20.id || Date.now() / 1000 < _this20.parent.suspendTimer) && hxd_Key.isPressed(k26);
+							} else {
+								tmp13 = true;
+							}
+							if(!tmp13) {
+								var k27 = _this20.parent.third.h[k24];
+								tmp12 = k27 != null && !(_this20.manualLock || _this20.parent.isLocked || _this20.parent.exclusiveId != null && _this20.parent.exclusiveId != _this20.id || Date.now() / 1000 < _this20.parent.suspendTimer) && hxd_Key.isPressed(k27);
+							} else {
+								tmp12 = true;
+							}
+							if(!tmp12) {
+								return _this20.parent.gc.isPressed(k24);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				} else {
+					var _this21 = Game.ME.hero;
+					var _this22 = Game.ME.hero;
+					new TutorialTip((_this21.cx + _this21.xr) * Const.GRID,(_this22.cy + _this22.yr) * Const.GRID,"You can't have full power in all 3 systems at the same time. Press *S* to balance energy *evenly*.",function() {
+						var _this23 = Game.ME.ca;
+						var k28 = 0;
+						if(!(_this23.manualLock || _this23.parent.isLocked || _this23.parent.exclusiveId != null && _this23.parent.exclusiveId != _this23.id || Date.now() / 1000 < _this23.parent.suspendTimer)) {
+							var tmp14;
+							var tmp15;
+							var k29 = _this23.parent.primary.h[k28];
+							if(!(k29 != null && !(_this23.manualLock || _this23.parent.isLocked || _this23.parent.exclusiveId != null && _this23.parent.exclusiveId != _this23.id || Date.now() / 1000 < _this23.parent.suspendTimer) && hxd_Key.isPressed(k29))) {
+								var k30 = _this23.parent.secondary.h[k28];
+								tmp15 = k30 != null && !(_this23.manualLock || _this23.parent.isLocked || _this23.parent.exclusiveId != null && _this23.parent.exclusiveId != _this23.id || Date.now() / 1000 < _this23.parent.suspendTimer) && hxd_Key.isPressed(k30);
+							} else {
+								tmp15 = true;
+							}
+							if(!tmp15) {
+								var k31 = _this23.parent.third.h[k28];
+								tmp14 = k31 != null && !(_this23.manualLock || _this23.parent.isLocked || _this23.parent.exclusiveId != null && _this23.parent.exclusiveId != _this23.id || Date.now() / 1000 < _this23.parent.suspendTimer) && hxd_Key.isPressed(k31);
+							} else {
+								tmp14 = true;
+							}
+							if(!tmp14) {
+								return _this23.parent.gc.isPressed(k28);
+							} else {
+								return true;
+							}
+						} else {
+							return false;
+						}
+					});
+				}
 			}
 		}
 	}
 	,__class__: Tutorial
 });
-var TutorialTip = function(x,y,txt,wk) {
+var TutorialTip = function(x,y,txt,skipPressed) {
 	var _gthis = this;
 	dn_Process.call(this,Main.ME);
 	TutorialTip.CUR = this;
+	if(skipPressed == null) {
+		this.skipKeyPressed = function() {
+			var tmp;
+			var tmp1;
+			var _this = Game.ME.ca;
+			var k = 0;
+			var tmp2;
+			if(!(_this.manualLock || _this.parent.isLocked || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || Date.now() / 1000 < _this.parent.suspendTimer)) {
+				var tmp3;
+				var tmp4;
+				var k1 = _this.parent.primary.h[k];
+				if(!(k1 != null && !(_this.manualLock || _this.parent.isLocked || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || Date.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(k1))) {
+					var k2 = _this.parent.secondary.h[k];
+					tmp4 = k2 != null && !(_this.manualLock || _this.parent.isLocked || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || Date.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(k2);
+				} else {
+					tmp4 = true;
+				}
+				if(!tmp4) {
+					var k3 = _this.parent.third.h[k];
+					tmp3 = k3 != null && !(_this.manualLock || _this.parent.isLocked || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || Date.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(k3);
+				} else {
+					tmp3 = true;
+				}
+				tmp2 = tmp3 || _this.parent.gc.isPressed(k);
+			} else {
+				tmp2 = false;
+			}
+			if(!tmp2) {
+				var _this1 = Game.ME.ca;
+				var k4 = 1;
+				if(!(_this1.manualLock || _this1.parent.isLocked || _this1.parent.exclusiveId != null && _this1.parent.exclusiveId != _this1.id || Date.now() / 1000 < _this1.parent.suspendTimer)) {
+					var tmp5;
+					var tmp6;
+					var k5 = _this1.parent.primary.h[k4];
+					if(!(k5 != null && !(_this1.manualLock || _this1.parent.isLocked || _this1.parent.exclusiveId != null && _this1.parent.exclusiveId != _this1.id || Date.now() / 1000 < _this1.parent.suspendTimer) && hxd_Key.isPressed(k5))) {
+						var k6 = _this1.parent.secondary.h[k4];
+						tmp6 = k6 != null && !(_this1.manualLock || _this1.parent.isLocked || _this1.parent.exclusiveId != null && _this1.parent.exclusiveId != _this1.id || Date.now() / 1000 < _this1.parent.suspendTimer) && hxd_Key.isPressed(k6);
+					} else {
+						tmp6 = true;
+					}
+					if(!tmp6) {
+						var k7 = _this1.parent.third.h[k4];
+						tmp5 = k7 != null && !(_this1.manualLock || _this1.parent.isLocked || _this1.parent.exclusiveId != null && _this1.parent.exclusiveId != _this1.id || Date.now() / 1000 < _this1.parent.suspendTimer) && hxd_Key.isPressed(k7);
+					} else {
+						tmp5 = true;
+					}
+					tmp1 = tmp5 || _this1.parent.gc.isPressed(k4);
+				} else {
+					tmp1 = false;
+				}
+			} else {
+				tmp1 = true;
+			}
+			if(!tmp1) {
+				var _this2 = Game.ME.ca;
+				var k8 = 2;
+				if(!(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer)) {
+					var tmp7;
+					var tmp8;
+					var k9 = _this2.parent.primary.h[k8];
+					if(!(k9 != null && !(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer) && hxd_Key.isPressed(k9))) {
+						var k10 = _this2.parent.secondary.h[k8];
+						tmp8 = k10 != null && !(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer) && hxd_Key.isPressed(k10);
+					} else {
+						tmp8 = true;
+					}
+					if(!tmp8) {
+						var k11 = _this2.parent.third.h[k8];
+						tmp7 = k11 != null && !(_this2.manualLock || _this2.parent.isLocked || _this2.parent.exclusiveId != null && _this2.parent.exclusiveId != _this2.id || Date.now() / 1000 < _this2.parent.suspendTimer) && hxd_Key.isPressed(k11);
+					} else {
+						tmp7 = true;
+					}
+					tmp = tmp7 || _this2.parent.gc.isPressed(k8);
+				} else {
+					tmp = false;
+				}
+			} else {
+				tmp = true;
+			}
+			if(!tmp) {
+				var _this3 = Game.ME.ca;
+				var k12 = 3;
+				if(!(_this3.manualLock || _this3.parent.isLocked || _this3.parent.exclusiveId != null && _this3.parent.exclusiveId != _this3.id || Date.now() / 1000 < _this3.parent.suspendTimer)) {
+					var tmp9;
+					var tmp10;
+					var k13 = _this3.parent.primary.h[k12];
+					if(!(k13 != null && !(_this3.manualLock || _this3.parent.isLocked || _this3.parent.exclusiveId != null && _this3.parent.exclusiveId != _this3.id || Date.now() / 1000 < _this3.parent.suspendTimer) && hxd_Key.isPressed(k13))) {
+						var k14 = _this3.parent.secondary.h[k12];
+						tmp10 = k14 != null && !(_this3.manualLock || _this3.parent.isLocked || _this3.parent.exclusiveId != null && _this3.parent.exclusiveId != _this3.id || Date.now() / 1000 < _this3.parent.suspendTimer) && hxd_Key.isPressed(k14);
+					} else {
+						tmp10 = true;
+					}
+					if(!tmp10) {
+						var k15 = _this3.parent.third.h[k12];
+						tmp9 = k15 != null && !(_this3.manualLock || _this3.parent.isLocked || _this3.parent.exclusiveId != null && _this3.parent.exclusiveId != _this3.id || Date.now() / 1000 < _this3.parent.suspendTimer) && hxd_Key.isPressed(k15);
+					} else {
+						tmp9 = true;
+					}
+					if(!tmp9) {
+						return _this3.parent.gc.isPressed(k12);
+					} else {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			} else {
+				return true;
+			}
+		};
+	} else {
+		this.skipKeyPressed = skipPressed;
+	}
 	var sx = x == null ? 0 : x + Game.ME.scroller.x | 0;
 	var sy = y == null ? 0 : y + Game.ME.scroller.y | 0;
 	var char = "\\" + "*".split("").join("\\");
@@ -5476,18 +5829,17 @@ var TutorialTip = function(x,y,txt,wk) {
 	}
 	txt = txt1;
 	txt = StringTools.replace(txt,"\n","<br>");
-	this.waitKeys = wk;
 	this.createRootInLayers(Game.ME.root,Const.DP_TOP);
 	this.pointer = new h2d_Graphics(this.root);
 	this.pointer.lineStyle(1,14142103);
 	this.pointer.drawCircle(0,0,16);
 	this.pointer.set_visible(x != null);
 	if(this.pointer.visible) {
-		var _this = this.pointer;
-		_this.posChanged = true;
-		_this.x = sx;
-		_this.posChanged = true;
-		_this.y = sy;
+		var _this4 = this.pointer;
+		_this4.posChanged = true;
+		_this4.x = sx;
+		_this4.posChanged = true;
+		_this4.y = sy;
 	}
 	this.win = new h2d_Object(this.root);
 	var px = 6;
@@ -5503,10 +5855,14 @@ var TutorialTip = function(x,y,txt,wk) {
 	var tf = new h2d_HtmlText(Assets.font,f);
 	tf.set_text(txt);
 	tf.set_maxWidth(115);
-	if(Game.ME.paused && this.waitKeys == null) {
+	if(Game.ME.paused && skipPressed == null) {
 		var tf1 = new h2d_HtmlText(Assets.font,f);
 		tf1.set_textColor(9675703);
-		tf1.set_text("Press SPACE to continue");
+		if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
+			tf1.set_text("Press A (gamepad) to continue");
+		} else {
+			tf1.set_text("Press SPACE to continue");
+		}
 	}
 	bg.posChanged = true;
 	bg.x = -px;
@@ -5515,31 +5871,31 @@ var TutorialTip = function(x,y,txt,wk) {
 	bg.set_width(f.get_outerWidth() + px * 2);
 	bg.set_height(f.get_outerHeight() + py * 2);
 	if(x != null) {
-		var _this1 = this.win;
-		_this1.posChanged = true;
-		_this1.x = sx + 22;
-		if(this.win.x + bg.width >= Game.ME.lvl.wid * Const.GRID) {
-			var _this2 = this.win;
-			_this2.posChanged = true;
-			_this2.x = sx - 22 - bg.width;
-		}
-		var _this3 = this.win;
-		_this3.posChanged = true;
-		_this3.y = sy - bg.height * 0.4;
-	} else {
-		var _this4 = this.win;
-		_this4.posChanged = true;
-		_this4.x = Game.ME.lvl.wid * Const.GRID - bg.width - 10;
 		var _this5 = this.win;
 		_this5.posChanged = true;
-		_this5.y = 10;
+		_this5.x = sx + 22;
+		if(this.win.x + bg.width >= Game.ME.lvl.wid * Const.GRID) {
+			var _this6 = this.win;
+			_this6.posChanged = true;
+			_this6.x = sx - 22 - bg.width;
+		}
+		var _this7 = this.win;
+		_this7.posChanged = true;
+		_this7.y = sy - bg.height * 0.4;
+	} else {
+		var _this8 = this.win;
+		_this8.posChanged = true;
+		_this8.x = Game.ME.lvl.wid * Const.GRID - bg.width - 10;
+		var _this9 = this.win;
+		_this9.posChanged = true;
+		_this9.y = 10;
 	}
 	var _tween = this.tw.create_(function() {
 		return _gthis.win.x;
 	},function(_setV) {
-		var _this6 = _gthis.win;
-		_this6.posChanged = true;
-		_this6.x = _setV;
+		var _this10 = _gthis.win;
+		_this10.posChanged = true;
+		_this10.x = _setV;
 	},this.win.x + 200,this.win.x,null,200.);
 	var _tween1 = this.tw.create_(function() {
 		return _gthis.pointer.alpha;
@@ -5638,19 +5994,8 @@ TutorialTip.prototype = $extend(dn_Process.prototype,{
 		var _this1 = this.pointer;
 		_this1.posChanged = true;
 		_this1.scaleY = this.pointer.scaleX;
-		if(this.waitKeys == null && hxd_Key.isDown(32)) {
+		if(this.skipKeyPressed()) {
 			this.close();
-		}
-		if(this.waitKeys != null) {
-			var _g = 0;
-			var _g1 = this.waitKeys;
-			while(_g < _g1.length) {
-				var k = _g1[_g];
-				++_g;
-				if(hxd_Key.isDown(k)) {
-					this.close();
-				}
-			}
 		}
 	}
 	,__class__: TutorialTip
