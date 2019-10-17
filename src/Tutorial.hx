@@ -69,7 +69,6 @@ class Tutorial extends dn.Process {
 		if( tryToStart("controls") )
 			new TutorialTip(Lang.untranslated("Use *ARROWS* to move."));
 		if( hero.cy<=game.vp.bottomCy-8 )
-		//if( hero.cd.has("l") && hero.cd.has("r") && hero.cd.has("u") && hero.cd.has("d") )
 			tryToComplete("controls");
 
 		if( dist>=6 ) {
