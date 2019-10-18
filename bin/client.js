@@ -3206,8 +3206,12 @@ Game.prototype = $extend(dn_Process.prototype,{
 		}
 		var _this8 = this.ca;
 		if(!(_this8.manualLock || _this8.parent.isLocked || _this8.parent.exclusiveId != null && _this8.parent.exclusiveId != _this8.id || Date.now() / 1000 < _this8.parent.suspendTimer) && hxd_Key.isPressed(77)) {
-			dn_heaps_Sfx.toggleMuteGroup(1);
-			new Notif(true,Std.string("Music: " + (dn_heaps_Sfx.getGlobalGroup(1).muted ? "Off" : "ON")));
+			if(Assets.music.isPlaying()) {
+				Assets.music.stop();
+			} else {
+				Assets.music.play(true);
+			}
+			new Notif(true,Std.string("Music: " + (Assets.music.isPlaying() ? "ON" : "Off")));
 		}
 		var _g4 = 0;
 		var _g5 = Entity.ALL;
