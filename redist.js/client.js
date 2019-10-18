@@ -18453,6 +18453,7 @@ h2d_FlowProperties.prototype = {
 	set_isAbsolute: function(a) {
 		if(a) {
 			this.elt.constraintSize(-1,-1);
+			this.isBreak = false;
 		}
 		return this.isAbsolute = a;
 	}
@@ -18822,23 +18823,31 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			while(_g < _g1) {
 				var i = _g++;
 				var p = _gthis.properties[_gthis.reverse ? _gthis.children.length - i - 1 : i];
-				if(p.isAbsolute) {
+				var isAbs = p.isAbsolute;
+				if(isAbs && p.horizontalAlign == null && p.verticalAlign == null) {
 					continue;
 				}
 				var c = _gthis.children[_gthis.reverse ? _gthis.children.length - i - 1 : i];
 				if(!c.visible) {
 					continue;
 				}
-				c.constraintSize(isConstraintWidth && p.constraint ? maxInWidth / Math.abs(c.scaleX) : -1,isConstraintHeight && p.constraint ? maxInHeight / Math.abs(c.scaleX) : -1);
+				var pw = p.paddingLeft + p.paddingRight;
+				var ph = p.paddingTop + p.paddingBottom;
+				if(!isAbs) {
+					c.constraintSize(isConstraintWidth && p.constraint ? (maxInWidth - pw) / Math.abs(c.scaleX) : -1,isConstraintHeight && p.constraint ? (maxInHeight - ph) / Math.abs(c.scaleX) : -1);
+				}
 				var b = c.getSize(this.tmpBounds);
 				var br = false;
-				p.calculatedWidth = Math.ceil(b.xMax) + p.paddingLeft + p.paddingRight;
-				p.calculatedHeight = Math.ceil(b.yMax) + p.paddingTop + p.paddingBottom;
+				p.calculatedWidth = Math.ceil(b.xMax) + pw;
+				p.calculatedHeight = Math.ceil(b.yMax) + ph;
 				if(p.minWidth != null && p.calculatedWidth < p.minWidth) {
 					p.calculatedWidth = p.minWidth;
 				}
 				if(p.minHeight != null && p.calculatedHeight < p.minHeight) {
 					p.calculatedHeight = p.minHeight;
+				}
+				if(isAbs) {
+					continue;
 				}
 				if(this.multiline && x - startX + p.calculatedWidth > maxInWidth && x - startX > 0) {
 					br = true;
@@ -18852,7 +18861,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 					while(_g2 < _g11) {
 						var i1 = _g2++;
 						var p1 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i1 - 1 : i1];
-						if(p1.isAbsolute) {
+						if(p1.isAbsolute && p1.verticalAlign == null) {
 							continue;
 						}
 						var c1 = _gthis.children[_gthis.reverse ? _gthis.children.length - i1 - 1 : i1];
@@ -18904,7 +18913,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			while(_g5 < _g12) {
 				var i2 = _g5++;
 				var p2 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i2 - 1 : i2];
-				if(p2.isAbsolute) {
+				if(p2.isAbsolute && p2.verticalAlign == null) {
 					continue;
 				}
 				var c2 = _gthis.children[_gthis.reverse ? _gthis.children.length - i2 - 1 : i2];
@@ -18945,7 +18954,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			while(_g21 < _g31) {
 				var i3 = _g21++;
 				var p3 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i3 - 1 : i3];
-				if(p3.isAbsolute || !_gthis.children[_gthis.reverse ? _gthis.children.length - i3 - 1 : i3].visible) {
+				if(p3.isAbsolute && p3.horizontalAlign == null || !_gthis.children[_gthis.reverse ? _gthis.children.length - i3 - 1 : i3].visible) {
 					continue;
 				}
 				if(p3.isBreak) {
@@ -19024,6 +19033,9 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 				var _this = _gthis.children[_gthis.reverse ? _gthis.children.length - i3 - 1 : i3];
 				_this.posChanged = true;
 				_this.x = px + p3.offsetX + p3.paddingLeft;
+				if(p3.isAbsolute) {
+					xmin = px;
+				}
 			}
 			break;
 		case 1:
@@ -19041,23 +19053,31 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			while(_g10 < _g15) {
 				var i4 = _g10++;
 				var p8 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i4 - 1 : i4];
-				if(p8.isAbsolute) {
+				var isAbs1 = p8.isAbsolute;
+				if(isAbs1 && p8.horizontalAlign == null && p8.verticalAlign == null) {
 					continue;
 				}
 				var c3 = _gthis.children[_gthis.reverse ? _gthis.children.length - i4 - 1 : i4];
 				if(!c3.visible) {
 					continue;
 				}
-				c3.constraintSize(isConstraintWidth && p8.constraint ? maxInWidth / Math.abs(c3.scaleX) : -1,isConstraintHeight && p8.constraint ? maxInHeight / Math.abs(c3.scaleY) : -1);
+				var pw1 = p8.paddingLeft + p8.paddingRight;
+				var ph1 = p8.paddingTop + p8.paddingBottom;
+				if(!isAbs1) {
+					c3.constraintSize(isConstraintWidth && p8.constraint ? (maxInWidth - pw1) / Math.abs(c3.scaleX) : -1,isConstraintHeight && p8.constraint ? (maxInHeight - ph1) / Math.abs(c3.scaleY) : -1);
+				}
 				var b1 = c3.getSize(this.tmpBounds);
 				var br1 = false;
-				p8.calculatedWidth = Math.ceil(b1.xMax) + p8.paddingLeft + p8.paddingRight;
-				p8.calculatedHeight = Math.ceil(b1.yMax) + p8.paddingTop + p8.paddingBottom;
+				p8.calculatedWidth = Math.ceil(b1.xMax) + pw1;
+				p8.calculatedHeight = Math.ceil(b1.yMax) + ph1;
 				if(p8.minWidth != null && p8.calculatedWidth < p8.minWidth) {
 					p8.calculatedWidth = p8.minWidth;
 				}
 				if(p8.minHeight != null && p8.calculatedHeight < p8.minHeight) {
 					p8.calculatedHeight = p8.minHeight;
+				}
+				if(isAbs1) {
+					continue;
 				}
 				if(this.multiline && y1 - startY + p8.calculatedHeight > maxInHeight && y1 - startY > 0) {
 					br1 = true;
@@ -19071,7 +19091,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 					while(_g16 < _g17) {
 						var i5 = _g16++;
 						var p9 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i5 - 1 : i5];
-						if(p9.isAbsolute) {
+						if(p9.isAbsolute && p9.horizontalAlign == null) {
 							continue;
 						}
 						var c4 = _gthis.children[_gthis.reverse ? _gthis.children.length - i5 - 1 : i5];
@@ -19125,7 +19145,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			while(_g20 < _g110) {
 				var i6 = _g20++;
 				var p10 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i6 - 1 : i6];
-				if(p10.isAbsolute) {
+				if(p10.isAbsolute && p10.horizontalAlign == null) {
 					continue;
 				}
 				var c5 = _gthis.children[_gthis.reverse ? _gthis.children.length - i6 - 1 : i6];
@@ -19166,7 +19186,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			while(_g24 < _g32) {
 				var i7 = _g24++;
 				var p11 = _gthis.properties[_gthis.reverse ? _gthis.children.length - i7 - 1 : i7];
-				if(p11.isAbsolute || !_gthis.children[_gthis.reverse ? _gthis.children.length - i7 - 1 : i7].visible) {
+				if(p11.isAbsolute && p11.verticalAlign == null || !_gthis.children[_gthis.reverse ? _gthis.children.length - i7 - 1 : i7].visible) {
 					continue;
 				}
 				if(p11.isBreak) {
@@ -19245,6 +19265,9 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 				var _this1 = _gthis.children[_gthis.reverse ? _gthis.children.length - i7 - 1 : i7];
 				_this1.posChanged = true;
 				_this1.y = py + p11.offsetY + p11.paddingTop;
+				if(p11.isAbsolute) {
+					py = ymin;
+				}
 			}
 			break;
 		case 2:
@@ -19282,7 +19305,7 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 				}
 			}
 			var xmin1 = this.paddingLeft + this.borderWidth;
-			var ymin1 = this.paddingTop + this.borderWidth;
+			var ymin1 = this.paddingTop + this.borderHeight;
 			var xmax1;
 			if(this.realMaxWidth > 0 && this.overflow) {
 				xmax1 = Math.floor(this.realMaxWidth - (this.paddingRight + this.borderWidth));
@@ -19293,14 +19316,14 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			}
 			var ymax1;
 			if(this.realMaxWidth > 0 && this.overflow) {
-				ymax1 = Math.floor(this.realMaxHeight - (this.paddingBottom + this.borderWidth));
+				ymax1 = Math.floor(this.realMaxHeight - (this.paddingBottom + this.borderHeight));
 			} else {
 				var a5 = ymin1 + maxChildH;
-				var b4 = this.realMinHeight - (this.paddingBottom + this.borderWidth);
+				var b4 = this.realMinHeight - (this.paddingBottom + this.borderHeight);
 				ymax1 = a5 < b4 ? b4 : a5;
 			}
 			cw = xmax1 + this.paddingRight + this.borderWidth;
-			ch = ymax1 + this.paddingBottom + this.borderWidth;
+			ch = ymax1 + this.paddingBottom + this.borderHeight;
 			var _g28 = 0;
 			var _g33 = this.children.length;
 			while(_g28 < _g33) {
@@ -25303,8 +25326,11 @@ h3d_Camera.prototype = {
 		}
 		this.frustum.loadMatrix(this.m);
 	}
-	,getFrustumCorners: function() {
-		return [this.unproject(-1,1,0),this.unproject(1,1,0),this.unproject(1,-1,0),this.unproject(-1,-1,0),this.unproject(-1,1,1),this.unproject(1,1,1),this.unproject(1,-1,1),this.unproject(-1,-1,1)];
+	,getFrustumCorners: function(zMax) {
+		if(zMax == null) {
+			zMax = 1.;
+		}
+		return [this.unproject(-1,1,0),this.unproject(1,1,0),this.unproject(1,-1,0),this.unproject(-1,-1,0),this.unproject(-1,1,zMax),this.unproject(1,1,zMax),this.unproject(1,-1,zMax),this.unproject(-1,-1,zMax)];
 	}
 	,makeCameraMatrix: function(m) {
 		var _this = this.target;
@@ -26512,17 +26538,6 @@ h3d_col_Frustum.prototype = {
 	}
 	,__class__: h3d_col_Frustum
 };
-var h3d_col_Plane = function(nx,ny,nz,d) {
-	this.nx = nx;
-	this.ny = ny;
-	this.nz = nz;
-	this.d = d;
-};
-$hxClasses["h3d.col.Plane"] = h3d_col_Plane;
-h3d_col_Plane.__name__ = "h3d.col.Plane";
-h3d_col_Plane.prototype = {
-	__class__: h3d_col_Plane
-};
 var h3d_col_Ray = function() {
 };
 $hxClasses["h3d.col.Ray"] = h3d_col_Ray;
@@ -26543,6 +26558,17 @@ h3d_col_Ray.prototype = {
 		this.lz *= l;
 	}
 	,__class__: h3d_col_Ray
+};
+var h3d_col_Plane = function(nx,ny,nz,d) {
+	this.nx = nx;
+	this.ny = ny;
+	this.nz = nz;
+	this.d = d;
+};
+$hxClasses["h3d.col.Plane"] = h3d_col_Plane;
+h3d_col_Plane.__name__ = "h3d.col.Plane";
+h3d_col_Plane.prototype = {
+	__class__: h3d_col_Plane
 };
 var h3d_col_Sphere = function(x,y,z,r) {
 	if(r == null) {
@@ -39187,6 +39213,7 @@ var hxd_SceneEvents = function($window) {
 	this.mouseCheckMove = true;
 	this.enablePhysicalMouse = true;
 	this.isOut = false;
+	this.onOver = new hxd_Event(hxd_EventKind.EOver);
 	this.onOut = new hxd_Event(hxd_EventKind.EOut);
 	this.checkPos = new hxd_Event(hxd_EventKind.ECheck);
 	this.focusLost = new hxd_Event(hxd_EventKind.EFocusLost);
@@ -39199,6 +39226,7 @@ var hxd_SceneEvents = function($window) {
 	this.pendingEvents = [];
 	this.pushList = [];
 	this.overList = [];
+	this.overCandidates = [];
 	if($window == null) {
 		$window = hxd_Window.getInstance();
 	}
@@ -39280,6 +39308,7 @@ hxd_SceneEvents.prototype = {
 	,emitEvent: function(event) {
 		var oldX = event.relX;
 		var oldY = event.relY;
+		var overCandidateCount = 0;
 		var handled = false;
 		var checkOver = false;
 		var fillOver = false;
@@ -39329,20 +39358,18 @@ hxd_SceneEvents.prototype = {
 					if(fillOver) {
 						var idx = this.overList.indexOf(i);
 						if(idx == -1) {
-							var oldPropagate = event.propagate;
-							var oldKind = event.kind;
-							event.kind = hxd_EventKind.EOver;
-							event.cancel = false;
-							i.handleEvent(event);
-							if(!event.cancel) {
-								this.overList.splice(this.overIndex,0,i);
-								this.overIndex++;
-								fillOver = event.propagate;
-								updateCursor = true;
+							if(this.overCandidates.length == overCandidateCount) {
+								this.overCandidates[overCandidateCount] = { i : i, x : event.relX, y : event.relY, z : event.relZ};
+							} else {
+								var info = this.overCandidates[overCandidateCount];
+								info.i = i;
+								info.x = event.relX;
+								info.y = event.relY;
+								info.z = event.relZ;
 							}
-							event.kind = oldKind;
-							event.propagate = oldPropagate;
-							event.cancel = false;
+							++overCandidateCount;
+							this.overList.splice(this.overIndex++,0,i);
+							updateCursor = true;
 						} else {
 							if(idx < this.overIndex) {
 								while(true) {
@@ -39365,9 +39392,9 @@ hxd_SceneEvents.prototype = {
 								this.overList[this.overIndex] = i;
 								updateCursor = true;
 							}
-							fillOver = i.propagateEvents;
 							this.overIndex++;
 						}
+						fillOver = event.propagate;
 					}
 				} else {
 					if(checkPush) {
@@ -39397,24 +39424,33 @@ hxd_SceneEvents.prototype = {
 		if(cancelFocus && this.currentFocus != null) {
 			this.blur();
 		}
-		if(checkOver && this.overIndex < this.overList.length) {
-			this.outIndex = this.overList.length - 1;
-			while(true) {
-				this.onOut.cancel = false;
-				this.overList[this.outIndex].handleEvent(this.onOut);
-				if(!this.onOut.cancel) {
+		if(checkOver) {
+			if(this.overIndex < this.overList.length) {
+				this.outIndex = this.overList.length - 1;
+				while(true) {
+					this.overList[this.outIndex].handleEvent(this.onOut);
 					HxOverrides.remove(this.overList,this.overList[this.outIndex]);
 					if(!(--this.outIndex >= this.overIndex)) {
 						break;
-					} else {
-						continue;
 					}
 				}
-				if(!(--this.outIndex >= this.overIndex)) {
-					break;
+				updateCursor = true;
+			}
+			if(overCandidateCount != 0) {
+				var i1 = 0;
+				var ev = this.onOver;
+				while(true) {
+					var info1 = this.overCandidates[i1++];
+					ev.relX = info1.x;
+					ev.relY = info1.y;
+					ev.relZ = info1.z;
+					info1.i.handleEvent(ev);
+					info1.i = null;
+					if(!(i1 < overCandidateCount)) {
+						break;
+					}
 				}
 			}
-			updateCursor = true;
 		}
 		this.overIndex = -1;
 		if(updateCursor) {
@@ -39432,17 +39468,17 @@ hxd_SceneEvents.prototype = {
 			var _g3 = 0;
 			var _g4 = this.pushList;
 			while(_g3 < _g4.length) {
-				var i1 = _g4[_g3];
+				var i2 = _g4[_g3];
 				++_g3;
-				if(i1 == null) {
+				if(i2 == null) {
 					this.dispatchListeners(event);
 				} else {
-					var s1 = i1.getInteractiveScene();
+					var s1 = i2.getInteractiveScene();
 					if(s1 == null) {
 						continue;
 					}
 					event.kind = hxd_EventKind.EReleaseOutside;
-					s1.dispatchEvent(event,i1);
+					s1.dispatchEvent(event,i2);
 					event.kind = hxd_EventKind.ERelease;
 					event.relX = oldX;
 					event.relY = oldY;
@@ -39503,14 +39539,12 @@ hxd_SceneEvents.prototype = {
 				default:
 				}
 				if(this.currentDrag != null && (this.currentDrag.ref == null || this.currentDrag.ref == e.touchId)) {
-					e.propagate = false;
+					e.propagate = true;
 					e.cancel = false;
 					this.currentDrag.f(e);
 					e.relX = ox;
 					e.relY = oy;
-					if(e.cancel || e.propagate) {
-						e.cancel = false;
-						e.propagate = false;
+					if(!e.propagate) {
 						continue;
 					}
 				}
@@ -39914,6 +39948,12 @@ hxd_Window.prototype = {
 		ev.keyCode = e.keyCode;
 		this.event(ev);
 		if(!this.propagateKeyEvents) {
+			switch(ev.keyCode) {
+			case 8:case 16:case 17:case 33:case 34:case 35:case 36:case 37:case 38:case 39:case 40:
+				e.preventDefault();
+				break;
+			default:
+			}
 			e.stopPropagation();
 		}
 	}
@@ -39957,7 +39997,7 @@ hxd_System.start = function(callb) {
 	callb();
 };
 hxd_System.setNativeCursor = function(c) {
-	if(Type.enumEq(c,hxd_System.currentNativeCursor)) {
+	if(hxd_System.currentNativeCursor != null && Type.enumEq(c,hxd_System.currentNativeCursor)) {
 		return;
 	}
 	hxd_System.currentNativeCursor = c;
@@ -44465,6 +44505,8 @@ hxd_snd_Buffer.prototype = {
 	,__class__: hxd_snd_Buffer
 };
 var hxd_snd_Manager = function() {
+	this.suspended = false;
+	this.timeOffset = 0.;
 	try {
 		this.driver = new hxd_snd_openal_Driver();
 	} catch( e ) {
@@ -44596,7 +44638,7 @@ hxd_snd_Manager.prototype = {
 		}
 	}
 	,update: function() {
-		this.now = Date.now() / 1000;
+		this.now = Date.now() / 1000 + this.timeOffset;
 		if(this.driver == null) {
 			this.updateVirtualChannels(this.now);
 			return;
@@ -44680,7 +44722,7 @@ hxd_snd_Manager.prototype = {
 			if(c1.isLoading && !c1.sound.getData().isLoading()) {
 				c1.isLoading = false;
 			}
-			c1.isVirtual = c1.pause || c1.mute || c1.channelGroup.mute || c1.allowVirtual && c1.audibleVolume < hxd_snd_Manager.VIRTUAL_VOLUME_THRESHOLD || c1.isLoading;
+			c1.isVirtual = this.suspended || c1.pause || c1.mute || c1.channelGroup.mute || c1.allowVirtual && c1.audibleVolume < hxd_snd_Manager.VIRTUAL_VOLUME_THRESHOLD || c1.isLoading;
 			c1 = c1.next;
 		}
 		var list = this.channels;
