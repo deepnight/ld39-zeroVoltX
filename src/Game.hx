@@ -280,8 +280,12 @@ class Game extends dn.Process {
 
 		// Toggle music
 		if( ca.isKeyboardPressed(Key.M) ) {
-			dn.heaps.Sfx.toggleMuteGroup(1);
-			new Notif(true, Lang.untranslated("Music: "+(dn.heaps.Sfx.isMuted(1)?"Off":"ON")));
+			if( Assets.music.isPlaying() )
+				Assets.music.stop();
+			else
+				Assets.music.play(true);
+			// dn.heaps.Sfx.toggleMuteGroup(1);
+			new Notif(true, Lang.untranslated("Music: "+(Assets.music.isPlaying()?"ON":"Off")));
 		}
 
 		// Exit
