@@ -23862,8 +23862,8 @@ h2d_Scene.prototype = $extend(h2d_Layers.prototype,{
 	}
 	,isInteractiveVisible: function(i) {
 		var s = i;
-		while(s != null) {
-			if(!s.visible) {
+		while(s != this) {
+			if(s == null || !s.visible) {
 				return false;
 			}
 			s = s.parent;
@@ -33587,8 +33587,8 @@ h3d_scene_Scene.prototype = $extend(h3d_scene_Object.prototype,{
 	}
 	,isInteractiveVisible: function(i) {
 		var o = i;
-		while(o != null) {
-			if((o.flags & 2) == 0) {
+		while(o != this) {
+			if(o == null || (o.flags & 2) == 0) {
 				return false;
 			}
 			o = o.parent;
@@ -39363,10 +39363,11 @@ hxd_SceneEvents.prototype = {
 						var idx = this.overList.indexOf(i);
 						if(idx == -1) {
 							if(this.overCandidates.length == overCandidateCount) {
-								this.overCandidates[overCandidateCount] = { i : i, x : event.relX, y : event.relY, z : event.relZ};
+								this.overCandidates[overCandidateCount] = { i : i, s : s, x : event.relX, y : event.relY, z : event.relZ};
 							} else {
 								var info = this.overCandidates[overCandidateCount];
 								info.i = i;
+								info.s = s;
 								info.x = event.relX;
 								info.y = event.relY;
 								info.z = event.relZ;
@@ -39448,8 +39449,11 @@ hxd_SceneEvents.prototype = {
 					ev.relX = info1.x;
 					ev.relY = info1.y;
 					ev.relZ = info1.z;
-					info1.i.handleEvent(ev);
+					if(info1.s.isInteractiveVisible(info1.i)) {
+						info1.i.handleEvent(ev);
+					}
 					info1.i = null;
+					info1.s = null;
 					if(!(i1 < overCandidateCount)) {
 						break;
 					}
@@ -39526,9 +39530,7 @@ hxd_SceneEvents.prototype = {
 						while(i >= 0) {
 							this.onOut.cancel = false;
 							this.overList[i].handleEvent(this.onOut);
-							if(!this.onOut.cancel) {
-								HxOverrides.remove(this.overList,this.overList[i]);
-							}
+							HxOverrides.remove(this.overList,this.overList[i]);
 							--i;
 						}
 						this.selectCursor();
@@ -44667,6 +44669,9 @@ hxd_snd_Manager.prototype = {
 			while(_g2 < _g11) {
 				var i = _g2++;
 				var b = this.unqueueBuffer(s);
+				if(b == null) {
+					continue;
+				}
 				lastBuffer = b;
 				if(b.isEnd) {
 					c.sound = b.sound;
@@ -45075,6 +45080,9 @@ hxd_snd_Manager.prototype = {
 	}
 	,unqueueBuffer: function(s) {
 		var b = s.buffers.shift();
+		if(b == null) {
+			return null;
+		}
 		this.driver.unqueueBuffer(s.handle,b.handle);
 		if(b.isStream) {
 			this.freeStreamBuffers.unshift(b);
