@@ -244,7 +244,7 @@ class Hero extends Entity {
 
 		if( barriers<maxBarriers ) {
 			var r = barriers - Std.int(barriers);
-			fx.shieldRefill(this, r, getBarrierColor(Std.int(barriers)+1));
+			fx.shieldRefill(this, r, 0xff0000);
 		}
 
 		for(i in 0...stacks.length) {
@@ -409,7 +409,7 @@ class Hero extends Entity {
 			var old = barriers;
 			barriers += 0.003 * shield;
 			if( shield>=1 )
-				barriers += 0.003;
+				barriers += 0.0055;
 			else if( shield>=0.75 )
 				barriers += 0.002;
 			if( Std.int(barriers)!=Std.int(old) ) {

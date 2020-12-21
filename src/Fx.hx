@@ -360,11 +360,11 @@ class Fx extends dn.Process {
 		for( i in 0...n ) {
 			var a = base + 6.28 * i/n + rnd(0,0.1,true);
 			var p = allocTopAdd(getTile("star"), x+Math.cos(a)*(16-r*3), y+1+Math.sin(a)*(19-r*3));
-			p.alpha = 0.1 + rnd(0.1,0.2) * r;
+			p.alpha = 0.1 + rnd(0.3,0.4) * r;
 			p.colorize(c);
-			p.scale = 0.5 + 0.5*r;
+			p.scale = 0.5 + 1.5*r;
 			p.rotation = Math.atan2(y-p.y, x-p.x) + 1.57 + rnd(0,0.1,true);
-			p.lifeS = 0.03;
+			p.lifeS = 0.06;
 			p.userData = e;
 			p.onUpdate = _trackEntity;
 		}
@@ -374,14 +374,14 @@ class Fx extends dn.Process {
 	public function shieldReady(e:Entity, c:UInt) {
 		var x = e.centerX;
 		var y = e.centerY;
-		var n = 40;
+		var n = 50;
 		for( i in 0...n ) {
 			var a = 6.28 * i/n + rnd(0,0.1,true);
-			var p = allocTopAdd(getTile("line"), x+Math.cos(a)*27, y+1+Math.sin(a)*30);
+			var p = allocTopAdd(getTile("line"), x+Math.cos(a)*37, y+1+Math.sin(a)*40);
 			p.setCenterRatio(1,0.5);
 			p.colorize(c);
-			p.setFadeS(rnd(0.3,0.4), 0, 0.1);
-			p.moveTo(x,y, 5);
+			p.setFadeS(rnd(0.8,0.9), 0, 0.1);
+			p.moveTo(x,y, 8);
 			p.scaleXMul = rnd(0.85,0.90);
 			p.rotation = p.getMoveAng() + rnd(0,0.1,true);
 			p.dr = -0.3;
