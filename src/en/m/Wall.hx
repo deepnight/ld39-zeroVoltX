@@ -3,7 +3,7 @@ package en.m;
 class Wall extends en.Mob {
 	public function new(x,y) {
 		super(x,y);
-		setLife(60);
+		setLife(30);
 		speed = 0;
 		aimPrio = -20;
 		spr.anim.playAndLoop("wall").setSpeed(0.2);
