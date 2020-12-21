@@ -8,7 +8,9 @@ class Main extends dn.Process {
 		super();
 		ME = this;
 		createRoot(p);
-		// new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
+		#if js
+		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
+		#end
 
 		controller = new dn.heaps.Controller(Boot.ME.s2d);
 		controller.bind(AXIS_LEFT_X_NEG, Key.LEFT);
