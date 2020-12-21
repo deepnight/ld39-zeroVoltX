@@ -74,39 +74,39 @@ class Tutorial extends dn.Process {
 		if( dist>=6 ) {
 			if( tryToStart("energy") ) {
 				game.pause();
-				new TutorialTip(Lang.untranslated("You have a *limited* amount of power. Spread it between you *ship systems* to maximize efficiency."));
+				new TutorialTip(Lang.untranslated("*Your engines have limited power*. Spread your energy wisely among the ship systems."));
 			}
 
 			if( tryToStart("lazer") ) {
 				game.pause();
 				if( Game.ME.ca.isGamePad() )
-					new TutorialTip(hero.centerX, hero.centerY-19, Lang.untranslated("Invest more energy to your *machine gun* by pressing *Y (gamepad) two times*!"), function() return Game.ME.ca.yPressed());
+					new TutorialTip(hero.centerX, hero.centerY-19, Lang.untranslated("Press *Y button multiple times* to boost *MACHINE GUNS*!"), function() return Game.ME.ca.yPressed());
 				else
-					new TutorialTip(hero.centerX, hero.centerY-19, Lang.untranslated("Invest more energy to your *machine gun* by pressing *W two times*!"), function() return Game.ME.ca.yPressed());
+					new TutorialTip(hero.centerX, hero.centerY-19, Lang.untranslated("Press *W multiple times* to boost *MACHINE GUNS*!"), function() return Game.ME.ca.yPressed());
 			}
 
 			if( game.vp.elapsedDistCase>=14 && tryToStart("missile") ) {
 				game.pause();
 				if( Game.ME.ca.isGamePad() )
-					new TutorialTip(hero.centerX+16, hero.centerY, Lang.untranslated("MOVE power to your *missiles* by pressing *B (gamepad) * multiple times!"), function() return Game.ME.ca.bPressed());
+					new TutorialTip(hero.centerX+16, hero.centerY, Lang.untranslated("Press *B button multiple times* to boost *MISSILES*!"), function() return Game.ME.ca.bPressed());
 				else
-					new TutorialTip(hero.centerX+16, hero.centerY, Lang.untranslated("MOVE power to your *missiles* by pressing *D* multiple times!"), function() return Game.ME.ca.bPressed());
+					new TutorialTip(hero.centerX+16, hero.centerY, Lang.untranslated("Press *D multiple times* to boost *MISSILES*!"), function() return Game.ME.ca.bPressed());
 			}
 
 			if( dist>=21 && tryToStart("shield") ) {
 				game.pause();
 				if( Game.ME.ca.isGamePad() )
-					new TutorialTip(hero.centerX-17, hero.centerY, Lang.untranslated("Accelerate your *shield regen* by moving energy to the shield system: press *X (gamepad)*."), function() return Game.ME.ca.xPressed());
+					new TutorialTip(hero.centerX-17, hero.centerY, Lang.untranslated("Press *X button multiple times* to boost *SHIELD REGEN*!"), function() return Game.ME.ca.xPressed());
 				else
-					new TutorialTip(hero.centerX-17, hero.centerY, Lang.untranslated("Accelerate your *shield regen* by moving energy to the shield system: press *A*."), function() return Game.ME.ca.xPressed());
+					new TutorialTip(hero.centerX-17, hero.centerY, Lang.untranslated("Press *A multiple times* to boost *SHIELD REGEN*!"), function() return Game.ME.ca.xPressed());
 			}
 
 			if( dist>=26 && tryToStart("balance") ) {
 				game.pause();
 				if( Game.ME.ca.isGamePad() )
-					new TutorialTip(hero.centerX, hero.centerY, Lang.untranslated("You can't have full power in all 3 systems at the same time. Press *A (gamepad)* to balance energy *evenly*."), function() return Game.ME.ca.aPressed());
+					new TutorialTip(hero.centerX, hero.centerY, Lang.untranslated("Press *A button* to balance energy."), function() return Game.ME.ca.aPressed());
 				else
-					new TutorialTip(hero.centerX, hero.centerY, Lang.untranslated("You can't have full power in all 3 systems at the same time. Press *S* to balance energy *evenly*."), function() return Game.ME.ca.aPressed());
+					new TutorialTip(hero.centerX, hero.centerY, Lang.untranslated("Press *S* to balance energy."), function() return Game.ME.ca.aPressed());
 			}
 
 			//if( hasDone("balance") && tryToStart("allDone") ) {
