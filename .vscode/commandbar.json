@@ -6,7 +6,7 @@
       {
         "text": "Redist",
         "color": "lightgreen",
-        "command": "haxelib run redistHelper hl.hxml js.hxml -p ZeroVoltX -o redist.$",
+        "command": "haxelib run redistHelper hl.hxml js.hxml -p ZeroVoltX -zip",
         "alignment": "right",
         "skipTerminateQuickPick": false,
         "priority": 0
