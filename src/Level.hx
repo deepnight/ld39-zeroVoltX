@@ -34,7 +34,7 @@ class Level extends dn.Process {
 
 	override function onResize() {
 		super.onResize();
-		gradient.scaleX = w()/Const.SCALE / gradient.tile.width;
+		gradient.scaleX = Game.ME.vp.gameWidPx() / gradient.tile.width;
 	}
 	override function onDispose() {
 		super.onDispose();

@@ -82,14 +82,13 @@ class Game extends dn.Process {
 		scoreTf = new h2d.Text(Assets.font);
 		root.add(scoreTf, Const.DP_UI);
 		scoreTf.x = 5;
-		scoreTf.y = Const.TOP_MARGIN;
 		addScore(0);
 
 		var tf = new h2d.Text(Assets.font);
 		root.add(tf, Const.DP_UI);
 		tf.text = "INSERT COIN";
 		tf.x = 5;
-		tf.y = 15 + Const.TOP_MARGIN;
+		tf.y = 15;
 		createChildProcess(function(p) {
 			if( !cd.hasSetS("coin",0.33) )
 				tf.visible = !tf.visible;
@@ -105,7 +104,7 @@ class Game extends dn.Process {
 		f.horizontalAlign = Middle;
 		f.minWidth = Const.VWID*Const.GRID;
 		scroller.add(f, Const.DP_TOP);
-		f.y = Std.int( Const.TOP_MARGIN + ( lvl.hei-Const.VHEI-3.5) * Const.GRID );
+		f.y = Std.int( ( lvl.hei-Const.VHEI-2.5) * Const.GRID );
 
 		var tf = new h2d.Text(Assets.font,f);
 		tf.textColor = 0x496676;
@@ -238,7 +237,7 @@ class Game extends dn.Process {
 			vp.elapsedDistCase+=scPixel;
 			scFrame = true;
 		}
-		scroller.y = -lvl.hei*Const.GRID + M.ceil(h()/Const.SCALE) + vp.elapsedDistCase*Const.GRID;
+		scroller.y = -lvl.hei*Const.GRID + M.ceil( vp.gameHeiPx() ) + vp.elapsedDistCase*Const.GRID;
 
 		// LD bullets
 		for( pt in lvl.getPixels(0x7cffe8) ) {
@@ -261,7 +260,7 @@ class Game extends dn.Process {
 		// Checkpoints
 		var ptDist = 0.;
 		for(pt in lvl.getPixels(0xff6000)) {
-			ptDist = lvl.hei-pt.cy - vp.hei*0.5;
+			ptDist = lvl.hei-pt.cy - vp.cHei*0.5;
 			if( vp.elapsedDistCase >= ptDist  && ptDist>CHECKPOINT ) {
 				CHECKPOINT = ptDist;
 				new Notif(Lang.untranslated("Checkpoint reached"));

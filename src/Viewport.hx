@@ -3,7 +3,7 @@ class Viewport {
 	public var lvl(get,never) : Level; inline function get_lvl() return Game.ME.lvl;
 
 	public var elapsedDistCase : Float;
-	public var hei : Int;
+	public var cHei : Int;
 
 	public var topCy(get,never) : Int;
 	public var bottomCy(get,never) : Int;
@@ -12,12 +12,15 @@ class Viewport {
 	public var bottomY(get,never) : Float;
 
 	public function new() {
-		hei = Const.VHEI;
+		cHei = Const.VHEI;
 		elapsedDistCase = 1;
 	}
 
+	public inline function gameWidPx() return Boot.ME.mask.width;
+	public inline function gameHeiPx() return Boot.ME.mask.height;
+
 	inline function get_topCy() {
-		return Std.int( bottomCy-hei+1 );
+		return Std.int( bottomCy-cHei+1 );
 	}
 
 	inline function get_bottomCy() {
@@ -25,7 +28,7 @@ class Viewport {
 	}
 
 	inline function get_topY() {
-		return bottomY - (hei-1)*Const.GRID;
+		return bottomY - (cHei-1)*Const.GRID;
 	}
 	inline function get_bottomY() {
 		return ( lvl.hei-1-elapsedDistCase ) * Const.GRID;

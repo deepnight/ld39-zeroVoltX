@@ -71,7 +71,7 @@ class TutorialTip extends dn.Process {
 		}
 		else {
 			win.x = Game.ME.lvl.wid*Const.GRID - bg.width - 10;
-			win.y = Const.TOP_MARGIN + 10;
+			win.y = 10;
 		}
 		tw.createS(win.x, win.x+200>win.x, 0.2);
 		tw.createS(pointer.alpha, 0>1, 0.2);
@@ -93,7 +93,7 @@ class TutorialTip extends dn.Process {
 		if( CUR==this ) CUR = null;
 		if( !cd.hasSetS("lock",Const.INFINITE) ) {
 			tw.createS(pointer.alpha, 0, TEaseIn, 0.3);
-			tw.createS(win.y, win.y+Game.ME.vp.hei*Const.GRID, TEaseIn, 0.3).end( destroy );
+			tw.createS(win.y, win.y+Game.ME.vp.cHei*Const.GRID, TEaseIn, 0.3).end( destroy );
 			Game.ME.resume();
 			Tutorial.ME.completeCurrent();
 		}

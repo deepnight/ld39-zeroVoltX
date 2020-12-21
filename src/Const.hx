@@ -7,7 +7,6 @@ class Const {
 	public static final INFINITE = 999999;
 	public static final VWID = 18; //324
 	public static final VHEI = 16; //288
-	public static final TOP_MARGIN = 3*GRID; // offset the game -TOP_MARGIN
 
 	static var _inc = 0;
 	public static var DP_BG = _inc++;

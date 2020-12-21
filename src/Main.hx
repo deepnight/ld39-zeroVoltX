@@ -8,8 +8,7 @@ class Main extends dn.Process {
 		super();
 		ME = this;
 		createRoot(p);
-		root.y = -Const.GRID*3;
-		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
+		// new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
 
 		controller = new dn.heaps.Controller(Boot.ME.s2d);
 		controller.bind(AXIS_LEFT_X_NEG, Key.LEFT);
@@ -21,6 +20,8 @@ class Main extends dn.Process {
 		controller.bind(B, Key.D);
 		controller.bind(A, Key.S);
 		controller.bind(SELECT, Key.R);
+
+		hxd.Timer.skip();
 
 		delayer.addF(function() {
 			Assets.music.playOnGroup(1,true);

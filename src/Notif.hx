@@ -23,8 +23,8 @@ class Notif extends dn.Process {
 		bg.width = tf.textWidth + px*2;
 		bg.height = tf.textHeight + py*2;
 
-		win.x = Std.int( w()/Const.SCALE*0.5 - bg.width*0.5 );
-		win.y = Std.int( h()/Const.SCALE - bg.height - 10 );
+		win.x = Std.int( Game.ME.vp.gameWidPx()*0.5 - bg.width*0.5 );
+		win.y = Std.int( Game.ME.vp.gameHeiPx() - bg.height - 10 );
 		tw.createS(win.x, win.x+200>win.x, 0.2);
 		cd.setS("alive", short?2:4.3);
 	}
@@ -33,7 +33,7 @@ class Notif extends dn.Process {
 		super.update();
 
 		if( !cd.has("alive") && !cd.hasSetS("closing",Const.INFINITE) ) {
-			tw.createS(win.y, win.y+Game.ME.vp.hei*Const.GRID, TEaseIn, 0.3).end( destroy );
+			tw.createS(win.y, win.y+Game.ME.vp.cHei*Const.GRID, TEaseIn, 0.3).end( destroy );
 		}
 	}
 }
