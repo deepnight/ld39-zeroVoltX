@@ -14,7 +14,7 @@ class TutorialTip extends dn.Process {
 		CUR = this;
 
 		if( skipPressed==null )
-			skipKeyPressed = function() return Game.ME.ca.aPressed() || Game.ME.ca.bPressed() || Game.ME.ca.xPressed() || Game.ME.ca.yPressed();
+			skipKeyPressed = function() return Game.ME.ca.aPressed() || Game.ME.ca.bPressed() || Game.ME.ca.xPressed() || Game.ME.ca.yPressed() || Game.ME.ca.isKeyboardPressed(Key.SPACE);
 		else
 			skipKeyPressed = skipPressed;
 
@@ -71,7 +71,7 @@ class TutorialTip extends dn.Process {
 		}
 		else {
 			win.x = Game.ME.lvl.wid*Const.GRID - bg.width - 10;
-			win.y = 10;
+			win.y = Const.TOP_MARGIN + 10;
 		}
 		tw.createS(win.x, win.x+200>win.x, 0.2);
 		tw.createS(pointer.alpha, 0>1, 0.2);
