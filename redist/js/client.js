@@ -5653,14 +5653,14 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 		if(dist >= 6) {
 			if(this.tryToStart("energy")) {
 				Game.ME.pause();
-				new TutorialTip(null,null,"You have a *limited* amount of power. Spread it between you *ship systems* to maximize efficiency.");
+				new TutorialTip(null,null,"*Your engines have limited power*. Spread your energy wisely among the ship systems.");
 			}
 			if(this.tryToStart("lazer")) {
 				Game.ME.pause();
 				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID - 19,"Invest more energy to your *machine gun* by pressing *Y (gamepad) two times*!",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID - 19,"Press *Y button multiple times* to boost *MACHINE GUNS*!",function() {
 						var _this = Game.ME.ca;
 						var k = 3;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5698,7 +5698,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				} else {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID - 19,"Invest more energy to your *machine gun* by pressing *W two times*!",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID - 19,"Press *W multiple times* to boost *MACHINE GUNS*!",function() {
 						var _this = Game.ME.ca;
 						var k = 3;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5740,7 +5740,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID + 16,(_this1.cy + _this1.yr) * Const.GRID,"MOVE power to your *missiles* by pressing *B (gamepad) * multiple times!",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID + 16,(_this1.cy + _this1.yr) * Const.GRID,"Press *B button multiple times* to boost *MISSILES*!",function() {
 						var _this = Game.ME.ca;
 						var k = 1;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5778,7 +5778,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				} else {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID + 16,(_this1.cy + _this1.yr) * Const.GRID,"MOVE power to your *missiles* by pressing *D* multiple times!",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID + 16,(_this1.cy + _this1.yr) * Const.GRID,"Press *D multiple times* to boost *MISSILES*!",function() {
 						var _this = Game.ME.ca;
 						var k = 1;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5820,7 +5820,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID - 17,(_this1.cy + _this1.yr) * Const.GRID,"Accelerate your *shield regen* by moving energy to the shield system: press *X (gamepad)*.",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID - 17,(_this1.cy + _this1.yr) * Const.GRID,"Press *X button multiple times* to boost *SHIELD REGEN*!",function() {
 						var _this = Game.ME.ca;
 						var k = 2;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5858,7 +5858,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				} else {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID - 17,(_this1.cy + _this1.yr) * Const.GRID,"Accelerate your *shield regen* by moving energy to the shield system: press *A*.",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID - 17,(_this1.cy + _this1.yr) * Const.GRID,"Press *A multiple times* to boost *SHIELD REGEN*!",function() {
 						var _this = Game.ME.ca;
 						var k = 2;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5900,7 +5900,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				if(Game.ME.ca.parent.mode == dn_heaps_Mode.Pad) {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID,"You can't have full power in all 3 systems at the same time. Press *A (gamepad)* to balance energy *evenly*.",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID,"Press *A button* to balance energy.",function() {
 						var _this = Game.ME.ca;
 						var k = 0;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
@@ -5938,7 +5938,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 				} else {
 					var _this = Game.ME.hero;
 					var _this1 = Game.ME.hero;
-					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID,"You can't have full power in all 3 systems at the same time. Press *S* to balance energy *evenly*.",function() {
+					new TutorialTip((_this.cx + _this.xr) * Const.GRID,(_this1.cy + _this1.yr) * Const.GRID,"Press *S* to balance energy.",function() {
 						var _this = Game.ME.ca;
 						var k = 0;
 						if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer)) {
