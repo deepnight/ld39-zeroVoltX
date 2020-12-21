@@ -8,6 +8,7 @@ class Main extends dn.Process {
 		super();
 		ME = this;
 		createRoot(p);
+		root.y = -Const.GRID*3;
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
 
 		controller = new dn.heaps.Controller(Boot.ME.s2d);

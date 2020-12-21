@@ -82,13 +82,14 @@ class Game extends dn.Process {
 		scoreTf = new h2d.Text(Assets.font);
 		root.add(scoreTf, Const.DP_UI);
 		scoreTf.x = 5;
+		scoreTf.y = Const.TOP_MARGIN;
 		addScore(0);
 
 		var tf = new h2d.Text(Assets.font);
 		root.add(tf, Const.DP_UI);
 		tf.text = "INSERT COIN";
 		tf.x = 5;
-		tf.y = 15;
+		tf.y = 15 + Const.TOP_MARGIN;
 		createChildProcess(function(p) {
 			if( !cd.hasSetS("coin",0.33) )
 				tf.visible = !tf.visible;
@@ -104,7 +105,7 @@ class Game extends dn.Process {
 		f.horizontalAlign = Middle;
 		f.minWidth = Const.VWID*Const.GRID;
 		scroller.add(f, Const.DP_TOP);
-		f.y = ( lvl.hei-Const.VHEI-3) * Const.GRID;
+		f.y = Std.int( Const.TOP_MARGIN + ( lvl.hei-Const.VHEI-3.5) * Const.GRID );
 
 		var tf = new h2d.Text(Assets.font,f);
 		tf.textColor = 0x496676;

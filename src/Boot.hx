@@ -55,17 +55,17 @@ class Boot extends hxd.App {
 
 	override function onResize() {
 		super.onResize();
+
+		Const.SCALE = dn.heaps.Scaler.bestFit_i(Const.VWID*Const.GRID, Const.VHEI*Const.GRID);
+		if( Const.GIF_MODE )
+			Const.SCALE = 1;
+		mask.setScale(Const.SCALE);
+
 		var w = hxd.Window.getInstance().width;
 		var h = hxd.Window.getInstance().height;
-		if( !Const.GIF_MODE )
-			Const.SCALE = Std.int( M.fmin( w/(Const.VWID*Const.GRID), h/(Const.VHEI*Const.GRID) ) );
-		mask.setScale(Const.SCALE);
-		// cached.width = Const.VWID*Const.GRID;
-		// cached.height = Const.VHEI*Const.GRID;
-		mask.x = Std.int( w*0.5 - (Const.VWID*Const.GRID)*Const.SCALE*0.5 );
-		mask.y = Std.int( h*0.5 - (Const.VHEI*Const.GRID)*Const.SCALE*0.5 );
-		//cached.width = M.ceil( w / Const.SCALE );
-		//cached.height = M.ceil( h / Const.SCALE );
+		mask.x = Std.int( w*0.5 - mask.width*mask.scaleX*0.5 );
+		mask.y = Std.int( h*0.5 - mask.height*mask.scaleY*0.5 );
+
 		dn.Process.resizeAll();
 	}
 
