@@ -4842,13 +4842,13 @@ Level.prototype = $extend(dn_Process.prototype,{
 		}
 		var frames = (sign ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8) * _this1.baseFps;
 		var tmp;
-		if(_this.fastCheck.h.hasOwnProperty(104857600)) {
+		if(_this.fastCheck.h.hasOwnProperty(109051904)) {
 			tmp = true;
 		} else {
 			var frames1 = frames;
 			var onComplete = null;
 			frames1 = Math.floor(frames1 * 1000) / 1000;
-			var cur = _this._getCdObject(104857600);
+			var cur = _this._getCdObject(109051904);
 			if(!(cur != null && frames1 < cur.frames && false)) {
 				if(frames1 <= 0) {
 					if(cur != null) {
@@ -4858,20 +4858,20 @@ Level.prototype = $extend(dn_Process.prototype,{
 						_this.fastCheck.remove(cur.k);
 					}
 				} else {
-					_this.fastCheck.h[104857600] = true;
+					_this.fastCheck.h[109051904] = true;
 					if(cur != null) {
 						cur.frames = frames1;
 					} else {
-						_this.cdList.push(new dn__$Cooldown_CdInst(104857600,frames1));
+						_this.cdList.push(new dn__$Cooldown_CdInst(109051904,frames1));
 					}
 				}
 				if(onComplete != null) {
 					if(frames1 <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(104857600);
+						var cd = _this._getCdObject(109051904);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 104857600 + "): cooldown " + 104857600 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 109051904 + "): cooldown " + 109051904 + " isn't running");
 						}
 						cd.cb = onComplete;
 					}
@@ -5032,6 +5032,7 @@ var Main = function(p) {
 	dn_Process.call(this);
 	Main.ME = this;
 	this.createRoot(p);
+	new dn_heaps_GameFocusHelper(Boot.ME.s2d,Assets.font);
 	this.controller = new dn_heaps_Controller(Boot.ME.s2d);
 	this.controller.bind(17,37);
 	this.controller.bind(18,39);
@@ -5186,13 +5187,13 @@ Notif.prototype = $extend(dn_Process.prototype,{
 			var _this = this.cd;
 			var frames = Const.INFINITE * this.cd.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(92274688)) {
+			if(_this.fastCheck.h.hasOwnProperty(96468992)) {
 				tmp1 = true;
 			} else {
 				var frames1 = frames;
 				var onComplete = null;
 				frames1 = Math.floor(frames1 * 1000) / 1000;
-				var cur = _this._getCdObject(92274688);
+				var cur = _this._getCdObject(96468992);
 				if(!(cur != null && frames1 < cur.frames && false)) {
 					if(frames1 <= 0) {
 						if(cur != null) {
@@ -5202,20 +5203,20 @@ Notif.prototype = $extend(dn_Process.prototype,{
 							_this.fastCheck.remove(cur.k);
 						}
 					} else {
-						_this.fastCheck.h[92274688] = true;
+						_this.fastCheck.h[96468992] = true;
 						if(cur != null) {
 							cur.frames = frames1;
 						} else {
-							_this.cdList.push(new dn__$Cooldown_CdInst(92274688,frames1));
+							_this.cdList.push(new dn__$Cooldown_CdInst(96468992,frames1));
 						}
 					}
 					if(onComplete != null) {
 						if(frames1 <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(92274688);
+							var cd = _this._getCdObject(96468992);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 92274688 + "): cooldown " + 92274688 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 96468992 + "): cooldown " + 96468992 + " isn't running");
 							}
 							cd.cb = onComplete;
 						}
@@ -7423,6 +7424,169 @@ dn_heaps_ControllerAccess.prototype = {
 	}
 	,__class__: dn_heaps_ControllerAccess
 };
+var dn_heaps_GameFocusHelper = function(s,font) {
+	this.showIntro = false;
+	this.suspended = false;
+	dn_Process.call(this);
+	this.font = font;
+	this.scene = s;
+	this.createRoot(this.scene);
+	this.root.set_visible(false);
+	this.showIntro = true;
+	this.suspendGame();
+};
+$hxClasses["dn.heaps.GameFocusHelper"] = dn_heaps_GameFocusHelper;
+dn_heaps_GameFocusHelper.__name__ = "dn.heaps.GameFocusHelper";
+dn_heaps_GameFocusHelper.__super__ = dn_Process;
+dn_heaps_GameFocusHelper.prototype = $extend(dn_Process.prototype,{
+	suspendGame: function() {
+		var _gthis = this;
+		if(this.suspended) {
+			return;
+		}
+		this.suspended = true;
+		dn_heaps_slib_SpriteLib.DISABLE_ANIM_UPDATES = true;
+		var _g = 0;
+		var _g1 = dn_Process.ROOTS;
+		while(_g < _g1.length) {
+			var p = _g1[_g];
+			++_g;
+			if(p != this) {
+				p.pause();
+			}
+		}
+		this.root.set_visible(true);
+		this.root.removeChildren();
+		var bg = new h2d_Bitmap(h2d_Tile.fromColor(this.showIntro ? 2436675 : 0,1,1,this.showIntro ? 1 : 0.6),this.root);
+		var i = new h2d_Interactive(1,1,this.root);
+		var tf = new h2d_Text(this.font,this.root);
+		if(this.showIntro) {
+			tf.set_text("Click anywhere to start");
+		} else {
+			tf.set_text("PAUSED - click anywhere to resume");
+		}
+		this.createChildProcess(function(c) {
+			var y = Math.floor((dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width()) * 0.35 / tf.get_textWidth());
+			var v = 1 > y ? 1 : y;
+			tf.posChanged = true;
+			tf.scaleX = v;
+			tf.posChanged = true;
+			tf.scaleY = v;
+			var v = (dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width()) * 0.5 - tf.get_textWidth() * tf.scaleX * 0.5 | 0;
+			tf.posChanged = true;
+			tf.x = v;
+			var v = (dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height()) * 0.5 - tf.get_textHeight() * tf.scaleY * 0.5 | 0;
+			tf.posChanged = true;
+			tf.y = v;
+			var tmp = dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width();
+			i.width = tmp + 1;
+			var tmp = dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height();
+			i.height = tmp + 1;
+			var v = dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width();
+			bg.posChanged = true;
+			bg.scaleX = v + 1;
+			var v = dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height();
+			bg.posChanged = true;
+			bg.scaleY = v + 1;
+			if(!_gthis.suspended) {
+				c.destroyed = true;
+			}
+		},null,true);
+		var loadingMsg = this.showIntro;
+		i.onPush = function(_) {
+			if(loadingMsg) {
+				tf.set_text("Loading, please wait...");
+				var v = (dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width()) * 0.5 - tf.get_textWidth() * tf.scaleX * 0.5 | 0;
+				tf.posChanged = true;
+				tf.x = v;
+				var v = (dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height()) * 0.5 - tf.get_textHeight() * tf.scaleY * 0.5 | 0;
+				tf.posChanged = true;
+				tf.y = v;
+				_gthis.delayer.addS(null,$bind(_gthis,_gthis.resumeGame),1);
+			} else {
+				_gthis.resumeGame();
+			}
+			if(i != null && i.parent != null) {
+				i.parent.removeChild(i);
+			}
+		};
+		this.showIntro = false;
+	}
+	,resumeGame: function() {
+		var _gthis = this;
+		if(!this.suspended) {
+			return;
+		}
+		dn_heaps_slib_SpriteLib.DISABLE_ANIM_UPDATES = false;
+		this.delayer.addF(null,function() {
+			_gthis.root.set_visible(false);
+			_gthis.root.removeChildren();
+		},1);
+		this.suspended = false;
+		var _g = 0;
+		var _g1 = dn_Process.ROOTS;
+		while(_g < _g1.length) {
+			var p = _g1[_g];
+			++_g;
+			if(p != this) {
+				p.resume();
+			}
+		}
+	}
+	,update: function() {
+		dn_Process.prototype.update.call(this);
+		if(this.suspended) {
+			this.scene.over(this.root);
+		}
+		var _this = this.cd;
+		var frames = 0.2 * this.cd.baseFps;
+		var tmp;
+		if(_this.fastCheck.h.hasOwnProperty(62914560)) {
+			tmp = true;
+		} else {
+			var frames1 = frames;
+			var onComplete = null;
+			frames1 = Math.floor(frames1 * 1000) / 1000;
+			var cur = _this._getCdObject(62914560);
+			if(!(cur != null && frames1 < cur.frames && false)) {
+				if(frames1 <= 0) {
+					if(cur != null) {
+						HxOverrides.remove(_this.cdList,cur);
+						cur.frames = 0;
+						cur.cb = null;
+						_this.fastCheck.remove(cur.k);
+					}
+				} else {
+					_this.fastCheck.h[62914560] = true;
+					if(cur != null) {
+						cur.frames = frames1;
+					} else {
+						_this.cdList.push(new dn__$Cooldown_CdInst(62914560,frames1));
+					}
+				}
+				if(onComplete != null) {
+					if(frames1 <= 0) {
+						onComplete();
+					} else {
+						var cd = _this._getCdObject(62914560);
+						if(cd == null) {
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 62914560 + "): cooldown " + 62914560 + " isn't running");
+						}
+						cd.cb = onComplete;
+					}
+				}
+			}
+			tmp = false;
+		}
+		if(!tmp) {
+			var w = hxd_Window.getInstance();
+			if(!w.get_isFocused() && !this.suspended) {
+				this.suspendGame();
+			}
+		}
+	}
+	,__class__: dn_heaps_GameFocusHelper
+});
 var hxd_Pad = function() {
 	this.rawYAxis = 0.;
 	this.rawXAxis = 0.;
@@ -7961,13 +8125,13 @@ dn_heaps_Emitter.prototype = {
 			var _this = this.cd;
 			var frames = this.tickS * this.cd.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(100663296)) {
+			if(_this.fastCheck.h.hasOwnProperty(104857600)) {
 				tmp1 = true;
 			} else {
 				var frames1 = frames;
 				var onComplete = null;
 				frames1 = Math.floor(frames1 * 1000) / 1000;
-				var cur = _this._getCdObject(100663296);
+				var cur = _this._getCdObject(104857600);
 				if(!(cur != null && frames1 < cur.frames && false)) {
 					if(frames1 <= 0) {
 						if(cur != null) {
@@ -7977,20 +8141,20 @@ dn_heaps_Emitter.prototype = {
 							_this.fastCheck.remove(cur.k);
 						}
 					} else {
-						_this.fastCheck.h[100663296] = true;
+						_this.fastCheck.h[104857600] = true;
 						if(cur != null) {
 							cur.frames = frames1;
 						} else {
-							_this.cdList.push(new dn__$Cooldown_CdInst(100663296,frames1));
+							_this.cdList.push(new dn__$Cooldown_CdInst(104857600,frames1));
 						}
 					}
 					if(onComplete != null) {
 						if(frames1 <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(100663296);
+							var cd = _this._getCdObject(104857600);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 100663296 + "): cooldown " + 100663296 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 104857600 + "): cooldown " + 104857600 + " isn't running");
 							}
 							cd.cb = onComplete;
 						}
@@ -8005,7 +8169,7 @@ dn_heaps_Emitter.prototype = {
 		if(tmp) {
 			this.onUpdate();
 		}
-		if(!this.permanent && !this.cd.fastCheck.h.hasOwnProperty(96468992)) {
+		if(!this.permanent && !this.cd.fastCheck.h.hasOwnProperty(100663296)) {
 			this.dispose();
 		}
 	}
@@ -9286,6 +9450,9 @@ h2d_Object.prototype = {
 			++_g;
 			s.setParentContainer(c);
 		}
+	}
+	,removeChildren: function() {
+		while(this.children.length > 0) this.removeChild(this.children[0]);
 	}
 	,remove: function() {
 		if(this.parent != null) {
@@ -11599,7 +11766,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			allowLower = true;
 		}
 		frames = Math.floor(frames * 1000) / 1000;
-		var cur = _this._getCdObject(67108864);
+		var cur = _this._getCdObject(71303168);
 		if(!(cur != null && frames < cur.frames && !allowLower)) {
 			if(frames <= 0) {
 				if(cur != null) {
@@ -11609,20 +11776,20 @@ en_Hero.prototype = $extend(Entity.prototype,{
 					_this.fastCheck.remove(cur.k);
 				}
 			} else {
-				_this.fastCheck.h[67108864] = true;
+				_this.fastCheck.h[71303168] = true;
 				if(cur != null) {
 					cur.frames = frames;
 				} else {
-					_this.cdList.push(new dn__$Cooldown_CdInst(67108864,frames));
+					_this.cdList.push(new dn__$Cooldown_CdInst(71303168,frames));
 				}
 			}
 			if(onComplete != null) {
 				if(frames <= 0) {
 					onComplete();
 				} else {
-					var cd = _this._getCdObject(67108864);
+					var cd = _this._getCdObject(71303168);
 					if(cd == null) {
-						throw haxe_Exception.thrown("cannot bind onComplete(" + 67108864 + "): cooldown " + 67108864 + " isn't running");
+						throw haxe_Exception.thrown("cannot bind onComplete(" + 71303168 + "): cooldown " + 71303168 + " isn't running");
 					}
 					cd.cb = onComplete;
 				}
@@ -11674,13 +11841,13 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			var _this = this.cd;
 			var frames = 0.1 * this.cd.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(71303168)) {
+			if(_this.fastCheck.h.hasOwnProperty(75497472)) {
 				tmp1 = true;
 			} else {
 				var frames1 = frames;
 				var onComplete = null;
 				frames1 = Math.floor(frames1 * 1000) / 1000;
-				var cur = _this._getCdObject(71303168);
+				var cur = _this._getCdObject(75497472);
 				if(!(cur != null && frames1 < cur.frames && false)) {
 					if(frames1 <= 0) {
 						if(cur != null) {
@@ -11690,20 +11857,20 @@ en_Hero.prototype = $extend(Entity.prototype,{
 							_this.fastCheck.remove(cur.k);
 						}
 					} else {
-						_this.fastCheck.h[71303168] = true;
+						_this.fastCheck.h[75497472] = true;
 						if(cur != null) {
 							cur.frames = frames1;
 						} else {
-							_this.cdList.push(new dn__$Cooldown_CdInst(71303168,frames1));
+							_this.cdList.push(new dn__$Cooldown_CdInst(75497472,frames1));
 						}
 					}
 					if(onComplete != null) {
 						if(frames1 <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(71303168);
+							var cd = _this._getCdObject(75497472);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 71303168 + "): cooldown " + 71303168 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 75497472 + "): cooldown " + 75497472 + " isn't running");
 							}
 							cd.cb = onComplete;
 						}
@@ -11770,7 +11937,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			_this.y = (c >> 8 & 255) / 255;
 			_this.z = (c & 255) / 255;
 			_this.w = (c >>> 24) / 255;
-			if(!this.cd.fastCheck.h.hasOwnProperty(67108864) && e.get_colorAdd() != null) {
+			if(!this.cd.fastCheck.h.hasOwnProperty(71303168) && e.get_colorAdd() != null) {
 				e.get_colorAdd().x *= 0.6;
 				e.get_colorAdd().y *= 0.6;
 				e.get_colorAdd().z *= 0.6;
@@ -11884,7 +12051,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 		var _gthis = this;
 		Entity.prototype.update.call(this);
 		var s = en_Hero.MOUSE ? 0.13 : 0.07;
-		if(!this.cd.fastCheck.h.hasOwnProperty(62914560)) {
+		if(!this.cd.fastCheck.h.hasOwnProperty(67108864)) {
 			var _this = Game.ME;
 			var tmp;
 			var _this1 = _this.vp;
@@ -12615,13 +12782,13 @@ en_Hero.prototype = $extend(Entity.prototype,{
 		var _this = this.cd;
 		var frames = 0.08 * this.cd.baseFps;
 		var tmp;
-		if(_this.fastCheck.h.hasOwnProperty(83886080)) {
+		if(_this.fastCheck.h.hasOwnProperty(88080384)) {
 			tmp = true;
 		} else {
 			var frames1 = frames;
 			var onComplete = null;
 			frames1 = Math.floor(frames1 * 1000) / 1000;
-			var cur = _this._getCdObject(83886080);
+			var cur = _this._getCdObject(88080384);
 			if(!(cur != null && frames1 < cur.frames && false)) {
 				if(frames1 <= 0) {
 					if(cur != null) {
@@ -12631,20 +12798,20 @@ en_Hero.prototype = $extend(Entity.prototype,{
 						_this.fastCheck.remove(cur.k);
 					}
 				} else {
-					_this.fastCheck.h[83886080] = true;
+					_this.fastCheck.h[88080384] = true;
 					if(cur != null) {
 						cur.frames = frames1;
 					} else {
-						_this.cdList.push(new dn__$Cooldown_CdInst(83886080,frames1));
+						_this.cdList.push(new dn__$Cooldown_CdInst(88080384,frames1));
 					}
 				}
 				if(onComplete != null) {
 					if(frames1 <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(83886080);
+						var cd = _this._getCdObject(88080384);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 83886080 + "): cooldown " + 83886080 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 88080384 + "): cooldown " + 88080384 + " isn't running");
 						}
 						cd.cb = onComplete;
 					}
@@ -13694,7 +13861,7 @@ var en_bu_Homing = function(e,dmgBonus) {
 		allowLower = true;
 	}
 	frames = Math.floor(frames * 1000) / 1000;
-	var cur = _this._getCdObject(75497472);
+	var cur = _this._getCdObject(79691776);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -13704,20 +13871,20 @@ var en_bu_Homing = function(e,dmgBonus) {
 				_this.fastCheck.remove(cur.k);
 			}
 		} else {
-			_this.fastCheck.h[75497472] = true;
+			_this.fastCheck.h[79691776] = true;
 			if(cur != null) {
 				cur.frames = frames;
 			} else {
-				_this.cdList.push(new dn__$Cooldown_CdInst(75497472,frames));
+				_this.cdList.push(new dn__$Cooldown_CdInst(79691776,frames));
 			}
 		}
 		if(onComplete != null) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(75497472);
+				var cd = _this._getCdObject(79691776);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 75497472 + "): cooldown " + 75497472 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 79691776 + "): cooldown " + 79691776 + " isn't running");
 				}
 				cd.cb = onComplete;
 			}
@@ -13849,7 +14016,7 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 			var e = _g1[_g];
 			++_g;
 			if(!e.out) {
-				e.score += e.v.cd.fastCheck.h.hasOwnProperty(79691776) ? -1 : 0;
+				e.score += e.v.cd.fastCheck.h.hasOwnProperty(83886080) ? -1 : 0;
 			}
 		}
 		var _g = 0;
@@ -13871,7 +14038,7 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 				allowLower = true;
 			}
 			frames = Math.floor(frames * 1000) / 1000;
-			var cur = _this._getCdObject(79691776);
+			var cur = _this._getCdObject(83886080);
 			if(!(cur != null && frames < cur.frames && !allowLower)) {
 				if(frames <= 0) {
 					if(cur != null) {
@@ -13881,20 +14048,20 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 						_this.fastCheck.remove(cur.k);
 					}
 				} else {
-					_this.fastCheck.h[79691776] = true;
+					_this.fastCheck.h[83886080] = true;
 					if(cur != null) {
 						cur.frames = frames;
 					} else {
-						_this.cdList.push(new dn__$Cooldown_CdInst(79691776,frames));
+						_this.cdList.push(new dn__$Cooldown_CdInst(83886080,frames));
 					}
 				}
 				if(onComplete != null) {
 					if(frames <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(79691776);
+						var cd = _this._getCdObject(83886080);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 79691776 + "): cooldown " + 79691776 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 83886080 + "): cooldown " + 83886080 + " isn't running");
 						}
 						cd.cb = onComplete;
 					}
@@ -13945,7 +14112,7 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 	}
 	,update: function() {
 		en_Bullet.prototype.update.call(this);
-		if(!this.cd.fastCheck.h.hasOwnProperty(75497472)) {
+		if(!this.cd.fastCheck.h.hasOwnProperty(79691776)) {
 			Game.ME.fx.tail(this.lastX,this.lastY,(this.cx + this.xr) * Const.GRID,(this.cy + this.yr) * Const.GRID,16777215);
 		}
 		this.lastX = (this.cx + this.xr) * Const.GRID;
@@ -13963,13 +14130,13 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 			}
 			var frames = (sign ? (0.4 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.4 + Math.random() * 0.4) * _this1.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(88080384)) {
+			if(_this.fastCheck.h.hasOwnProperty(92274688)) {
 				tmp1 = true;
 			} else {
 				var frames1 = frames;
 				var onComplete = null;
 				frames1 = Math.floor(frames1 * 1000) / 1000;
-				var cur = _this._getCdObject(88080384);
+				var cur = _this._getCdObject(92274688);
 				if(!(cur != null && frames1 < cur.frames && false)) {
 					if(frames1 <= 0) {
 						if(cur != null) {
@@ -13979,20 +14146,20 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 							_this.fastCheck.remove(cur.k);
 						}
 					} else {
-						_this.fastCheck.h[88080384] = true;
+						_this.fastCheck.h[92274688] = true;
 						if(cur != null) {
 							cur.frames = frames1;
 						} else {
-							_this.cdList.push(new dn__$Cooldown_CdInst(88080384,frames1));
+							_this.cdList.push(new dn__$Cooldown_CdInst(92274688,frames1));
 						}
 					}
 					if(onComplete != null) {
 						if(frames1 <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(88080384);
+							var cd = _this._getCdObject(92274688);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 88080384 + "): cooldown " + 88080384 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 92274688 + "): cooldown " + 92274688 + " isn't running");
 							}
 							cd.cb = onComplete;
 						}
@@ -14007,7 +14174,7 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 		if(tmp) {
 			this.pickTarget();
 		}
-		if(!this.cd.fastCheck.h.hasOwnProperty(75497472)) {
+		if(!this.cd.fastCheck.h.hasOwnProperty(79691776)) {
 			this.precision -= 0.01;
 			var x = this.precision - 0.01;
 			this.precision = x < 0 ? 0 : x > 1 ? 1 : x;
@@ -18997,6 +19164,17 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			}
 		}
 	}
+	,removeChildren: function() {
+		var k = 0;
+		while(this.children.length > k) {
+			var c = this.children[k];
+			if(c == this.background || c == this.interactive || c == this.debugGraphics) {
+				++k;
+			} else {
+				this.removeChild(c);
+			}
+		}
+	}
 	,sync: function(ctx) {
 		if(!this.isConstraint && (this.fillWidth || this.fillHeight)) {
 			var scene = ctx.scene;
@@ -23159,6 +23337,35 @@ h2d_Layers.prototype = $extend(h2d_Object.prototype,{
 					this.parentContainer.contentChanged(this);
 				}
 				break;
+			}
+		}
+	}
+	,over: function(s) {
+		var _g = 0;
+		var _g1 = this.children.length;
+		while(_g < _g1) {
+			var i = _g++;
+			if(this.children[i] == s) {
+				var _g2 = 0;
+				var _g3 = this.layersIndexes;
+				while(_g2 < _g3.length) {
+					var l = _g3[_g2];
+					++_g2;
+					if(l > i) {
+						var _g4 = i;
+						var _g5 = l - 1;
+						while(_g4 < _g5) {
+							var p = _g4++;
+							this.children[p] = this.children[p + 1];
+						}
+						this.children[l - 1] = s;
+						if(s.allocated) {
+							s.onHierarchyMoved(false);
+						}
+						return;
+					}
+				}
+				return;
 			}
 		}
 	}
@@ -42267,6 +42474,9 @@ hxd_Window.prototype = {
 		this.event(new hxd_Event(b ? hxd_EventKind.EFocus : hxd_EventKind.EFocusLost));
 		this.focused = b;
 	}
+	,get_isFocused: function() {
+		return this.focused;
+	}
 	,set_displayMode: function(m) {
 		var doc = window.document;
 		var elt = doc.documentElement;
@@ -58763,6 +58973,8 @@ Const.DP_TOP = Const._inc++;
 Entity.UNIQ = 0;
 Entity.ALL = [];
 Entity.GC = [];
+dn_Process.CUSTOM_STAGE_WIDTH = -1;
+dn_Process.CUSTOM_STAGE_HEIGHT = -1;
 dn_Process.UNIQ_ID = 0;
 dn_Process.ROOTS = [];
 Game.CHECKPOINT = -1.;
@@ -58787,7 +58999,7 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-dn_Cooldown.__meta__ = { obj : { indexes : ["test","noCrash","lock","lazer","shoot","spread","alive","charge","coin","overheat","onGroundRecent","immune","pausePlan","flash","pop","lockControl","jaugeBlink","immBlink","launch","targeted","turn","changeTarget","closing","emitterLife","emitterTick","cloud"]}};
+dn_Cooldown.__meta__ = { obj : { indexes : ["test","noCrash","lock","lazer","shoot","spread","alive","charge","coin","overheat","onGroundRecent","immune","pausePlan","flash","pop","check","lockControl","jaugeBlink","immBlink","launch","targeted","turn","changeTarget","closing","emitterLife","emitterTick","cloud"]}};
 dn_Tweenie.DEFAULT_DURATION = 1000.0;
 dn_heaps_Controller.UNIQ_ID = 0;
 dn_heaps_Controller.LONG_PRESS = 0.35;

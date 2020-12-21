@@ -52,89 +52,6 @@ hxd_res_Loader.prototype = {
 	}
 	,__class__: hxd_res_Loader
 };
-var haxe_Exception = function(message,previous,native) {
-	Error.call(this,message);
-	this.message = message;
-	this.__previousException = previous;
-	this.__nativeException = native != null ? native : this;
-};
-$hxClasses["haxe.Exception"] = haxe_Exception;
-haxe_Exception.__name__ = "haxe.Exception";
-haxe_Exception.caught = function(value) {
-	if(((value) instanceof haxe_Exception)) {
-		return value;
-	} else if(((value) instanceof Error)) {
-		return new haxe_Exception(value.message,null,value);
-	} else {
-		return new haxe_ValueException(value,null,value);
-	}
-};
-haxe_Exception.thrown = function(value) {
-	if(((value) instanceof haxe_Exception)) {
-		return value.get_native();
-	} else if(((value) instanceof Error)) {
-		return value;
-	} else {
-		var e = new haxe_ValueException(value);
-		return e;
-	}
-};
-haxe_Exception.__super__ = Error;
-haxe_Exception.prototype = $extend(Error.prototype,{
-	unwrap: function() {
-		return this.__nativeException;
-	}
-	,get_native: function() {
-		return this.__nativeException;
-	}
-	,__class__: haxe_Exception
-});
-var haxe_ValueException = function(value,previous,native) {
-	haxe_Exception.call(this,String(value),previous,native);
-	this.value = value;
-};
-$hxClasses["haxe.ValueException"] = haxe_ValueException;
-haxe_ValueException.__name__ = "haxe.ValueException";
-haxe_ValueException.__super__ = haxe_Exception;
-haxe_ValueException.prototype = $extend(haxe_Exception.prototype,{
-	unwrap: function() {
-		return this.value;
-	}
-	,__class__: haxe_ValueException
-});
-var haxe_IMap = function() { };
-$hxClasses["haxe.IMap"] = haxe_IMap;
-haxe_IMap.__name__ = "haxe.IMap";
-haxe_IMap.__isInterface__ = true;
-var haxe_ds_IntMap = function() {
-	this.h = { };
-};
-$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
-haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
-haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
-haxe_ds_IntMap.prototype = {
-	remove: function(key) {
-		if(!this.h.hasOwnProperty(key)) {
-			return false;
-		}
-		delete(this.h[key]);
-		return true;
-	}
-	,keys: function() {
-		var a = [];
-		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(key | 0);
-		return new haxe_iterators_ArrayIterator(a);
-	}
-	,iterator: function() {
-		return { ref : this.h, it : this.keys(), hasNext : function() {
-			return this.it.hasNext();
-		}, next : function() {
-			var i = this.it.next();
-			return this.ref[i];
-		}};
-	}
-	,__class__: haxe_ds_IntMap
-};
 var dn_heaps_Sfx = function(s) {
 	this.sound = s;
 	this.volume = 1;
@@ -1634,27 +1551,27 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			best.reset(sb,t,x,y);
 			p = best;
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.a = sign1 ? (0.7 + Math.random() * 0.30000000000000004) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.30000000000000004;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		p.a = sign ? (0.7 + Math.random() * 0.30000000000000004) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.30000000000000004;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.ds = sign1 ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
+		p.ds = sign ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
 		p.dsFrict = 0.98;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.playAnimAndKill(Assets.tiles,"hit",0.4 * (sign1 ? (0.6 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.4));
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		p.playAnimAndKill(Assets.tiles,"hit",0.4 * (sign ? (0.6 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.4));
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.rotation = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+		p.rotation = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
 	}
 	,explode: function(x,y) {
 		var n = 4;
@@ -1663,16 +1580,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var t = Assets.tiles.getTileRandom("smoke");
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var x1 = x + (sign ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
 			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var x1 = x + (sign1 ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
-			}
-			var y1 = y + (sign11 ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
+			var y1 = y + (sign1 ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -1685,9 +1602,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -1699,27 +1616,27 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.playAnimAndKill(Assets.tiles,"smoke",0.12 * (sign12 ? (0.85 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.4));
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.playAnimAndKill(Assets.tiles,"smoke",0.12 * (sign2 ? (0.85 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.4));
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.rotation = sign13 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.rotation = sign3 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.ds = sign14 ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
+			p.ds = sign4 ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
 			p.dsFrict = 0.99;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			var d = 0.3 * i / n - (sign15 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.3 * i / n - (sign5 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -1734,16 +1651,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var t = Assets.tiles.getTileRandom("explode");
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var x1 = x + (sign ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
 			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var x1 = x + (sign1 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
-			}
-			var y1 = y + (sign11 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+			var y1 = y + (sign1 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.topNormalSb;
 			var p;
@@ -1756,9 +1673,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -1770,21 +1687,21 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.playAnimAndKill(Assets.tiles,"explode",0.6 * (sign12 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.playAnimAndKill(Assets.tiles,"explode",0.6 * (sign2 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.rotation = sign13 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.rotation = sign3 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			var d = 0.3 * i / n - (sign14 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.3 * i / n - (sign4 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -1799,16 +1716,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var t = Assets.tiles.getTileRandom("explode");
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var x1 = x + (sign ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
 			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var x1 = x + (sign1 ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
-			}
-			var y1 = y + (sign11 ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
+			var y1 = y + (sign1 ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -1821,9 +1738,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -1835,26 +1752,26 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.playAnimAndKill(Assets.tiles,"explode",0.3 * (sign12 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.playAnimAndKill(Assets.tiles,"explode",0.3 * (sign2 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.scaleX = p.scaleY = sign13 ? (0.4 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.4 + Math.random() * 0.19999999999999996;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.scaleX = p.scaleY = sign3 ? (0.4 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.4 + Math.random() * 0.19999999999999996;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.rotation = sign14 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			p.rotation = sign4 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			var d = 0.2 + 0.3 * i / n - (sign15 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.2 + 0.3 * i / n - (sign5 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -1863,31 +1780,31 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			p.delayF = d1;
 			p.set_lifeS(3);
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var n = sign1 ? (6 + Std.random(5)) * (Std.random(2) * 2 - 1) : 6 + Std.random(5);
+		var n = sign ? (6 + Std.random(5)) * (Std.random(2) * 2 - 1) : 6 + Std.random(5);
 		var _g = 0;
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = null;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
+			}
+			var a = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var t = Assets.tiles.getTileRandom("line");
+			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var a = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var t = Assets.tiles.getTileRandom("line");
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
+			var x1 = x + (sign1 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+			var sign2 = true;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			var x1 = x + (sign11 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
-			var sign12 = true;
-			if(sign12 == null) {
-				sign12 = false;
-			}
-			var y1 = y + (sign12 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+			var y1 = y + (sign2 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -1900,9 +1817,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -1914,40 +1831,40 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.colorAnimS(16776960,6240200,sign13 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5);
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.colorAnimS(16776960,6240200,sign3 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5);
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			var spd = sign14 ? (1.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 1.5 + Math.random() * 0.5;
+			var spd = sign4 ? (1.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 1.5 + Math.random() * 0.5;
 			var a1 = Math.atan2(y - p.y,x - p.x);
 			p.dx = -Math.cos(a1) * spd;
 			p.dy = -Math.sin(a1) * spd;
 			p.rotation = Math.atan2(p.dy,p.dx);
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.scaleX = sign15 ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8;
-			var sign16 = null;
-			if(sign16 == null) {
-				sign16 = false;
+			p.scaleX = sign5 ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8;
+			var sign6 = null;
+			if(sign6 == null) {
+				sign6 = false;
 			}
-			p.scaleXMul = sign16 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
-			var sign17 = null;
-			if(sign17 == null) {
-				sign17 = false;
+			p.scaleXMul = sign6 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
+			var sign7 = null;
+			if(sign7 == null) {
+				sign7 = false;
 			}
-			p.frictX = p.frictY = sign17 ? (0.92 + Math.random() * 0.049999999999999933) * (Std.random(2) * 2 - 1) : 0.92 + Math.random() * 0.049999999999999933;
-			var sign18 = null;
-			if(sign18 == null) {
-				sign18 = false;
+			p.frictX = p.frictY = sign7 ? (0.92 + Math.random() * 0.049999999999999933) * (Std.random(2) * 2 - 1) : 0.92 + Math.random() * 0.049999999999999933;
+			var sign8 = null;
+			if(sign8 == null) {
+				sign8 = false;
 			}
-			var d = 0.15 * i / n - (sign18 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.15 * i / n - (sign8 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -1955,31 +1872,31 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			p.visible = !p.killed && d1 <= 0;
 			p.delayF = d1;
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var n = sign1 ? (4 + Std.random(5)) * (Std.random(2) * 2 - 1) : 4 + Std.random(5);
+		var n = sign ? (4 + Std.random(5)) * (Std.random(2) * 2 - 1) : 4 + Std.random(5);
 		var _g = 0;
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = null;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
+			}
+			var a = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var t = Assets.tiles.getTileRandom("expBall");
+			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var a = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var t = Assets.tiles.getTileRandom("expBall");
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
+			var x1 = x + (sign1 ? Math.random() * 3 * (Std.random(2) * 2 - 1) : Math.random() * 3);
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			var x1 = x + (sign11 ? Math.random() * 3 * (Std.random(2) * 2 - 1) : Math.random() * 3);
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
-			}
-			var y1 = y - (sign12 ? (3 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 3 + Math.random() * 5);
+			var y1 = y - (sign2 ? (3 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 3 + Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -1992,9 +1909,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2006,35 +1923,35 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			var spd = sign13 ? (2 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 2;
+			var spd = sign3 ? (2 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 2;
 			var a1 = Math.atan2(y - p.y,x - p.x);
 			p.dx = -Math.cos(a1) * spd;
 			p.dy = -Math.sin(a1) * spd;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.scaleX = p.scaleY = sign14 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			p.scaleX = p.scaleY = sign4 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.scaleMul = sign15 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
+			p.scaleMul = sign5 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
 			p.frictX = p.frictY = 0.97;
-			var sign16 = null;
-			if(sign16 == null) {
-				sign16 = false;
+			var sign6 = null;
+			if(sign6 == null) {
+				sign6 = false;
 			}
-			p.gy = sign16 ? (0.05 + Math.random() * 0.05) * (Std.random(2) * 2 - 1) : 0.05 + Math.random() * 0.05;
-			var sign17 = null;
-			if(sign17 == null) {
-				sign17 = false;
+			p.gy = sign6 ? (0.05 + Math.random() * 0.05) * (Std.random(2) * 2 - 1) : 0.05 + Math.random() * 0.05;
+			var sign7 = null;
+			if(sign7 == null) {
+				sign7 = false;
 			}
-			var d = 0.3 * i / n - (sign17 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.3 * i / n - (sign7 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -2112,16 +2029,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var t = Assets.tiles.getTileRandom("smoke");
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var x1 = x + (sign ? (2 + Math.random() * 16) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 16);
 			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var x1 = x + (sign1 ? (2 + Math.random() * 16) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 16);
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
-			}
-			var y1 = y + (sign11 ? (2 + Math.random() * 16) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 16);
+			var y1 = y + (sign1 ? (2 + Math.random() * 16) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 16);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -2134,9 +2051,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2148,27 +2065,27 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.playAnimAndKill(Assets.tiles,"smoke",0.08 * (sign12 ? (0.85 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.4));
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.playAnimAndKill(Assets.tiles,"smoke",0.08 * (sign2 ? (0.85 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.4));
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.rotation = sign13 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.rotation = sign3 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.ds = sign14 ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
+			p.ds = sign4 ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
 			p.dsFrict = 0.99;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			var d = 0.6 * i / n - (sign15 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.6 * i / n - (sign5 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -2183,16 +2100,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var t = Assets.tiles.getTileRandom("explode");
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var x1 = x + (sign ? Math.random() * 15 * (Std.random(2) * 2 - 1) : Math.random() * 15);
 			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var x1 = x + (sign1 ? Math.random() * 15 * (Std.random(2) * 2 - 1) : Math.random() * 15);
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
-			}
-			var y1 = y + (sign11 ? Math.random() * 15 * (Std.random(2) * 2 - 1) : Math.random() * 15);
+			var y1 = y + (sign1 ? Math.random() * 15 * (Std.random(2) * 2 - 1) : Math.random() * 15);
 			var _this = this.pool;
 			var sb = this.topNormalSb;
 			var p;
@@ -2205,9 +2122,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2219,32 +2136,32 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.playAnimAndKill(Assets.tiles,"explode",0.3 * (sign12 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.playAnimAndKill(Assets.tiles,"explode",0.3 * (sign2 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.rotation = sign13 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.rotation = sign3 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			var d = i / n - (sign14 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = i / n - (sign4 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
 			}
 			p.visible = !p.killed && d1 <= 0;
 			p.delayF = d1;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.ds = sign15 ? (0.02 + Math.random() * 0.0099999999999999985) * (Std.random(2) * 2 - 1) : 0.02 + Math.random() * 0.0099999999999999985;
+			p.ds = sign5 ? (0.02 + Math.random() * 0.0099999999999999985) * (Std.random(2) * 2 - 1) : 0.02 + Math.random() * 0.0099999999999999985;
 			p.dsFrict = 0.98;
 			p.set_lifeS(10);
 		}
@@ -2254,16 +2171,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var t = Assets.tiles.getTileRandom("explode");
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var x1 = x + (sign ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
 			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var x1 = x + (sign1 ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
-			}
-			var y1 = y + (sign11 ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
+			var y1 = y + (sign1 ? (8 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 8 + Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -2276,9 +2193,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2290,26 +2207,26 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.playAnimAndKill(Assets.tiles,"explode",0.3 * (sign12 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.playAnimAndKill(Assets.tiles,"explode",0.3 * (sign2 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.scaleX = p.scaleY = sign13 ? (0.4 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.4 + Math.random() * 0.19999999999999996;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.scaleX = p.scaleY = sign3 ? (0.4 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.4 + Math.random() * 0.19999999999999996;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.rotation = sign14 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			p.rotation = sign4 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			var d = 0.2 + i / n - (sign15 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.2 + i / n - (sign5 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -2318,31 +2235,31 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			p.delayF = d1;
 			p.set_lifeS(10);
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var n = sign1 ? (30 + Std.random(11)) * (Std.random(2) * 2 - 1) : 30 + Std.random(11);
+		var n = sign ? (30 + Std.random(11)) * (Std.random(2) * 2 - 1) : 30 + Std.random(11);
 		var _g = 0;
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = null;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
+			}
+			var a = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var t = Assets.tiles.getTileRandom("line");
+			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var a = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var t = Assets.tiles.getTileRandom("line");
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
+			var x1 = x + (sign1 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+			var sign2 = true;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			var x1 = x + (sign11 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
-			var sign12 = true;
-			if(sign12 == null) {
-				sign12 = false;
-			}
-			var y1 = y + (sign12 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+			var y1 = y + (sign2 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -2355,9 +2272,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2369,40 +2286,40 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.colorAnimS(16776960,6240200,sign13 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5);
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			p.colorAnimS(16776960,6240200,sign3 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5);
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			var spd = sign14 ? (1.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 1.5 + Math.random() * 0.5;
+			var spd = sign4 ? (1.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 1.5 + Math.random() * 0.5;
 			var a1 = Math.atan2(y - p.y,x - p.x);
 			p.dx = -Math.cos(a1) * spd;
 			p.dy = -Math.sin(a1) * spd;
 			p.rotation = Math.atan2(p.dy,p.dx);
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.scaleX = sign15 ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8;
-			var sign16 = null;
-			if(sign16 == null) {
-				sign16 = false;
+			p.scaleX = sign5 ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8;
+			var sign6 = null;
+			if(sign6 == null) {
+				sign6 = false;
 			}
-			p.scaleXMul = sign16 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
-			var sign17 = null;
-			if(sign17 == null) {
-				sign17 = false;
+			p.scaleXMul = sign6 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
+			var sign7 = null;
+			if(sign7 == null) {
+				sign7 = false;
 			}
-			p.frictX = p.frictY = sign17 ? (0.92 + Math.random() * 0.049999999999999933) * (Std.random(2) * 2 - 1) : 0.92 + Math.random() * 0.049999999999999933;
-			var sign18 = null;
-			if(sign18 == null) {
-				sign18 = false;
+			p.frictX = p.frictY = sign7 ? (0.92 + Math.random() * 0.049999999999999933) * (Std.random(2) * 2 - 1) : 0.92 + Math.random() * 0.049999999999999933;
+			var sign8 = null;
+			if(sign8 == null) {
+				sign8 = false;
 			}
-			var d = 0.15 * i / n - (sign18 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.15 * i / n - (sign8 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -2410,31 +2327,31 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			p.visible = !p.killed && d1 <= 0;
 			p.delayF = d1;
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var n = sign1 ? (40 + Std.random(6)) * (Std.random(2) * 2 - 1) : 40 + Std.random(6);
+		var n = sign ? (40 + Std.random(6)) * (Std.random(2) * 2 - 1) : 40 + Std.random(6);
 		var _g = 0;
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = null;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
+			}
+			var a = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+			var t = Assets.tiles.getTileRandom("expBall");
+			var sign1 = true;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var a = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-			var t = Assets.tiles.getTileRandom("expBall");
-			var sign11 = true;
-			if(sign11 == null) {
-				sign11 = false;
+			var x1 = x + (sign1 ? Math.random() * 3 * (Std.random(2) * 2 - 1) : Math.random() * 3);
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			var x1 = x + (sign11 ? Math.random() * 3 * (Std.random(2) * 2 - 1) : Math.random() * 3);
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
-			}
-			var y1 = y - (sign12 ? (3 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 3 + Math.random() * 5);
+			var y1 = y - (sign2 ? (3 + Math.random() * 5) * (Std.random(2) * 2 - 1) : 3 + Math.random() * 5);
 			var _this = this.pool;
 			var sb = this.bgNormalSb;
 			var p;
@@ -2447,9 +2364,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2461,35 +2378,35 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			var spd = sign13 ? (2 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 2;
+			var spd = sign3 ? (2 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 2;
 			var a1 = Math.atan2(y - p.y,x - p.x);
 			p.dx = -Math.cos(a1) * spd;
 			p.dy = -Math.sin(a1) * spd;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.scaleX = p.scaleY = sign14 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			p.scaleX = p.scaleY = sign4 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.scaleMul = sign15 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
+			p.scaleMul = sign5 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
 			p.frictX = p.frictY = 0.97;
-			var sign16 = null;
-			if(sign16 == null) {
-				sign16 = false;
+			var sign6 = null;
+			if(sign6 == null) {
+				sign6 = false;
 			}
-			p.gy = sign16 ? (0.05 + Math.random() * 0.05) * (Std.random(2) * 2 - 1) : 0.05 + Math.random() * 0.05;
-			var sign17 = null;
-			if(sign17 == null) {
-				sign17 = false;
+			p.gy = sign6 ? (0.05 + Math.random() * 0.05) * (Std.random(2) * 2 - 1) : 0.05 + Math.random() * 0.05;
+			var sign7 = null;
+			if(sign7 == null) {
+				sign7 = false;
 			}
-			var d = 0.6 * i / n - (sign17 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
+			var d = 0.6 * i / n - (sign7 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05);
 			var d1 = d * p.fps;
 			if(0 > d1) {
 				d1 = 0;
@@ -2502,16 +2419,16 @@ Fx.prototype = $extend(dn_Process.prototype,{
 	}
 	,smallExplode: function(x,y) {
 		var t = Assets.tiles.getTileRandom("smoke");
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		var x1 = x + (sign1 ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		var x1 = x + (sign ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		var y1 = y + (sign1 ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
+		var y1 = y + (sign ? (2 + Math.random() * 6) * (Std.random(2) * 2 - 1) : 2 + Math.random() * 6);
 		var _this = this.pool;
 		var sb = this.bgNormalSb;
 		var p;
@@ -2538,35 +2455,35 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			best.reset(sb,t,x1,y1);
 			p = best;
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.playAnimAndKill(Assets.tiles,"smoke",0.3 * (sign1 ? (0.85 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.4));
+		p.playAnimAndKill(Assets.tiles,"smoke",0.3 * (sign ? (0.85 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.4));
 		p.scaleX = p.scaleY = 0.4;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.rotation = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		p.rotation = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.ds = sign1 ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
+		p.ds = sign ? (0.01 + Math.random() * 0.01) * (Std.random(2) * 2 - 1) : 0.01 + Math.random() * 0.01;
 		p.dsFrict = 0.99;
 		p.set_lifeS(3);
 		var t = Assets.tiles.getTileRandom("explode");
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		var x1 = x + (sign1 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		var x1 = x + (sign ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		var y1 = y + (sign1 ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
+		var y1 = y + (sign ? Math.random() * 5 * (Std.random(2) * 2 - 1) : Math.random() * 5);
 		var _this = this.pool;
 		var sb = this.topNormalSb;
 		var p;
@@ -2593,17 +2510,17 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			best.reset(sb,t,x1,y1);
 			p = best;
 		}
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.playAnimAndKill(Assets.tiles,"explode",0.6 * (sign1 ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
+		p.playAnimAndKill(Assets.tiles,"explode",0.6 * (sign ? (0.75 + Math.random() * 0.75) * (Std.random(2) * 2 - 1) : 0.75 + Math.random() * 0.75));
 		p.scaleX = p.scaleY = 0.6;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.rotation = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+		p.rotation = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
 		p.set_lifeS(3);
 	}
 	,tail: function(lx,ly,x,y,c) {
@@ -2634,46 +2551,46 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			best.reset(sb,t,lx,ly);
 			p = best;
 		}
-		var ratio1 = 1.0;
-		if(ratio1 == null) {
-			ratio1 = 1.0;
+		var ratio = 1.0;
+		if(ratio == null) {
+			ratio = 1.0;
 		}
 		var a = UInt.toFloat(255);
-		var x1 = a + (UInt.toFloat(c >>> 16) - a) * ratio1;
+		var x1 = a + (UInt.toFloat(c >>> 16) - a) * ratio;
 		p.r = ((x1 > 0 ? x1 + .5 : x1 < 0 ? x1 - .5 : 0) | 0) / 255;
 		var a = UInt.toFloat(65535 & 255);
-		var x1 = a + (UInt.toFloat(c >>> 8 & 255) - a) * ratio1;
+		var x1 = a + (UInt.toFloat(c >>> 8 & 255) - a) * ratio;
 		p.g = ((x1 > 0 ? x1 + .5 : x1 < 0 ? x1 - .5 : 0) | 0) / 255;
 		var a = UInt.toFloat(255);
-		var x1 = a + (UInt.toFloat(c & 255) - a) * ratio1;
+		var x1 = a + (UInt.toFloat(c & 255) - a) * ratio;
 		p.b = ((x1 > 0 ? x1 + .5 : x1 < 0 ? x1 - .5 : 0) | 0) / 255;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var tmp = sign1 ? (0.1 + Math.random() * 0.1) * (Std.random(2) * 2 - 1) : 0.1 + Math.random() * 0.1;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var tmp = sign ? (0.1 + Math.random() * 0.1) * (Std.random(2) * 2 - 1) : 0.1 + Math.random() * 0.1;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.setFadeS(tmp,0.1,sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
+		p.setFadeS(tmp,0.1,sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
 		p.rotation = Math.atan2(y - ly,x - lx);
 		p.scaleX = Math.sqrt((lx - x) * (lx - x) + (ly - y) * (ly - y)) / p.t.width;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.scaleY = sign1 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		p.scaleY = sign ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.scaleYMul = sign1 ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		p.scaleYMul = sign ? (0.97 + Math.random() * 0.020000000000000018) * (Std.random(2) * 2 - 1) : 0.97 + Math.random() * 0.020000000000000018;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		p.set_lifeS(sign1 ? (0.3 + Math.random() * 0.3) * (Std.random(2) * 2 - 1) : 0.3 + Math.random() * 0.3);
+		p.set_lifeS(sign ? (0.3 + Math.random() * 0.3) * (Std.random(2) * 2 - 1) : 0.3 + Math.random() * 0.3);
 	}
 	,lostShield: function(x,y) {
 		this.halo(x,y,718143,2.5);
@@ -2682,11 +2599,11 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var a = 6.28 * i / n + (sign1 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			var a = 6.28 * i / n + (sign ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
 			var t = Assets.tiles.getTileRandom("line");
 			var x1 = x + Math.cos(a) * 10;
 			var y1 = y + Math.sin(a) * 15;
@@ -2702,9 +2619,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2716,57 +2633,57 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var ratio1 = 1.0;
-			if(ratio1 == null) {
-				ratio1 = 1.0;
+			var ratio = 1.0;
+			if(ratio == null) {
+				ratio = 1.0;
 			}
 			var a1 = UInt.toFloat(255);
-			var x2 = a1 + (UInt.toFloat(10) - a1) * ratio1;
+			var x2 = a1 + (UInt.toFloat(10) - a1) * ratio;
 			p.r = ((x2 > 0 ? x2 + .5 : x2 < 0 ? x2 - .5 : 0) | 0) / 255;
 			var a2 = UInt.toFloat(65535 & 255);
-			var x3 = a2 + (UInt.toFloat(2805 & 255) - a2) * ratio1;
+			var x3 = a2 + (UInt.toFloat(2805 & 255) - a2) * ratio;
 			p.g = ((x3 > 0 ? x3 + .5 : x3 < 0 ? x3 - .5 : 0) | 0) / 255;
 			var a3 = UInt.toFloat(255);
-			var x4 = a3 + (UInt.toFloat(63) - a3) * ratio1;
+			var x4 = a3 + (UInt.toFloat(63) - a3) * ratio;
 			p.b = ((x4 > 0 ? x4 + .5 : x4 < 0 ? x4 - .5 : 0) | 0) / 255;
-			var sign11 = null;
-			if(sign11 == null) {
-				sign11 = false;
+			var sign1 = null;
+			if(sign1 == null) {
+				sign1 = false;
 			}
-			var tmp = sign11 ? (0.7 + Math.random() * 0.30000000000000004) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.30000000000000004;
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var tmp = sign1 ? (0.7 + Math.random() * 0.30000000000000004) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.30000000000000004;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.setFadeS(tmp,0,sign12 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random());
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			p.setFadeS(tmp,0,sign2 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random());
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			var spd = sign13 ? (12 + Math.random() * 3) * (Std.random(2) * 2 - 1) : 12 + Math.random() * 3;
+			var spd = sign3 ? (12 + Math.random() * 3) * (Std.random(2) * 2 - 1) : 12 + Math.random() * 3;
 			var a4 = Math.atan2(y - p.y,x - p.x);
 			p.dx = -Math.cos(a4) * spd;
 			p.dy = -Math.sin(a4) * spd;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.scaleXMul = sign14 ? (0.92 + Math.random() * 0.049999999999999933) * (Std.random(2) * 2 - 1) : 0.92 + Math.random() * 0.049999999999999933;
-			var sign15 = true;
-			if(sign15 == null) {
-				sign15 = false;
+			p.scaleXMul = sign4 ? (0.92 + Math.random() * 0.049999999999999933) * (Std.random(2) * 2 - 1) : 0.92 + Math.random() * 0.049999999999999933;
+			var sign5 = true;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.rotation = Math.atan2(p.dy,p.dx) + 1.57 + (sign15 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
-			var sign16 = null;
-			if(sign16 == null) {
-				sign16 = false;
+			p.rotation = Math.atan2(p.dy,p.dx) + 1.57 + (sign5 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			var sign6 = null;
+			if(sign6 == null) {
+				sign6 = false;
 			}
-			p.frictX = p.frictY = sign16 ? (0.70 + Math.random() * 0.050000000000000044) * (Std.random(2) * 2 - 1) : 0.70 + Math.random() * 0.050000000000000044;
-			var sign17 = null;
-			if(sign17 == null) {
-				sign17 = false;
+			p.frictX = p.frictY = sign6 ? (0.70 + Math.random() * 0.050000000000000044) * (Std.random(2) * 2 - 1) : 0.70 + Math.random() * 0.050000000000000044;
+			var sign7 = null;
+			if(sign7 == null) {
+				sign7 = false;
 			}
-			p.set_lifeS(sign17 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random());
+			p.set_lifeS(sign7 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random());
 		}
 	}
 	,_trackEntity: function(p) {
@@ -2783,31 +2700,31 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		var x = (e.cx + e.xr) * Const.GRID;
 		var y = (e.cy + e.yr) * Const.GRID - 1;
 		var n = 4;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var base = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+		var base = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
 		var _g = 0;
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = true;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
+			}
+			var a = base + 6.28 * i / n + (sign ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			var t = Assets.tiles.getTileRandom("line");
+			var sign1 = null;
 			if(sign1 == null) {
 				sign1 = false;
 			}
-			var a = base + 6.28 * i / n + (sign1 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
-			var t = Assets.tiles.getTileRandom("line");
-			var sign11 = null;
-			if(sign11 == null) {
-				sign11 = false;
+			var x1 = x + Math.cos(a) * (sign1 ? (5 + Math.random() * 8) * (Std.random(2) * 2 - 1) : 5 + Math.random() * 8);
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			var x1 = x + Math.cos(a) * (sign11 ? (5 + Math.random() * 8) * (Std.random(2) * 2 - 1) : 5 + Math.random() * 8);
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
-			}
-			var y1 = y + 1 + Math.sin(a) * (sign12 ? (5 + Math.random() * 11) * (Std.random(2) * 2 - 1) : 5 + Math.random() * 11);
+			var y1 = y + 1 + Math.sin(a) * (sign2 ? (5 + Math.random() * 11) * (Std.random(2) * 2 - 1) : 5 + Math.random() * 11);
 			var _this = this.pool;
 			var sb = this.topAddSb;
 			var p;
@@ -2820,9 +2737,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2834,39 +2751,39 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign13 = null;
-			if(sign13 == null) {
-				sign13 = false;
+			var sign3 = null;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			var tmp = sign13 ? (0.15 + Math.random() * 0.15) * (Std.random(2) * 2 - 1) : 0.15 + Math.random() * 0.15;
-			var sign14 = null;
-			if(sign14 == null) {
-				sign14 = false;
+			var tmp = sign3 ? (0.15 + Math.random() * 0.15) * (Std.random(2) * 2 - 1) : 0.15 + Math.random() * 0.15;
+			var sign4 = null;
+			if(sign4 == null) {
+				sign4 = false;
 			}
-			p.setFadeS(r * tmp,0.1,sign14 ? (0.2 + Math.random() * 0.099999999999999978) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.099999999999999978);
-			var ratio1 = 1.0;
-			if(ratio1 == null) {
-				ratio1 = 1.0;
+			p.setFadeS(r * tmp,0.1,sign4 ? (0.2 + Math.random() * 0.099999999999999978) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.099999999999999978);
+			var ratio = 1.0;
+			if(ratio == null) {
+				ratio = 1.0;
 			}
 			var a1 = UInt.toFloat(255);
-			var x2 = a1 + (UInt.toFloat(c >>> 16) - a1) * ratio1;
+			var x2 = a1 + (UInt.toFloat(c >>> 16) - a1) * ratio;
 			p.r = ((x2 > 0 ? x2 + .5 : x2 < 0 ? x2 - .5 : 0) | 0) / 255;
 			var a2 = UInt.toFloat(65535 & 255);
-			var x3 = a2 + (UInt.toFloat(c >>> 8 & 255) - a2) * ratio1;
+			var x3 = a2 + (UInt.toFloat(c >>> 8 & 255) - a2) * ratio;
 			p.g = ((x3 > 0 ? x3 + .5 : x3 < 0 ? x3 - .5 : 0) | 0) / 255;
 			var a3 = UInt.toFloat(255);
-			var x4 = a3 + (UInt.toFloat(c & 255) - a3) * ratio1;
+			var x4 = a3 + (UInt.toFloat(c & 255) - a3) * ratio;
 			p.b = ((x4 > 0 ? x4 + .5 : x4 < 0 ? x4 - .5 : 0) | 0) / 255;
-			var sign15 = null;
-			if(sign15 == null) {
-				sign15 = false;
+			var sign5 = null;
+			if(sign5 == null) {
+				sign5 = false;
 			}
-			p.scaleX = p.scaleY = sign15 ? (0.33 + Math.random() * 0.42) * (Std.random(2) * 2 - 1) : 0.33 + Math.random() * 0.42;
-			var sign16 = true;
-			if(sign16 == null) {
-				sign16 = false;
+			p.scaleX = p.scaleY = sign5 ? (0.33 + Math.random() * 0.42) * (Std.random(2) * 2 - 1) : 0.33 + Math.random() * 0.42;
+			var sign6 = true;
+			if(sign6 == null) {
+				sign6 = false;
 			}
-			p.rotation = Math.atan2(y - p.y,x - p.x) + (sign16 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			p.rotation = Math.atan2(y - p.y,x - p.x) + (sign6 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
 			p.set_lifeS(0.1);
 			p.userData = e;
 			p.onUpdate = $bind(this,this._trackEntity);
@@ -2875,21 +2792,21 @@ Fx.prototype = $extend(dn_Process.prototype,{
 	,shieldRefill: function(e,r,c) {
 		var x = (e.cx + e.xr) * Const.GRID;
 		var y = (e.cy + e.yr) * Const.GRID - 1;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var base = sign1 ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
+		var base = sign ? Math.random() * 6.28 * (Std.random(2) * 2 - 1) : Math.random() * 6.28;
 		var n = 8;
 		var _g = 0;
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var a = base + 6.28 * i / n + (sign1 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			var a = base + 6.28 * i / n + (sign ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
 			var t = Assets.tiles.getTileRandom("star");
 			var x1 = x + Math.cos(a) * (16 - r * 3);
 			var y1 = y + 1 + Math.sin(a) * (19 - r * 3);
@@ -2905,9 +2822,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -2919,30 +2836,30 @@ Fx.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign11 = null;
-			if(sign11 == null) {
-				sign11 = false;
+			var sign1 = null;
+			if(sign1 == null) {
+				sign1 = false;
 			}
-			p.a = 0.1 + (sign11 ? (0.3 + Math.random() * 0.10000000000000003) * (Std.random(2) * 2 - 1) : 0.3 + Math.random() * 0.10000000000000003) * r;
-			var ratio1 = 1.0;
-			if(ratio1 == null) {
-				ratio1 = 1.0;
+			p.a = 0.1 + (sign1 ? (0.3 + Math.random() * 0.10000000000000003) * (Std.random(2) * 2 - 1) : 0.3 + Math.random() * 0.10000000000000003) * r;
+			var ratio = 1.0;
+			if(ratio == null) {
+				ratio = 1.0;
 			}
 			var a1 = UInt.toFloat(255);
-			var x2 = a1 + (UInt.toFloat(c >>> 16) - a1) * ratio1;
+			var x2 = a1 + (UInt.toFloat(c >>> 16) - a1) * ratio;
 			p.r = ((x2 > 0 ? x2 + .5 : x2 < 0 ? x2 - .5 : 0) | 0) / 255;
 			var a2 = UInt.toFloat(65535 & 255);
-			var x3 = a2 + (UInt.toFloat(c >>> 8 & 255) - a2) * ratio1;
+			var x3 = a2 + (UInt.toFloat(c >>> 8 & 255) - a2) * ratio;
 			p.g = ((x3 > 0 ? x3 + .5 : x3 < 0 ? x3 - .5 : 0) | 0) / 255;
 			var a3 = UInt.toFloat(255);
-			var x4 = a3 + (UInt.toFloat(c & 255) - a3) * ratio1;
+			var x4 = a3 + (UInt.toFloat(c & 255) - a3) * ratio;
 			p.b = ((x4 > 0 ? x4 + .5 : x4 < 0 ? x4 - .5 : 0) | 0) / 255;
 			p.scaleX = p.scaleY = 0.5 + 1.5 * r;
-			var sign12 = true;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = true;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.rotation = Math.atan2(y - p.y,x - p.x) + 1.57 + (sign12 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			p.rotation = Math.atan2(y - p.y,x - p.x) + 1.57 + (sign2 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
 			p.set_lifeS(0.06);
 			p.userData = e;
 			p.onUpdate = $bind(this,this._trackEntity);
@@ -2956,11 +2873,11 @@ Fx.prototype = $extend(dn_Process.prototype,{
 		var _g1 = n;
 		while(_g < _g1) {
 			var i = _g++;
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var a = 6.28 * i / n + (sign1 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			var a = 6.28 * i / n + (sign ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
 			var t = Assets.tiles.getTileRandom("line");
 			var x1 = x + Math.cos(a) * 37;
 			var y1 = y + 1 + Math.sin(a) * 40;
@@ -2976,9 +2893,9 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			} else {
 				var best = null;
 				var _g2 = 0;
-				var _g11 = _this.all;
-				while(_g2 < _g11.length) {
-					var p2 = _g11[_g2];
+				var _g3 = _this.all;
+				while(_g2 < _g3.length) {
+					var p2 = _g3[_g2];
 					++_g2;
 					if(best == null || p2.stamp <= best.stamp) {
 						best = p2;
@@ -3003,37 +2920,37 @@ Fx.prototype = $extend(dn_Process.prototype,{
 			_this1.dy = -(py * _this1.height);
 			p.animXr = 1;
 			p.animYr = 0.5;
-			var ratio1 = 1.0;
-			if(ratio1 == null) {
-				ratio1 = 1.0;
+			var ratio = 1.0;
+			if(ratio == null) {
+				ratio = 1.0;
 			}
 			var a1 = UInt.toFloat(255);
-			var x2 = a1 + (UInt.toFloat(c >>> 16) - a1) * ratio1;
+			var x2 = a1 + (UInt.toFloat(c >>> 16) - a1) * ratio;
 			p.r = ((x2 > 0 ? x2 + .5 : x2 < 0 ? x2 - .5 : 0) | 0) / 255;
 			var a2 = UInt.toFloat(65535 & 255);
-			var x3 = a2 + (UInt.toFloat(c >>> 8 & 255) - a2) * ratio1;
+			var x3 = a2 + (UInt.toFloat(c >>> 8 & 255) - a2) * ratio;
 			p.g = ((x3 > 0 ? x3 + .5 : x3 < 0 ? x3 - .5 : 0) | 0) / 255;
 			var a3 = UInt.toFloat(255);
-			var x4 = a3 + (UInt.toFloat(c & 255) - a3) * ratio1;
+			var x4 = a3 + (UInt.toFloat(c & 255) - a3) * ratio;
 			p.b = ((x4 > 0 ? x4 + .5 : x4 < 0 ? x4 - .5 : 0) | 0) / 255;
-			var sign11 = null;
-			if(sign11 == null) {
-				sign11 = false;
+			var sign1 = null;
+			if(sign1 == null) {
+				sign1 = false;
 			}
-			p.setFadeS(sign11 ? (0.8 + Math.random() * 0.099999999999999978) * (Std.random(2) * 2 - 1) : 0.8 + Math.random() * 0.099999999999999978,0,0.1);
+			p.setFadeS(sign1 ? (0.8 + Math.random() * 0.099999999999999978) * (Std.random(2) * 2 - 1) : 0.8 + Math.random() * 0.099999999999999978,0,0.1);
 			var a4 = Math.atan2(y - p.y,x - p.x);
 			p.dx = Math.cos(a4) * 8;
 			p.dy = Math.sin(a4) * 8;
-			var sign12 = null;
-			if(sign12 == null) {
-				sign12 = false;
+			var sign2 = null;
+			if(sign2 == null) {
+				sign2 = false;
 			}
-			p.scaleXMul = sign12 ? (0.85 + Math.random() * 0.050000000000000044) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.050000000000000044;
-			var sign13 = true;
-			if(sign13 == null) {
-				sign13 = false;
+			p.scaleXMul = sign2 ? (0.85 + Math.random() * 0.050000000000000044) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.050000000000000044;
+			var sign3 = true;
+			if(sign3 == null) {
+				sign3 = false;
 			}
-			p.rotation = Math.atan2(p.dy,p.dx) + (sign13 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
+			p.rotation = Math.atan2(p.dy,p.dx) + (sign3 ? Math.random() * 0.1 * (Std.random(2) * 2 - 1) : Math.random() * 0.1);
 			p.dr = -0.3;
 			p.frictX = p.frictY = 0.65;
 			p.set_lifeS(0.3);
@@ -3484,22 +3401,22 @@ Game.prototype = $extend(dn_Process.prototype,{
 				while(_g2 < _g3) {
 					var i = _g2++;
 					var tmp = (pt.cx + 0.5) * Const.GRID - Const.GRID * 0.4 + Const.GRID * 0.8 * i / (n - 1);
-					var sign1 = true;
+					var sign = true;
+					if(sign == null) {
+						sign = false;
+					}
+					var tmp1 = sign ? Math.random() * 2 * (Std.random(2) * 2 - 1) : Math.random() * 2;
+					var tmp2 = (pt.cy + 0.5) * Const.GRID;
+					var sign1 = null;
 					if(sign1 == null) {
 						sign1 = false;
 					}
-					var tmp1 = sign1 ? Math.random() * 2 * (Std.random(2) * 2 - 1) : Math.random() * 2;
-					var tmp2 = (pt.cy + 0.5) * Const.GRID;
-					var sign11 = null;
-					if(sign11 == null) {
-						sign11 = false;
+					var tmp3 = sign1 ? (5 + Math.random() * 7) * (Std.random(2) * 2 - 1) : 5 + Math.random() * 7;
+					var sign2 = null;
+					if(sign2 == null) {
+						sign2 = false;
 					}
-					var tmp3 = sign11 ? (5 + Math.random() * 7) * (Std.random(2) * 2 - 1) : 5 + Math.random() * 7;
-					var sign12 = null;
-					if(sign12 == null) {
-						sign12 = false;
-					}
-					en_bu_MobBullet.linearLD(tmp + tmp1,tmp2 - tmp3,1.57,sign12 ? (0.95 + Math.random() * 0.070000000000000062) * (Std.random(2) * 2 - 1) : 0.95 + Math.random() * 0.070000000000000062);
+					en_bu_MobBullet.linearLD(tmp + tmp1,tmp2 - tmp3,1.57,sign2 ? (0.95 + Math.random() * 0.070000000000000062) * (Std.random(2) * 2 - 1) : 0.95 + Math.random() * 0.070000000000000062);
 				}
 			}
 		}
@@ -4526,11 +4443,11 @@ Level.prototype = $extend(dn_Process.prototype,{
 		_this.isUndefined = false;
 		e.updateTile();
 		var e1 = e;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.a = sign1 ? (0.6 + Math.random() * 0.20000000000000007) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.20000000000000007;
+		e1.a = sign ? (0.6 + Math.random() * 0.20000000000000007) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.20000000000000007;
 		var xRatio = 0.5;
 		var yRatio = 0.5;
 		if(yRatio == null) {
@@ -4547,21 +4464,21 @@ Level.prototype = $extend(dn_Process.prototype,{
 		e1.updateTile();
 		e1.x = x;
 		e1.y = y + 3;
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.scaleX = sign1 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		e1.scaleX = sign ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.scaleY = sign1 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		e1.scaleY = sign ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.rotation = sign1 ? Math.random() * 0.2 * (Std.random(2) * 2 - 1) : Math.random() * 0.2;
+		e1.rotation = sign ? Math.random() * 0.2 * (Std.random(2) * 2 - 1) : Math.random() * 0.2;
 		var em = new dn_heaps_Emitter(null,Const.FPS);
 		em.tickS = 0.10;
 		var fx = Game.ME.fx;
@@ -4575,11 +4492,11 @@ Level.prototype = $extend(dn_Process.prototype,{
 		};
 		em.onUpdate = function() {
 			var t = Assets.tiles.getTileRandom("flame");
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var x1 = x + (sign1 ? Math.random() * 4 * (Std.random(2) * 2 - 1) : Math.random() * 4);
+			var x1 = x + (sign ? Math.random() * 4 * (Std.random(2) * 2 - 1) : Math.random() * 4);
 			var _this = fx.pool;
 			var sb = fx.bgAddSb;
 			var p;
@@ -4606,52 +4523,52 @@ Level.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y);
 				p = best;
 			}
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			var tmp = sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var tmp = sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.setFadeS(tmp,0.2,sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.setFadeS(tmp,0.2,sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.gx = sign1 ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.gx = sign ? Math.random() * 0.05 * (Std.random(2) * 2 - 1) : Math.random() * 0.05;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.gy = -(sign1 ? (0.02 + Math.random() * 0.0099999999999999985) * (Std.random(2) * 2 - 1) : 0.02 + Math.random() * 0.0099999999999999985);
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.gy = -(sign ? (0.02 + Math.random() * 0.0099999999999999985) * (Std.random(2) * 2 - 1) : 0.02 + Math.random() * 0.0099999999999999985);
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.frictX = p.frictY = sign1 ? (0.85 + Math.random() * 0.040000000000000036) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.040000000000000036;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.frictX = p.frictY = sign ? (0.85 + Math.random() * 0.040000000000000036) * (Std.random(2) * 2 - 1) : 0.85 + Math.random() * 0.040000000000000036;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.scaleMul = sign1 ? (0.93 + Math.random() * 0.059999999999999942) * (Std.random(2) * 2 - 1) : 0.93 + Math.random() * 0.059999999999999942;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.scaleMul = sign ? (0.93 + Math.random() * 0.059999999999999942) * (Std.random(2) * 2 - 1) : 0.93 + Math.random() * 0.059999999999999942;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.set_lifeS(sign1 ? (0.5 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.19999999999999996);
+			p.set_lifeS(sign ? (0.5 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.19999999999999996);
 			var t = Assets.tiles.getTileRandom("flame");
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var x1 = x + (sign1 ? Math.random() * 4 * (Std.random(2) * 2 - 1) : Math.random() * 4);
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var x1 = x + (sign ? Math.random() * 4 * (Std.random(2) * 2 - 1) : Math.random() * 4);
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var y1 = y + (sign1 ? Math.random() * 0 * (Std.random(2) * 2 - 1) : Math.random() * 0);
+			var y1 = y + (sign ? Math.random() * 0 * (Std.random(2) * 2 - 1) : Math.random() * 0);
 			var _this = fx.pool;
 			var sb = fx.bgAddSb;
 			var p;
@@ -4678,31 +4595,31 @@ Level.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.scaleX = p.scaleY = sign1 ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.scaleX = p.scaleY = sign ? (0.5 + Math.random() * 0.5) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.5;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			var tmp = sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var tmp = sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.setFadeS(tmp,0.2,sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.setFadeS(tmp,0.2,sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.scaleMul = sign1 ? (0.93 + Math.random() * 0.059999999999999942) * (Std.random(2) * 2 - 1) : 0.93 + Math.random() * 0.059999999999999942;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.scaleMul = sign ? (0.93 + Math.random() * 0.059999999999999942) * (Std.random(2) * 2 - 1) : 0.93 + Math.random() * 0.059999999999999942;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.set_lifeS(sign1 ? (0.5 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.19999999999999996);
+			p.set_lifeS(sign ? (0.5 + Math.random() * 0.19999999999999996) * (Std.random(2) * 2 - 1) : 0.5 + Math.random() * 0.19999999999999996);
 		};
 		this.emitters.push(em);
 	}
@@ -4734,11 +4651,11 @@ Level.prototype = $extend(dn_Process.prototype,{
 		_this.isUndefined = false;
 		e.updateTile();
 		var e1 = e;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.a = sign1 ? (0.6 + Math.random() * 0.20000000000000007) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.20000000000000007;
+		e1.a = sign ? (0.6 + Math.random() * 0.20000000000000007) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.20000000000000007;
 		var xRatio = 0.5;
 		var yRatio = 0.5;
 		if(yRatio == null) {
@@ -4755,21 +4672,21 @@ Level.prototype = $extend(dn_Process.prototype,{
 		e1.updateTile();
 		e1.x = x;
 		e1.y = y + 3;
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.scaleX = sign1 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		e1.scaleX = sign ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.scaleY = sign1 ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
-		var sign1 = true;
-		if(sign1 == null) {
-			sign1 = false;
+		e1.scaleY = sign ? (1 + Math.random()) * (Std.random(2) * 2 - 1) : 1 + Math.random();
+		var sign = true;
+		if(sign == null) {
+			sign = false;
 		}
-		e1.rotation = sign1 ? Math.random() * 0.2 * (Std.random(2) * 2 - 1) : Math.random() * 0.2;
+		e1.rotation = sign ? Math.random() * 0.2 * (Std.random(2) * 2 - 1) : Math.random() * 0.2;
 		var em = new dn_heaps_Emitter(null,Const.FPS);
 		em.tickS = 0.4;
 		var fx = Game.ME.fx;
@@ -4783,16 +4700,16 @@ Level.prototype = $extend(dn_Process.prototype,{
 		};
 		em.onUpdate = function() {
 			var t = Assets.tiles.getTileRandom("dot");
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var x1 = x + (sign1 ? Math.random() * 3 * (Std.random(2) * 2 - 1) : Math.random() * 3);
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var x1 = x + (sign ? Math.random() * 3 * (Std.random(2) * 2 - 1) : Math.random() * 3);
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var y1 = y + (sign1 ? Math.random() * (Std.random(2) * 2 - 1) : Math.random());
+			var y1 = y + (sign ? Math.random() * (Std.random(2) * 2 - 1) : Math.random());
 			var _this = fx.pool;
 			var sb = fx.bgAddSb;
 			var p;
@@ -4819,31 +4736,31 @@ Level.prototype = $extend(dn_Process.prototype,{
 				best.reset(sb,t,x1,y1);
 				p = best;
 			}
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.colorAnimS(16777088,16711680,sign1 ? (1 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 1 + Math.random() * 2);
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.colorAnimS(16777088,16711680,sign ? (1 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 1 + Math.random() * 2);
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			var tmp = sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var tmp = sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			var tmp1 = sign1 ? (0.2 + Math.random() * 0.3) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.3;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var tmp1 = sign ? (0.2 + Math.random() * 0.3) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.3;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.setFadeS(tmp,tmp1,sign1 ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			p.setFadeS(tmp,tmp1,sign ? (0.2 + Math.random() * 0.2) * (Std.random(2) * 2 - 1) : 0.2 + Math.random() * 0.2);
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			p.set_lifeS(sign1 ? (1.5 + Math.random() * 1.5) * (Std.random(2) * 2 - 1) : 1.5 + Math.random() * 1.5);
+			p.set_lifeS(sign ? (1.5 + Math.random() * 1.5) * (Std.random(2) * 2 - 1) : 1.5 + Math.random() * 1.5);
 		};
 		this.emitters.push(em);
 	}
@@ -4919,11 +4836,11 @@ Level.prototype = $extend(dn_Process.prototype,{
 		dn_Process.prototype.update.call(this);
 		var _this = this.cd;
 		var _this1 = this.cd;
-		var sign1 = null;
-		if(sign1 == null) {
-			sign1 = false;
+		var sign = null;
+		if(sign == null) {
+			sign = false;
 		}
-		var frames = (sign1 ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8) * _this1.baseFps;
+		var frames = (sign ? (0.7 + Math.random() * 0.8) * (Std.random(2) * 2 - 1) : 0.7 + Math.random() * 0.8) * _this1.baseFps;
 		var tmp;
 		if(_this.fastCheck.h.hasOwnProperty(109051904)) {
 			tmp = true;
@@ -4995,25 +4912,25 @@ Level.prototype = $extend(dn_Process.prototype,{
 				s.smooth = smooth;
 			}
 			var e = s;
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var v = sign1 ? Math.random() * 0.2 * (Std.random(2) * 2 - 1) : Math.random() * 0.2;
+			var v = sign ? Math.random() * 0.2 * (Std.random(2) * 2 - 1) : Math.random() * 0.2;
 			e.posChanged = true;
 			e.rotation = v;
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
-			var v = sign1 ? (0.6 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.4;
+			var v = sign ? (0.6 + Math.random() * 0.4) * (Std.random(2) * 2 - 1) : 0.6 + Math.random() * 0.4;
 			e.posChanged = true;
 			e.scaleX = v;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			var x = e.scaleX * (sign1 ? (0.8 + Math.random() * 0.30000000000000004) * (Std.random(2) * 2 - 1) : 0.8 + Math.random() * 0.30000000000000004);
+			var x = e.scaleX * (sign ? (0.8 + Math.random() * 0.30000000000000004) * (Std.random(2) * 2 - 1) : 0.8 + Math.random() * 0.30000000000000004);
 			e.posChanged = true;
 			e.scaleY = x < 0 ? -x : x;
 			var xRatio = 0.5;
@@ -5031,41 +4948,41 @@ Level.prototype = $extend(dn_Process.prototype,{
 			_this.isUndefined = false;
 			Game.ME.scroller.addChildAt(e,Const.DP_FX_BG);
 			if(Std.random(100) < 80) {
-				var sign1 = null;
-				if(sign1 == null) {
-					sign1 = false;
+				var sign = null;
+				if(sign == null) {
+					sign = false;
 				}
-				var v = sign1 ? (-100 + Math.random() * 130) * (Std.random(2) * 2 - 1) : -100 + Math.random() * 130;
+				var v = sign ? (-100 + Math.random() * 130) * (Std.random(2) * 2 - 1) : -100 + Math.random() * 130;
 				e.posChanged = true;
 				e.x = v;
 			} else {
 				var v = this.wid * Const.GRID;
-				var sign1 = null;
-				if(sign1 == null) {
-					sign1 = false;
+				var sign = null;
+				if(sign == null) {
+					sign = false;
 				}
-				var v1 = sign1 ? (-30 + Math.random() * 130) * (Std.random(2) * 2 - 1) : -30 + Math.random() * 130;
+				var v1 = sign ? (-30 + Math.random() * 130) * (Std.random(2) * 2 - 1) : -30 + Math.random() * 130;
 				e.posChanged = true;
 				e.x = v + v1;
 			}
 			var _this = Game.ME.vp;
 			e.posChanged = true;
 			e.y = (Game.ME.lvl.hei - 1 - _this.elapsedDistCase) * Const.GRID - (_this.cHei - 1) * Const.GRID;
-			var sign1 = null;
-			if(sign1 == null) {
-				sign1 = false;
+			var sign = null;
+			if(sign == null) {
+				sign = false;
 			}
-			this.clouds.push({ e : e, spd : sign1 ? (1 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 1 + Math.random() * 2});
-			var sign1 = true;
-			if(sign1 == null) {
-				sign1 = false;
+			this.clouds.push({ e : e, spd : sign ? (1 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 1 + Math.random() * 2});
+			var sign = true;
+			if(sign == null) {
+				sign = false;
 			}
 			var _tween = this.tw.create_(function() {
 				return e.x;
 			},function(_setV) {
 				e.posChanged = true;
 				e.x = _setV;
-			},null,e.x + (sign1 ? Math.random() * 35 * (Std.random(2) * 2 - 1) : Math.random() * 35),dn_TType.TLinear,10000);
+			},null,e.x + (sign ? Math.random() * 35 * (Std.random(2) * 2 - 1) : Math.random() * 35),dn_TType.TLinear,10000);
 		}
 		var i = 0;
 		while(i < this.clouds.length) {
@@ -5115,6 +5032,7 @@ var Main = function(p) {
 	dn_Process.call(this);
 	Main.ME = this;
 	this.createRoot(p);
+	new dn_heaps_GameFocusHelper(Boot.ME.s2d,Assets.font);
 	this.controller = new dn_heaps_Controller(Boot.ME.s2d);
 	this.controller.bind(17,37);
 	this.controller.bind(18,39);
@@ -5181,8 +5099,8 @@ var Notif = function(short,txt) {
 	}
 	var _gthis = this;
 	dn_Process.call(this,Main.ME);
-	var char1 = "\\" + "*".split("").join("\\");
-	var re = char1 + "([^" + char1 + "]+)" + char1;
+	var char = "\\" + "*".split("").join("\\");
+	var re = char + "([^" + char + "]+)" + char;
 	try {
 		var _this_r = new RegExp(re,"g".split("u").join(""));
 		txt = txt.replace(_this_r,"<font color='#FFBF00'>" + "$1" + "</font>");
@@ -6216,8 +6134,8 @@ var TutorialTip = function(x,y,txt,skipPressed) {
 	}
 	var sx = x == null ? 0 : x + Game.ME.scroller.x | 0;
 	var sy = y == null ? 0 : y + Game.ME.scroller.y | 0;
-	var char1 = "\\" + "*".split("").join("\\");
-	var re = char1 + "([^" + char1 + "]+)" + char1;
+	var char = "\\" + "*".split("").join("\\");
+	var re = char + "([^" + char + "]+)" + char;
 	try {
 		var _this_r = new RegExp(re,"g".split("u").join(""));
 		txt = txt.replace(_this_r,"<font color='#FFBF00'>" + "$1" + "</font>");
@@ -7506,6 +7424,169 @@ dn_heaps_ControllerAccess.prototype = {
 	}
 	,__class__: dn_heaps_ControllerAccess
 };
+var dn_heaps_GameFocusHelper = function(s,font) {
+	this.showIntro = false;
+	this.suspended = false;
+	dn_Process.call(this);
+	this.font = font;
+	this.scene = s;
+	this.createRoot(this.scene);
+	this.root.set_visible(false);
+	this.showIntro = true;
+	this.suspendGame();
+};
+$hxClasses["dn.heaps.GameFocusHelper"] = dn_heaps_GameFocusHelper;
+dn_heaps_GameFocusHelper.__name__ = "dn.heaps.GameFocusHelper";
+dn_heaps_GameFocusHelper.__super__ = dn_Process;
+dn_heaps_GameFocusHelper.prototype = $extend(dn_Process.prototype,{
+	suspendGame: function() {
+		var _gthis = this;
+		if(this.suspended) {
+			return;
+		}
+		this.suspended = true;
+		dn_heaps_slib_SpriteLib.DISABLE_ANIM_UPDATES = true;
+		var _g = 0;
+		var _g1 = dn_Process.ROOTS;
+		while(_g < _g1.length) {
+			var p = _g1[_g];
+			++_g;
+			if(p != this) {
+				p.pause();
+			}
+		}
+		this.root.set_visible(true);
+		this.root.removeChildren();
+		var bg = new h2d_Bitmap(h2d_Tile.fromColor(this.showIntro ? 2436675 : 0,1,1,this.showIntro ? 1 : 0.6),this.root);
+		var i = new h2d_Interactive(1,1,this.root);
+		var tf = new h2d_Text(this.font,this.root);
+		if(this.showIntro) {
+			tf.set_text("Click anywhere to start");
+		} else {
+			tf.set_text("PAUSED - click anywhere to resume");
+		}
+		this.createChildProcess(function(c) {
+			var y = Math.floor((dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width()) * 0.35 / tf.get_textWidth());
+			var v = 1 > y ? 1 : y;
+			tf.posChanged = true;
+			tf.scaleX = v;
+			tf.posChanged = true;
+			tf.scaleY = v;
+			var v = (dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width()) * 0.5 - tf.get_textWidth() * tf.scaleX * 0.5 | 0;
+			tf.posChanged = true;
+			tf.x = v;
+			var v = (dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height()) * 0.5 - tf.get_textHeight() * tf.scaleY * 0.5 | 0;
+			tf.posChanged = true;
+			tf.y = v;
+			var tmp = dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width();
+			i.width = tmp + 1;
+			var tmp = dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height();
+			i.height = tmp + 1;
+			var v = dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width();
+			bg.posChanged = true;
+			bg.scaleX = v + 1;
+			var v = dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height();
+			bg.posChanged = true;
+			bg.scaleY = v + 1;
+			if(!_gthis.suspended) {
+				c.destroyed = true;
+			}
+		},null,true);
+		var loadingMsg = this.showIntro;
+		i.onPush = function(_) {
+			if(loadingMsg) {
+				tf.set_text("Loading, please wait...");
+				var v = (dn_Process.CUSTOM_STAGE_WIDTH > 0 ? dn_Process.CUSTOM_STAGE_WIDTH : hxd_Window.getInstance().get_width()) * 0.5 - tf.get_textWidth() * tf.scaleX * 0.5 | 0;
+				tf.posChanged = true;
+				tf.x = v;
+				var v = (dn_Process.CUSTOM_STAGE_HEIGHT > 0 ? dn_Process.CUSTOM_STAGE_HEIGHT : hxd_Window.getInstance().get_height()) * 0.5 - tf.get_textHeight() * tf.scaleY * 0.5 | 0;
+				tf.posChanged = true;
+				tf.y = v;
+				_gthis.delayer.addS(null,$bind(_gthis,_gthis.resumeGame),1);
+			} else {
+				_gthis.resumeGame();
+			}
+			if(i != null && i.parent != null) {
+				i.parent.removeChild(i);
+			}
+		};
+		this.showIntro = false;
+	}
+	,resumeGame: function() {
+		var _gthis = this;
+		if(!this.suspended) {
+			return;
+		}
+		dn_heaps_slib_SpriteLib.DISABLE_ANIM_UPDATES = false;
+		this.delayer.addF(null,function() {
+			_gthis.root.set_visible(false);
+			_gthis.root.removeChildren();
+		},1);
+		this.suspended = false;
+		var _g = 0;
+		var _g1 = dn_Process.ROOTS;
+		while(_g < _g1.length) {
+			var p = _g1[_g];
+			++_g;
+			if(p != this) {
+				p.resume();
+			}
+		}
+	}
+	,update: function() {
+		dn_Process.prototype.update.call(this);
+		if(this.suspended) {
+			this.scene.over(this.root);
+		}
+		var _this = this.cd;
+		var frames = 0.2 * this.cd.baseFps;
+		var tmp;
+		if(_this.fastCheck.h.hasOwnProperty(62914560)) {
+			tmp = true;
+		} else {
+			var frames1 = frames;
+			var onComplete = null;
+			frames1 = Math.floor(frames1 * 1000) / 1000;
+			var cur = _this._getCdObject(62914560);
+			if(!(cur != null && frames1 < cur.frames && false)) {
+				if(frames1 <= 0) {
+					if(cur != null) {
+						HxOverrides.remove(_this.cdList,cur);
+						cur.frames = 0;
+						cur.cb = null;
+						_this.fastCheck.remove(cur.k);
+					}
+				} else {
+					_this.fastCheck.h[62914560] = true;
+					if(cur != null) {
+						cur.frames = frames1;
+					} else {
+						_this.cdList.push(new dn__$Cooldown_CdInst(62914560,frames1));
+					}
+				}
+				if(onComplete != null) {
+					if(frames1 <= 0) {
+						onComplete();
+					} else {
+						var cd = _this._getCdObject(62914560);
+						if(cd == null) {
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 62914560 + "): cooldown " + 62914560 + " isn't running");
+						}
+						cd.cb = onComplete;
+					}
+				}
+			}
+			tmp = false;
+		}
+		if(!tmp) {
+			var w = hxd_Window.getInstance();
+			if(!w.get_isFocused() && !this.suspended) {
+				this.suspendGame();
+			}
+		}
+	}
+	,__class__: dn_heaps_GameFocusHelper
+});
 var hxd_Pad = function() {
 	this.rawYAxis = 0.;
 	this.rawXAxis = 0.;
@@ -8590,40 +8671,6 @@ dn_heaps_slib__$AnimManager_Transition.__name__ = "dn.heaps.slib._AnimManager.Tr
 dn_heaps_slib__$AnimManager_Transition.prototype = {
 	__class__: dn_heaps_slib__$AnimManager_Transition
 };
-var haxe_ds_StringMap = function() {
-	this.h = Object.create(null);
-};
-$hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
-haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
-haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
-haxe_ds_StringMap.keysIterator = function(h) {
-	var keys = Object.keys(h);
-	var len = keys.length;
-	var idx = 0;
-	return { hasNext : function() {
-		return idx < len;
-	}, next : function() {
-		idx += 1;
-		return keys[idx - 1];
-	}};
-};
-haxe_ds_StringMap.valueIterator = function(h) {
-	var keys = Object.keys(h);
-	var len = keys.length;
-	var idx = 0;
-	return { hasNext : function() {
-		return idx < len;
-	}, next : function() {
-		idx += 1;
-		return h[keys[idx - 1]];
-	}};
-};
-haxe_ds_StringMap.prototype = {
-	iterator: function() {
-		return haxe_ds_StringMap.valueIterator(this.h);
-	}
-	,__class__: haxe_ds_StringMap
-};
 var dn_heaps_slib_AnimManager = function(spr) {
 	this.S_STAR = "*";
 	this.suspendF = 0.;
@@ -9403,6 +9450,9 @@ h2d_Object.prototype = {
 			++_g;
 			s.setParentContainer(c);
 		}
+	}
+	,removeChildren: function() {
+		while(this.children.length > 0) this.removeChild(this.children[0]);
 	}
 	,remove: function() {
 		if(this.parent != null) {
@@ -11525,12 +11575,12 @@ var en_Hero = function() {
 		_this.group = k == null ? _this1.currentGroup : _this1.groups.h[k];
 		var _this1 = _this.lib;
 		var k = _this.groupName;
-		var frame1 = 0;
-		if(frame1 == null) {
-			frame1 = 0;
+		var frame = 0;
+		if(frame == null) {
+			frame = 0;
 		}
 		var g = k == null ? _this1.currentGroup : _this1.groups.h[k];
-		_this.frameData = g == null ? null : g.frames[frame1];
+		_this.frameData = g == null ? null : g.frames[frame];
 		if(_this.frameData == null) {
 			throw haxe_Exception.thrown("Unknown frame: " + _this.groupName + "(" + 0 + ")");
 		}
@@ -12850,12 +12900,12 @@ var en_LazerBeam = function(e,ox,oy,ang) {
 		_this.group = k == null ? _this1.currentGroup : _this1.groups.h[k];
 		var _this1 = _this.lib;
 		var k = _this.groupName;
-		var frame1 = 0;
-		if(frame1 == null) {
-			frame1 = 0;
+		var frame = 0;
+		if(frame == null) {
+			frame = 0;
 		}
 		var g = k == null ? _this1.currentGroup : _this1.groups.h[k];
-		_this.frameData = g == null ? null : g.frames[frame1];
+		_this.frameData = g == null ? null : g.frames[frame];
 		if(_this.frameData == null) {
 			throw haxe_Exception.thrown("Unknown frame: " + _this.groupName + "(" + 0 + ")");
 		}
@@ -13073,20 +13123,20 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 	}
 	,isHitting: function(e) {
 		if(!e.destroyed && this.cd.fastCheck.h.hasOwnProperty(25165824) && !this.cd.fastCheck.h.hasOwnProperty(29360128)) {
-			var a1 = this.ang;
-			var b1 = Math.atan2((e.cy + e.yr) * Const.GRID - (this.cy + this.yr) * Const.GRID,(e.cx + e.xr) * Const.GRID - (this.cx + this.xr) * Const.GRID);
-			var a = a1;
-			while(a < -3.1415926535897931) a += 6.283185307179586;
-			while(a > 3.141592653589793) a -= 6.283185307179586;
-			a1 = a;
-			var a = b1;
-			while(a < -3.1415926535897931) a += 6.283185307179586;
-			while(a > 3.141592653589793) a -= 6.283185307179586;
-			b1 = a;
-			var a = a1 - b1;
-			while(a < -3.1415926535897931) a += 6.283185307179586;
-			while(a > 3.141592653589793) a -= 6.283185307179586;
-			var x = a;
+			var a = this.ang;
+			var b = Math.atan2((e.cy + e.yr) * Const.GRID - (this.cy + this.yr) * Const.GRID,(e.cx + e.xr) * Const.GRID - (this.cx + this.xr) * Const.GRID);
+			var a1 = a;
+			while(a1 < -3.1415926535897931) a1 += 6.283185307179586;
+			while(a1 > 3.141592653589793) a1 -= 6.283185307179586;
+			a = a1;
+			var a1 = b;
+			while(a1 < -3.1415926535897931) a1 += 6.283185307179586;
+			while(a1 > 3.141592653589793) a1 -= 6.283185307179586;
+			b = a1;
+			var a1 = a - b;
+			while(a1 < -3.1415926535897931) a1 += 6.283185307179586;
+			while(a1 > 3.141592653589793) a1 -= 6.283185307179586;
+			var x = a1;
 			var da = x < 0 ? -x : x;
 			if(da >= 1.57) {
 				return false;
@@ -13266,12 +13316,12 @@ var en_Mob = function(x,y) {
 		_this.group = k == null ? _this1.currentGroup : _this1.groups.h[k];
 		var _this1 = _this.lib;
 		var k = _this.groupName;
-		var frame1 = 0;
-		if(frame1 == null) {
-			frame1 = 0;
+		var frame = 0;
+		if(frame == null) {
+			frame = 0;
 		}
 		var g = k == null ? _this1.currentGroup : _this1.groups.h[k];
-		_this.frameData = g == null ? null : g.frames[frame1];
+		_this.frameData = g == null ? null : g.frames[frame];
 		if(_this.frameData == null) {
 			throw haxe_Exception.thrown("Unknown frame: " + _this.groupName + "(" + 0 + ")");
 		}
@@ -13544,12 +13594,12 @@ var en_WaveEmitter = function(x,y,n,cb,freqS) {
 		_this.group = k == null ? _this1.currentGroup : _this1.groups.h[k];
 		var _this1 = _this.lib;
 		var k = _this.groupName;
-		var frame1 = 0;
-		if(frame1 == null) {
-			frame1 = 0;
+		var frame = 0;
+		if(frame == null) {
+			frame = 0;
 		}
 		var g = k == null ? _this1.currentGroup : _this1.groups.h[k];
-		_this.frameData = g == null ? null : g.frames[frame1];
+		_this.frameData = g == null ? null : g.frames[frame];
 		if(_this.frameData == null) {
 			throw haxe_Exception.thrown("Unknown frame: " + _this.groupName + "(" + 0 + ")");
 		}
@@ -14499,12 +14549,12 @@ var en_m_Hammer = function(x,y) {
 		_this.group = k == null ? _this1.currentGroup : _this1.groups.h[k];
 		var _this1 = _this.lib;
 		var k = _this.groupName;
-		var frame1 = 0;
-		if(frame1 == null) {
-			frame1 = 0;
+		var frame = 0;
+		if(frame == null) {
+			frame = 0;
 		}
 		var g = k == null ? _this1.currentGroup : _this1.groups.h[k];
-		_this.frameData = g == null ? null : g.frames[frame1];
+		_this.frameData = g == null ? null : g.frames[frame];
 		if(_this.frameData == null) {
 			throw haxe_Exception.thrown("Unknown frame: " + _this.groupName + "(" + 0 + ")");
 		}
@@ -19114,6 +19164,17 @@ h2d_Flow.prototype = $extend(h2d_Object.prototype,{
 			}
 		}
 	}
+	,removeChildren: function() {
+		var k = 0;
+		while(this.children.length > k) {
+			var c = this.children[k];
+			if(c == this.background || c == this.interactive || c == this.debugGraphics) {
+				++k;
+			} else {
+				this.removeChild(c);
+			}
+		}
+	}
 	,sync: function(ctx) {
 		if(!this.isConstraint && (this.fillWidth || this.fillHeight)) {
 			var scene = ctx.scene;
@@ -23276,6 +23337,35 @@ h2d_Layers.prototype = $extend(h2d_Object.prototype,{
 					this.parentContainer.contentChanged(this);
 				}
 				break;
+			}
+		}
+	}
+	,over: function(s) {
+		var _g = 0;
+		var _g1 = this.children.length;
+		while(_g < _g1) {
+			var i = _g++;
+			if(this.children[i] == s) {
+				var _g2 = 0;
+				var _g3 = this.layersIndexes;
+				while(_g2 < _g3.length) {
+					var l = _g3[_g2];
+					++_g2;
+					if(l > i) {
+						var _g4 = i;
+						var _g5 = l - 1;
+						while(_g4 < _g5) {
+							var p = _g4++;
+							this.children[p] = this.children[p + 1];
+						}
+						this.children[l - 1] = s;
+						if(s.allocated) {
+							s.onHierarchyMoved(false);
+						}
+						return;
+					}
+				}
+				return;
 			}
 		}
 	}
@@ -37782,6 +37872,10 @@ h3d_shader_VolumeDecal.prototype = $extend(hxsl_Shader.prototype,{
 	}
 	,__class__: h3d_shader_VolumeDecal
 });
+var haxe_IMap = function() { };
+$hxClasses["haxe.IMap"] = haxe_IMap;
+haxe_IMap.__name__ = "haxe.IMap";
+haxe_IMap.__isInterface__ = true;
 var haxe_EntryPoint = function() { };
 $hxClasses["haxe.EntryPoint"] = haxe_EntryPoint;
 haxe_EntryPoint.__name__ = "haxe.EntryPoint";
@@ -37813,6 +37907,43 @@ haxe_EntryPoint.run = function() {
 		setTimeout(haxe_EntryPoint.run,nextTick * 1000);
 	}
 };
+var haxe_Exception = function(message,previous,native) {
+	Error.call(this,message);
+	this.message = message;
+	this.__previousException = previous;
+	this.__nativeException = native != null ? native : this;
+};
+$hxClasses["haxe.Exception"] = haxe_Exception;
+haxe_Exception.__name__ = "haxe.Exception";
+haxe_Exception.caught = function(value) {
+	if(((value) instanceof haxe_Exception)) {
+		return value;
+	} else if(((value) instanceof Error)) {
+		return new haxe_Exception(value.message,null,value);
+	} else {
+		return new haxe_ValueException(value,null,value);
+	}
+};
+haxe_Exception.thrown = function(value) {
+	if(((value) instanceof haxe_Exception)) {
+		return value.get_native();
+	} else if(((value) instanceof Error)) {
+		return value;
+	} else {
+		var e = new haxe_ValueException(value);
+		return e;
+	}
+};
+haxe_Exception.__super__ = Error;
+haxe_Exception.prototype = $extend(Error.prototype,{
+	unwrap: function() {
+		return this.__nativeException;
+	}
+	,get_native: function() {
+		return this.__nativeException;
+	}
+	,__class__: haxe_Exception
+});
 var haxe_Log = function() { };
 $hxClasses["haxe.Log"] = haxe_Log;
 haxe_Log.__name__ = "haxe.Log";
@@ -38352,6 +38483,19 @@ haxe_Unserializer.prototype = {
 	}
 	,__class__: haxe_Unserializer
 };
+var haxe_ValueException = function(value,previous,native) {
+	haxe_Exception.call(this,String(value),previous,native);
+	this.value = value;
+};
+$hxClasses["haxe.ValueException"] = haxe_ValueException;
+haxe_ValueException.__name__ = "haxe.ValueException";
+haxe_ValueException.__super__ = haxe_Exception;
+haxe_ValueException.prototype = $extend(haxe_Exception.prototype,{
+	unwrap: function() {
+		return this.value;
+	}
+	,__class__: haxe_ValueException
+});
 var haxe_crypto_Adler32 = function() {
 	this.a1 = 1;
 	this.a2 = 0;
@@ -39085,6 +39229,35 @@ haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
 	}
 	,__class__: haxe_ds_EnumValueMap
 });
+var haxe_ds_IntMap = function() {
+	this.h = { };
+};
+$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
+haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
+haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
+haxe_ds_IntMap.prototype = {
+	remove: function(key) {
+		if(!this.h.hasOwnProperty(key)) {
+			return false;
+		}
+		delete(this.h[key]);
+		return true;
+	}
+	,keys: function() {
+		var a = [];
+		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(key | 0);
+		return new haxe_iterators_ArrayIterator(a);
+	}
+	,iterator: function() {
+		return { ref : this.h, it : this.keys(), hasNext : function() {
+			return this.it.hasNext();
+		}, next : function() {
+			var i = this.it.next();
+			return this.ref[i];
+		}};
+	}
+	,__class__: haxe_ds_IntMap
+};
 var haxe_ds_List = function() {
 	this.length = 0;
 };
@@ -39175,6 +39348,40 @@ haxe_ds_ObjectMap.prototype = {
 		return new haxe_iterators_ArrayIterator(a);
 	}
 	,__class__: haxe_ds_ObjectMap
+};
+var haxe_ds_StringMap = function() {
+	this.h = Object.create(null);
+};
+$hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
+haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
+haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
+haxe_ds_StringMap.keysIterator = function(h) {
+	var keys = Object.keys(h);
+	var len = keys.length;
+	var idx = 0;
+	return { hasNext : function() {
+		return idx < len;
+	}, next : function() {
+		idx += 1;
+		return keys[idx - 1];
+	}};
+};
+haxe_ds_StringMap.valueIterator = function(h) {
+	var keys = Object.keys(h);
+	var len = keys.length;
+	var idx = 0;
+	return { hasNext : function() {
+		return idx < len;
+	}, next : function() {
+		idx += 1;
+		return h[keys[idx - 1]];
+	}};
+};
+haxe_ds_StringMap.prototype = {
+	iterator: function() {
+		return haxe_ds_StringMap.valueIterator(this.h);
+	}
+	,__class__: haxe_ds_StringMap
 };
 var haxe_io_BytesBuffer = function() {
 	this.pos = 0;
@@ -42266,6 +42473,9 @@ hxd_Window.prototype = {
 	,onFocus: function(b) {
 		this.event(new hxd_Event(b ? hxd_EventKind.EFocus : hxd_EventKind.EFocusLost));
 		this.focused = b;
+	}
+	,get_isFocused: function() {
+		return this.focused;
 	}
 	,set_displayMode: function(m) {
 		var doc = window.document;
@@ -58763,6 +58973,8 @@ Const.DP_TOP = Const._inc++;
 Entity.UNIQ = 0;
 Entity.ALL = [];
 Entity.GC = [];
+dn_Process.CUSTOM_STAGE_WIDTH = -1;
+dn_Process.CUSTOM_STAGE_HEIGHT = -1;
 dn_Process.UNIQ_ID = 0;
 dn_Process.ROOTS = [];
 Game.CHECKPOINT = -1.;
