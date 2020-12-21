@@ -15,6 +15,7 @@ class Game extends dn.Process {
 
 	var ldBulletMap : Map<Int,Bool>;
 	var scoreTf : h2d.Text;
+	var shieldWarning : h2d.Text;
 	public var score : Int;
 	public var ca : dn.heaps.Controller.ControllerAccess;
 
@@ -78,6 +79,14 @@ class Game extends dn.Process {
 			new en.WaveEmitter(x,y, 1, function() return new en.m.Hunter(0,0));
 		});
 		#end
+
+		// Shield warning
+		shieldWarning = new h2d.Text(Assets.font);
+		root.add(shieldWarning, Const.DP_UI);
+		shieldWarning.textColor = 0xff0000;
+		shieldWarning.blendMode = Add;
+		shieldWarning.text = "< WARNING! Shield offline! >";
+		shieldWarning.scale(2);
 
 		scoreTf = new h2d.Text(Assets.font);
 		root.add(scoreTf, Const.DP_UI);
@@ -299,6 +308,11 @@ class Game extends dn.Process {
 			}
 		}
 		#end
+
+		shieldWarning.alpha = 0.6 + 0.4*Math.cos(ftime*0.4);
+		shieldWarning.visible = hero.barriers<1 && Tutorial.ME.isDoingOrDone("shield");
+		shieldWarning.x = Std.int( vp.gameWidPx()*0.5 - shieldWarning.textWidth*shieldWarning.scaleX*0.5 );
+		shieldWarning.y = Std.int( vp.gameHeiPx() - shieldWarning.textHeight*shieldWarning.scaleY - 16 );
 
 		// Update
 		for(e in Entity.ALL)
