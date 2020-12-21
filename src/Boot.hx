@@ -27,7 +27,9 @@ class Boot extends hxd.App {
 		hxd.Res.initLocal();
         #else
         hxd.Res.initEmbed();
-        #end
+		#end
+
+		hxd.snd.Manager.get();
 
 		delayer = new dn.Delayer(Const.FPS);
 		tw = new dn.Tweenie(Const.FPS);
