@@ -92,7 +92,7 @@ class Boot extends hxd.App {
 		accu += tmod / ( 1 + slowMo*4 ) * (paused?0:1);
 
 		#if debug
-		if( hxd.Key.isDown(hxd.Key.NUMPAD_ADD) )
+		if( hxd.Key.isDown(hxd.Key.NUMPAD_ADD) || hxd.Key.isDown(hxd.Key.END) )
 			accu+=10;
 		#end
 
