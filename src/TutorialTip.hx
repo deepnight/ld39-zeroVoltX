@@ -49,7 +49,7 @@ class TutorialTip extends dn.Process {
 		tf.text = txt;
 		tf.maxWidth = 115;
 
-		if( Game.ME.paused && skipPressed==null ) {
+		if( Game.ME.isPaused() && skipPressed==null ) {
 			var tf = new h2d.HtmlText(Assets.font, f);
 			tf.textColor = 0x93A3B7;
 			if( Game.ME.ca.isGamePad() )

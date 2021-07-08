@@ -141,7 +141,7 @@ class Entity {
 	inline function get_centerX() return (cx+xr)*Const.GRID;
 	inline function get_centerY() return (cy+yr)*Const.GRID;
 
-	public inline function is(t:Class<Entity>) return Std.is(this, t);
+	public inline function is(t:Class<Entity>) return Std.isOfType(this, t);
 
 	public inline function rnd(min,max,?s) return Lib.rnd(min,max,s);
 	public inline function irnd(min,max,?s) return Lib.irnd(min,max,s);
