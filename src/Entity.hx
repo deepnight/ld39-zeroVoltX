@@ -117,7 +117,7 @@ class Entity {
 		invalidateDebug = false;
 		debug.clear();
 		debug.visible = Boot.ME.debugEnt;
-		debug.lineStyle(1, dn.Color.makeColorHsl(id/15), 0.8);
+		debug.lineStyle(1, Color.makeColorHsl(id/15), 0.8);
 		debug.drawCircle(0,0,radius);
 	}
 
@@ -209,7 +209,7 @@ class Entity {
 
 		ALL.remove(this);
 		spr.remove(); spr = null;
-		cd.destroy(); cd = null;
+		cd.dispose(); cd = null;
 		delayer.destroy(); delayer = null;
 		setLabel();
 	}

@@ -13,7 +13,7 @@ class Hero extends Entity {
 
 	public var maxBarriers : Int;
 	public var barriers : Float;
-	var ca : dn.heaps.Controller.ControllerAccess;
+	var ca : ControllerAccess;
 	var bSpr : HSprite;
 
 	//public var heat : Float;

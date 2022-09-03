@@ -10,7 +10,7 @@ class Bee extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new dn.RandList( wave.makeRand().random );
+		var rlist = new dn.struct.RandList( wave.makeRand().random );
 		rlist.add("R14 U2 L1",1);
 		rlist.add("R12 (D3 L8 D3 R8)x2 D1",1);
 		rlist.add("s1 R10 s2 U3 s1 L6 D1",1);

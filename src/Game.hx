@@ -17,7 +17,7 @@ class Game extends dn.Process {
 	var scoreTf : h2d.Text;
 	var shieldWarning : h2d.Text;
 	public var score : Int;
-	public var ca : dn.heaps.Controller.ControllerAccess;
+	public var ca : ControllerAccess;
 
 	public function new() {
 		super();

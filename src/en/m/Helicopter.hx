@@ -24,7 +24,7 @@ class Helicopter extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new dn.RandList( wave.makeRand().random );
+		var rlist = new dn.struct.RandList( wave.makeRand().random );
 		rlist.add("s1.5 R8 s1 LD6/5 _4 R10 LU6/5 _4 L1",1);
 		rlist.add("RU2/2 RD10/2 _4 D2 LU10/2 _4 D1",1);
 		return rlist.draw();

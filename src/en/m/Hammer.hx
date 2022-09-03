@@ -31,7 +31,7 @@ class Hammer extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new dn.RandList( wave.makeRand().random );
+		var rlist = new dn.struct.RandList( wave.makeRand().random );
 		rlist.add("D4 _4 R2 _5 L4 _5 R4 _5 D1",1);
 		return rlist.draw();
 	}

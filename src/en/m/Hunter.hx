@@ -11,7 +11,7 @@ class Hunter extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new dn.RandList( wave.makeRand().random );
+		var rlist = new dn.struct.RandList( wave.makeRand().random );
 		rlist.add("D4 _3 RD2/1 _2 LD2/1 _3 RD2/2 _2 D1",1);
 		rlist.add("D3 _2 RD4/3 _3 LD3/1 _2 RD2/2 _2 D1",1);
 		return rlist.draw();

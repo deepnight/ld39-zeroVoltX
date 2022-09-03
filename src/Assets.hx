@@ -1,7 +1,7 @@
 import dn.heaps.Sfx;
 
 class Assets {
-	public static var SBANK = dn.heaps.assets.SfxDirectory.load("sfx");
+	public static var SBANK = dn.heaps.assets.SfxDirectory.load("sfx", true);
 	public static var font : h2d.Font;
 	public static var tiles : SpriteLib;
 	public static var music : dn.heaps.Sfx;

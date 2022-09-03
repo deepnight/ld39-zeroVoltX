@@ -28,7 +28,7 @@ class SmallHeli extends en.Mob {
 	}
 
 	override function generatePlan() {
-		var rlist = new dn.RandList( wave.makeRand().random );
+		var rlist = new dn.struct.RandList( wave.makeRand().random );
 		rlist.add("R12 D2 L10 D2 R10 D1",1);
 		return rlist.draw();
 	}

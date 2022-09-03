@@ -2,7 +2,7 @@ import dn.Tweenie;
 
 class Main extends dn.Process {
 	public static var ME : Main;
-	public var controller : dn.heaps.Controller;
+	public var controller : Controller;
 
 	public function new(p) {
 		super();
@@ -12,7 +12,7 @@ class Main extends dn.Process {
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.font);
 		#end
 
-		controller = new dn.heaps.Controller(Boot.ME.s2d);
+		controller = new Controller(Boot.ME.s2d);
 		controller.bind(AXIS_LEFT_X_NEG, Key.LEFT);
 		controller.bind(AXIS_LEFT_X_POS, Key.RIGHT);
 		controller.bind(AXIS_LEFT_Y_NEG, Key.UP);
@@ -54,7 +54,7 @@ class Main extends dn.Process {
 
 	override function update() {
 		super.update();
-		dn.heaps.Controller.beforeUpdate();
+		Controller.beforeUpdate();
 	}
 }
 
