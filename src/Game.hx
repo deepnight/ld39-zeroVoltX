@@ -297,6 +297,15 @@ class Game extends dn.Process {
 			new Notif(true, Lang.untranslated("Music: "+(Assets.music.isPlaying()?"ON":"Off")));
 		}
 
+		// Toggle god mode
+		if( ca.isKeyboardPressed(Key.G) ) {
+			if( !hero.cd.has("god") )
+				hero.cd.setS("god",Const.INFINITE);
+			else
+				hero.cd.unset("god");
+			new Notif(true, Lang.untranslated("God mode: "+(hero.cd.has("god")?"ON":"Off")));
+		}
+
 		// Exit
 		#if !js
 		if( ca.isKeyboardPressed(Key.ESCAPE) ) {

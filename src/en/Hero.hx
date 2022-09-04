@@ -86,7 +86,7 @@ class Hero extends Entity {
 	}
 
 	override public function hit(dmg:Int) {
-		if( cd.has("immune") )
+		if( cd.has("immune") || cd.has("god") )
 			return;
 
 		fx.flashBangS(0xFF0000,0.2);
