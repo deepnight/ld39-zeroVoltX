@@ -282,7 +282,7 @@ class Game extends dn.Process {
 			restart( Key.isDown(Key.SHIFT) );
 
 		// Toggle sounds
-		if( ca.isKeyboardPressed(Key.K) ) {
+		if( ca.isKeyboardPressed(Key.F) ) {
 			dn.heaps.Sfx.toggleMuteGroup(0);
 			new Notif(true, Lang.untranslated("Sounds: "+(dn.heaps.Sfx.isMuted(0)?"Off":"ON")));
 		}
@@ -297,13 +297,13 @@ class Game extends dn.Process {
 			new Notif(true, Lang.untranslated("Music: "+(Assets.music.isPlaying()?"ON":"Off")));
 		}
 
-		// Toggle god mode
-		if( ca.isKeyboardPressed(Key.G) ) {
-			if( !hero.cd.has("god") )
-				hero.cd.setS("god",Const.INFINITE);
+		// Toggle kid mode
+		if( ca.isKeyboardPressed(Key.K) ) {
+			if( !hero.cd.has("kid") )
+				hero.cd.setS("kid",Const.INFINITE);
 			else
-				hero.cd.unset("god");
-			new Notif(true, Lang.untranslated("God mode: "+(hero.cd.has("god")?"ON":"Off")));
+				hero.cd.unset("kid");
+			new Notif(true, Lang.untranslated("Kid mode: "+(hero.cd.has("kid")?"ON":"Off")));
 		}
 
 		// Exit
