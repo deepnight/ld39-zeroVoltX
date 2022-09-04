@@ -3,6 +3,7 @@ class Tutorial extends dn.Process {
 	public static var ME : Tutorial;
 
 	public var game(get,never) : Game; inline function get_game() return Game.ME;
+	public var kidMode(get,never) : Bool; inline function get_kidMode() return Game.ME.cd.has("kid");
 	public var lvl(get,never) : Level; inline function get_lvl() return Game.ME.lvl;
 	public var fx(get,never) : Fx; inline function get_fx() return Game.ME.fx;
 	public var hero(get,never) : en.Hero; inline function get_hero() return Game.ME.hero;
@@ -47,11 +48,11 @@ class Tutorial extends dn.Process {
 	}
 
 	public inline function isDoingOrDone(k) {
-		return k==cur || hasDone(k);
+		return k==cur || hasDone(k) || kidMode;
 	}
 
 	public inline function hasDone(k) {
-		if( disable )
+		if( disable || kidMode )
 			return true;
 		return DONES.exists(k);
 	}
