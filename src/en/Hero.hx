@@ -392,12 +392,12 @@ class Hero extends Entity {
 			//new en.LazerBeam(this, 0,-10, -1.57);
 		}
 
-		if( ca.isKeyboardPressed(Key.K) ) {
-			for(e in Entity.ALL)
-			if( e.is(en.Mob) && !e.is(en.m.Wall) || e.is(en.Bullet) || e.is(en.WaveEmitter) ) {
-				e.destroy();
-			}
-		}
+		// if( ca.isKeyboardPressed(Key.K) ) {
+		// 	for(e in Entity.ALL)
+		// 	if( e.is(en.Mob) && !e.is(en.m.Wall) || e.is(en.Bullet) || e.is(en.WaveEmitter) ) {
+		// 		e.destroy();
+		// 	}
+		// }
 		#end
 
 		// Rotation

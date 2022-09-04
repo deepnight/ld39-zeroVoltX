@@ -299,8 +299,11 @@ class Game extends dn.Process {
 
 		// Toggle kid mode
 		if( ca.isKeyboardPressed(Key.K) ) {
-			if( !cd.has("kid") )
+			if( !cd.has("kid") ) {
 				cd.setS("kid",Const.INFINITE);
+				CHECKPOINT = 30;
+				loadCheckPoint();
+			}
 			else
 				cd.unset("kid");
 			new Notif(true, Lang.untranslated("Kid mode: "+(cd.has("kid")?"ON":"Off")));
