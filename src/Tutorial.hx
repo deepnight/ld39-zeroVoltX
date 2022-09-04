@@ -60,7 +60,7 @@ class Tutorial extends dn.Process {
 	override function update() {
 		super.update();
 
-		if( game.hero.destroyed ) {
+		if( game.hero.destroyed || kidMode ) {
 			destroy();
 			return;
 		}

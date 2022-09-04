@@ -7,6 +7,7 @@ class Entity {
 	public var lvl(get,never) : Level; inline function get_lvl() return Game.ME.lvl;
 	public var fx(get,never) : Fx; inline function get_fx() return Game.ME.fx;
 	public var ftime(get,never) : Float; inline function get_ftime() return Game.ME.ftime;
+	public var kidMode(get,never) : Bool; inline function get_kidMode() return Game.ME.cd.has("kid");
 
 	public var spr : HSprite;
 	public var cd : dn.Cooldown;

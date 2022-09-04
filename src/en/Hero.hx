@@ -86,7 +86,7 @@ class Hero extends Entity {
 	}
 
 	override public function hit(dmg:Int) {
-		if( cd.has("immune") || cd.has("kid") )
+		if( cd.has("immune") || kidMode )
 			return;
 
 		fx.flashBangS(0xFF0000,0.2);
@@ -192,12 +192,11 @@ class Hero extends Entity {
 		return true;
 	}
 
-	function resetStacks(playSound:Bool) {
+	public function resetStacks(playSound:Bool) {
 		if( stacks[0]!=BASE || stacks[1]!= BASE )
 			if( playSound )
 				Assets.SBANK.bleep08(0.3);
-		stacks[0] = stacks[1] = stacks[2] = BASE;
-		//trace(stacks);
+		stacks[0] = stacks[1] = stacks[2] = kidMode ? MAX : BASE;
 	}
 
 	inline function getBarrierColor(b:Int) {
@@ -249,6 +248,8 @@ class Hero extends Entity {
 
 		for(i in 0...stacks.length) {
 			var e = jauges[i];
+			if( kidMode )
+				e.visible = false;
 			e.setFrame(stacks[i]);
 			var r = stacks[i]/MAX;
 			e.colorize(getJaugeColor(r));
@@ -270,14 +271,17 @@ class Hero extends Entity {
 		iShield.setPosition(centerX-24, centerY);
 		iShield.colorize(getJaugeColor(shield));
 		iShield.alpha = shield*.75;
+		iShield.visible = !kidMode;
 
 		iGun.setPosition(centerX, centerY-26);
 		iGun.colorize(getJaugeColor(power));
 		iGun.alpha = power*.75;
+		iGun.visible = !kidMode;
 
 		iMiss.setPosition(centerX+24, centerY);
 		iMiss.colorize(getJaugeColor(missile));
 		iMiss.alpha = missile*.75;
+		iMiss.visible = !kidMode;
 
 
 		//bRefill.setPosition(bSpr.x, bSpr.y);

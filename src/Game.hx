@@ -299,11 +299,12 @@ class Game extends dn.Process {
 
 		// Toggle kid mode
 		if( ca.isKeyboardPressed(Key.K) ) {
-			if( !hero.cd.has("kid") )
-				hero.cd.setS("kid",Const.INFINITE);
+			if( !cd.has("kid") )
+				cd.setS("kid",Const.INFINITE);
 			else
-				hero.cd.unset("kid");
-			new Notif(true, Lang.untranslated("Kid mode: "+(hero.cd.has("kid")?"ON":"Off")));
+				cd.unset("kid");
+			new Notif(true, Lang.untranslated("Kid mode: "+(cd.has("kid")?"ON":"Off")));
+			hero.resetStacks(true);
 		}
 
 		// Exit
