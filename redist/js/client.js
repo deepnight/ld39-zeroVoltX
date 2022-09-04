@@ -10058,7 +10058,7 @@ Game.prototype = $extend(dn_Process.prototype,{
 			this.restart(hxd_Key.isDown(16));
 		}
 		var _this = this.ca;
-		if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(75)) {
+		if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(70)) {
 			dn_heaps_Sfx.toggleMuteGroup(0);
 			new Notif(true,Std.string("Sounds: " + (dn_heaps_Sfx.getGlobalGroup(0).muted ? "Off" : "ON")));
 		}
@@ -10074,7 +10074,7 @@ Game.prototype = $extend(dn_Process.prototype,{
 			new Notif(true,Std.string("Music: " + (_this.lastChannel != null && !(_this.lastChannel != null && _this.lastChannel.pause) ? "ON" : "Off")));
 		}
 		var _this = this.ca;
-		if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(71)) {
+		if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(75)) {
 			if(!this.hero.cd.fastCheck.h.hasOwnProperty(58720256)) {
 				var _this = this.hero.cd;
 				var frames = Const.INFINITE * this.hero.cd.baseFps;
@@ -10163,7 +10163,7 @@ Game.prototype = $extend(dn_Process.prototype,{
 					}
 				}
 			}
-			new Notif(true,Std.string("God mode: " + (this.hero.cd.fastCheck.h.hasOwnProperty(58720256) ? "ON" : "Off")));
+			new Notif(true,Std.string("Kid mode: " + (this.hero.cd.fastCheck.h.hasOwnProperty(58720256) ? "ON" : "Off")));
 		}
 		this.shieldWarning.alpha = 0.6 + 0.4 * Math.cos(this.ftime * 0.4);
 		var tmp = this.shieldWarning;
@@ -24654,7 +24654,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 });
 var en_m_Wall = function(x,y) {
 	en_Mob.call(this,x,y);
-	this.setLife(30);
+	this.setLife(17);
 	this.speed = 0;
 	this.aimPrio = -20;
 	var _this = this.spr;
@@ -72019,7 +72019,7 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","noCrash","lock","lazer","shoot","spread","alive","charge","coin","immune","god","onGroundRecent","pausePlan","flash","pop","check","overheat","lockControl","jaugeBlink","immBlink","launch","targeted","turn","changeTarget","closing","emitterLife","emitterTick","cloud"]}};
+dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","noCrash","lock","lazer","shoot","spread","alive","charge","coin","immune","kid","onGroundRecent","pausePlan","flash","pop","check","overheat","lockControl","jaugeBlink","immBlink","launch","targeted","turn","changeTarget","closing","emitterLife","emitterTick","cloud"]}};
 dn_Cooldown.DEFAULT_COUNT_LIMIT = 512;
 dn_Tweenie.DEFAULT_DURATION = 1000.0;
 dn_data_GetText.VERBOSE = false;
