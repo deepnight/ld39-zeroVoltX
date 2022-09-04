@@ -9728,11 +9728,11 @@ var Game = function() {
 		var _this = _gthis.cd;
 		var frames = 0.33 * _gthis.cd.baseFps;
 		var tmp;
-		if(_this.fastCheck.h.hasOwnProperty(50331648)) {
+		if(_this.fastCheck.h.hasOwnProperty(54525952)) {
 			tmp = true;
 		} else {
 			var onComplete = null;
-			var cur = _this._getCdObject(50331648);
+			var cur = _this._getCdObject(54525952);
 			if(!(cur != null && frames < cur.frames && false)) {
 				if(frames <= 0) {
 					if(cur != null) {
@@ -9758,7 +9758,7 @@ var Game = function() {
 						}
 					}
 				} else {
-					_this.fastCheck.h[50331648] = true;
+					_this.fastCheck.h[54525952] = true;
 					if(cur != null) {
 						cur.frames = frames;
 						cur.initial = frames;
@@ -9770,7 +9770,7 @@ var Game = function() {
 						var e = _this1.pool[_this1.nalloc++];
 						e.recycle();
 						var cd = e;
-						cd.k = 50331648;
+						cd.k = 54525952;
 						cd.frames = frames;
 						cd.initial = frames;
 					}
@@ -9779,9 +9779,9 @@ var Game = function() {
 					if(frames <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(50331648);
+						var cd = _this._getCdObject(54525952);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 50331648 + "): cooldown " + 50331648 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 54525952 + "): cooldown " + 54525952 + " isn't running");
 						}
 						cd.onCompleteOnce = onComplete;
 					}
@@ -9805,7 +9805,7 @@ var Game = function() {
 				var _this = _gthis.vp;
 				tmp1 = _gthis.hero.cy <= ((Game.ME.lvl.hei - 1 - _this.elapsedDistCase | 0) - _this.cHei + 1 | 0) + 3 ? 1.8 : 1;
 			}
-			tmp = 0.0125 * tmp1 * ((Tutorial.ME.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
+			tmp = 0.0125 * tmp1 * ((Tutorial.ME.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
 		}
 		if(tmp > 0) {
 			if(tf != null && tf.parent != null) {
@@ -9980,7 +9980,7 @@ Game.prototype = $extend(dn_Process.prototype,{
 				var _this = this.vp;
 				tmp3 = this.hero.cy <= ((Game.ME.lvl.hei - 1 - _this.elapsedDistCase | 0) - _this.cHei + 1 | 0) + 3 ? 1.8 : 1;
 			}
-			tmp2 = 0.0125 * tmp3 * ((Tutorial.ME.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
+			tmp2 = 0.0125 * tmp3 * ((Tutorial.ME.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
 		}
 		tmp.scAccu = tmp1 + tmp2;
 		this.scPixel = 1 / Const.GRID;
@@ -10075,15 +10075,15 @@ Game.prototype = $extend(dn_Process.prototype,{
 		}
 		var _this = this.ca;
 		if(!(_this.manualLock || _this.parent.isLocked() || _this.parent.exclusiveId != null && _this.parent.exclusiveId != _this.id || HxOverrides.now() / 1000 < _this.parent.suspendTimer) && hxd_Key.isPressed(75)) {
-			if(!this.hero.cd.fastCheck.h.hasOwnProperty(58720256)) {
-				var _this = this.hero.cd;
-				var frames = Const.INFINITE * this.hero.cd.baseFps;
+			if(!this.cd.fastCheck.h.hasOwnProperty(29360128)) {
+				var _this = this.cd;
+				var frames = Const.INFINITE * this.cd.baseFps;
 				var allowLower = true;
 				var onComplete = null;
 				if(allowLower == null) {
 					allowLower = true;
 				}
-				var cur = _this._getCdObject(58720256);
+				var cur = _this._getCdObject(29360128);
 				if(!(cur != null && frames < cur.frames && !allowLower)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -10109,7 +10109,7 @@ Game.prototype = $extend(dn_Process.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[58720256] = true;
+						_this.fastCheck.h[29360128] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -10121,7 +10121,7 @@ Game.prototype = $extend(dn_Process.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 58720256;
+							cd.k = 29360128;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -10130,22 +10130,24 @@ Game.prototype = $extend(dn_Process.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(58720256);
+							var cd = _this._getCdObject(29360128);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 58720256 + "): cooldown " + 58720256 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 29360128 + "): cooldown " + 29360128 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
 					}
 				}
+				Game.CHECKPOINT = 30;
+				this.loadCheckPoint();
 			} else {
-				var _this = this.hero.cd;
+				var _this = this.cd;
 				var _g = 0;
 				var _g1 = _this.cds.nalloc;
 				while(_g < _g1) {
 					var i = _g++;
 					var _this1 = _this.cds;
-					if((i < 0 || i >= _this1.nalloc ? null : _this1.pool[i]).k == 58720256) {
+					if((i < 0 || i >= _this1.nalloc ? null : _this1.pool[i]).k == 29360128) {
 						var _this2 = _this.cds;
 						_this.fastCheck.remove((i < 0 || i >= _this2.nalloc ? null : _this2.pool[i]).k);
 						var _this3 = _this.cds;
@@ -10163,14 +10165,15 @@ Game.prototype = $extend(dn_Process.prototype,{
 					}
 				}
 			}
-			new Notif(true,Std.string("Kid mode: " + (this.hero.cd.fastCheck.h.hasOwnProperty(58720256) ? "ON" : "Off")));
+			new Notif(true,Std.string("Kid mode: " + (this.cd.fastCheck.h.hasOwnProperty(29360128) ? "ON" : "Off")));
+			this.hero.resetStacks(true);
 		}
 		this.shieldWarning.alpha = 0.6 + 0.4 * Math.cos(this.ftime * 0.4);
 		var tmp = this.shieldWarning;
 		var tmp1;
 		if(this.hero.barriers < 1) {
 			var _this = Tutorial.ME;
-			tmp1 = "shield" == _this.cur || (_this.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"shield"));
+			tmp1 = "shield" == _this.cur || (_this.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"shield")) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128);
 		} else {
 			tmp1 = false;
 		}
@@ -12545,7 +12548,7 @@ Level.prototype = $extend(dn_Process.prototype,{
 					var _this3 = _this.vp;
 					v1 = _this.hero.cy <= ((Game.ME.lvl.hei - 1 - _this3.elapsedDistCase | 0) - _this3.cHei + 1 | 0) + 3 ? 1.8 : 1;
 				}
-				v = 0.0125 * v1 * ((Tutorial.ME.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
+				v = 0.0125 * v1 * ((Tutorial.ME.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
 			}
 			var v2 = fh1 + v * Const.GRID * this.clouds[i].spd;
 			fh.posChanged = true;
@@ -12810,7 +12813,7 @@ var Notif = function(short,txt) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(41943040);
+	var cur = _this._getCdObject(46137344);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -12836,7 +12839,7 @@ var Notif = function(short,txt) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[41943040] = true;
+			_this.fastCheck.h[46137344] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -12848,7 +12851,7 @@ var Notif = function(short,txt) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 41943040;
+				cd.k = 46137344;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -12857,9 +12860,9 @@ var Notif = function(short,txt) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(41943040);
+				var cd = _this._getCdObject(46137344);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 41943040 + "): cooldown " + 41943040 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 46137344 + "): cooldown " + 46137344 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -12874,7 +12877,7 @@ Notif.prototype = $extend(dn_Process.prototype,{
 		var _gthis = this;
 		dn_Process.prototype.update.call(this);
 		var tmp;
-		if(!this.cd.fastCheck.h.hasOwnProperty(41943040)) {
+		if(!this.cd.fastCheck.h.hasOwnProperty(46137344)) {
 			var _this = this.cd;
 			var frames = Const.INFINITE * this.cd.baseFps;
 			var tmp1;
@@ -13405,7 +13408,7 @@ Tutorial.prototype = $extend(dn_Process.prototype,{
 	}
 	,update: function() {
 		dn_Process.prototype.update.call(this);
-		if(Game.ME.hero.destroyed) {
+		if(Game.ME.hero.destroyed || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128)) {
 			this.destroyed = true;
 			return;
 		}
@@ -19529,7 +19532,7 @@ en_Hero.__name__ = "en.Hero";
 en_Hero.__super__ = Entity;
 en_Hero.prototype = $extend(Entity.prototype,{
 	hit: function(dmg) {
-		if(this.cd.fastCheck.h.hasOwnProperty(54525952) || this.cd.fastCheck.h.hasOwnProperty(58720256)) {
+		if(this.cd.fastCheck.h.hasOwnProperty(58720256) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128)) {
 			return;
 		}
 		Game.ME.fx.flashBangS(16711680,0.2);
@@ -19544,7 +19547,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			if(allowLower == null) {
 				allowLower = true;
 			}
-			var cur = _this._getCdObject(54525952);
+			var cur = _this._getCdObject(58720256);
 			if(!(cur != null && frames < cur.frames && !allowLower)) {
 				if(frames <= 0) {
 					if(cur != null) {
@@ -19570,7 +19573,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 						}
 					}
 				} else {
-					_this.fastCheck.h[54525952] = true;
+					_this.fastCheck.h[58720256] = true;
 					if(cur != null) {
 						cur.frames = frames;
 						cur.initial = frames;
@@ -19582,7 +19585,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 						var e = _this1.pool[_this1.nalloc++];
 						e.recycle();
 						var cd = e;
-						cd.k = 54525952;
+						cd.k = 58720256;
 						cd.frames = frames;
 						cd.initial = frames;
 					}
@@ -19591,9 +19594,9 @@ en_Hero.prototype = $extend(Entity.prototype,{
 					if(frames <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(54525952);
+						var cd = _this._getCdObject(58720256);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 54525952 + "): cooldown " + 54525952 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 58720256 + "): cooldown " + 58720256 + " isn't running");
 						}
 						cd.onCompleteOnce = onComplete;
 					}
@@ -19759,8 +19762,9 @@ en_Hero.prototype = $extend(Entity.prototype,{
 				Assets.SBANK.bleep08(0.3);
 			}
 		}
-		var tmp = this.stacks[1] = this.stacks[2] = en_Hero.BASE;
-		this.stacks[0] = tmp;
+		var tmp = this.stacks;
+		var tmp1 = Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? en_Hero.MAX : en_Hero.BASE;
+		tmp[0] = this.stacks[1] = this.stacks[2] = tmp1;
 	}
 	,getJaugeColor: function(r) {
 		if(r >= 1) {
@@ -19778,7 +19782,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 	,postUpdate: function() {
 		Entity.prototype.postUpdate.call(this);
 		var tmp;
-		if(this.cd.fastCheck.h.hasOwnProperty(54525952)) {
+		if(this.cd.fastCheck.h.hasOwnProperty(58720256)) {
 			var _this = this.cd;
 			var frames = 0.1 * this.cd.baseFps;
 			var tmp1;
@@ -19889,6 +19893,9 @@ en_Hero.prototype = $extend(Entity.prototype,{
 		while(_g < _g1) {
 			var i = _g++;
 			var e = this.jauges[i];
+			if(Game.ME.cd.fastCheck.h.hasOwnProperty(29360128)) {
+				e.set_visible(false);
+			}
 			e.setFrame(this.stacks[i]);
 			var r = this.stacks[i] / en_Hero.MAX;
 			var col = this.getJaugeColor(r);
@@ -19951,6 +19958,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 		_this1.w = (c >>> 24) / 255;
 		var tmp = this.cd.fastCheck.h.hasOwnProperty(83886080) ? 0.15 : Math.pow(this.stacks[0] / en_Hero.MAX,this.curvePow);
 		this.iShield.alpha = tmp * .75;
+		this.iShield.set_visible(!Game.ME.cd.fastCheck.h.hasOwnProperty(29360128));
 		var _this = this.iGun;
 		_this.posChanged = true;
 		_this.x = (this.cx + this.xr) * Const.GRID;
@@ -19970,6 +19978,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 		_this1.w = (c >>> 24) / 255;
 		var tmp = this.cd.fastCheck.h.hasOwnProperty(83886080) ? 0.15 : Math.pow(this.stacks[1] / en_Hero.MAX,this.curvePow);
 		this.iGun.alpha = tmp * .75;
+		this.iGun.set_visible(!Game.ME.cd.fastCheck.h.hasOwnProperty(29360128));
 		var _this = this.iMiss;
 		_this.posChanged = true;
 		_this.x = (this.cx + this.xr) * Const.GRID + 24;
@@ -19989,6 +19998,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 		_this1.w = (c >>> 24) / 255;
 		var tmp = this.cd.fastCheck.h.hasOwnProperty(83886080) ? 0.15 : Math.pow(this.stacks[2] / en_Hero.MAX,this.curvePow);
 		this.iMiss.alpha = tmp * .75;
+		this.iMiss.set_visible(!Game.ME.cd.fastCheck.h.hasOwnProperty(29360128));
 	}
 	,physicsUpdate: function() {
 		if(this.dy > 0 && (this.cy + this.yr) * Const.GRID >= (Game.ME.lvl.hei - 1 - Game.ME.vp.elapsedDistCase) * Const.GRID) {
@@ -20031,9 +20041,9 @@ en_Hero.prototype = $extend(Entity.prototype,{
 					var _this1 = _this.vp;
 					tmp1 = _this.hero.cy <= ((Game.ME.lvl.hei - 1 - _this1.elapsedDistCase | 0) - _this1.cHei + 1 | 0) + 3 ? 1.8 : 1;
 				}
-				tmp = 0.0125 * tmp1 * ((Tutorial.ME.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
+				tmp = 0.0125 * tmp1 * ((Tutorial.ME.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
 			}
-			if(tmp > 0 && Game.ME.vp.elapsedDistCase >= 5 && !this.cd.fastCheck.h.hasOwnProperty(29360128)) {
+			if(tmp > 0 && Game.ME.vp.elapsedDistCase >= 5 && !this.cd.fastCheck.h.hasOwnProperty(33554432)) {
 				var n;
 				if(this.cd.fastCheck.h.hasOwnProperty(83886080)) {
 					n = 1;
@@ -20073,7 +20083,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 				if(allowLower == null) {
 					allowLower = true;
 				}
-				var cur = _this._getCdObject(29360128);
+				var cur = _this._getCdObject(33554432);
 				if(!(cur != null && frames < cur.frames && !allowLower)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -20099,7 +20109,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[29360128] = true;
+						_this.fastCheck.h[33554432] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -20111,7 +20121,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 29360128;
+							cd.k = 33554432;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -20120,9 +20130,9 @@ en_Hero.prototype = $extend(Entity.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(29360128);
+							var cd = _this._getCdObject(33554432);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 29360128 + "): cooldown " + 29360128 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
@@ -20144,7 +20154,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 					var _this1 = _this.vp;
 					tmp1 = _this.hero.cy <= ((Game.ME.lvl.hei - 1 - _this1.elapsedDistCase | 0) - _this1.cHei + 1 | 0) + 3 ? 1.8 : 1;
 				}
-				tmp = 0.0125 * tmp1 * ((Tutorial.ME.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
+				tmp = 0.0125 * tmp1 * ((Tutorial.ME.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"controls")) ? 1 : 0);
 			}
 			if(tmp > 0 && Game.ME.vp.elapsedDistCase >= 5 && this.missileCdF >= Const.FPS * (1.5 - (this.cd.fastCheck.h.hasOwnProperty(83886080) ? 0.15 : Math.pow(this.stacks[2] / en_Hero.MAX,this.curvePow)) * 0.6)) {
 				var n;
@@ -20210,7 +20220,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			}
 			if(tmp1) {
 				var _this = Tutorial.ME;
-				tmp = "shield" == _this.cur || (_this.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"shield"));
+				tmp = "shield" == _this.cur || (_this.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"shield")) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128);
 			} else {
 				tmp = false;
 			}
@@ -20250,7 +20260,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			}
 			if(tmp1) {
 				var _this = Tutorial.ME;
-				tmp = "lazer" == _this.cur || (_this.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"lazer"));
+				tmp = "lazer" == _this.cur || (_this.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"lazer")) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128);
 			} else {
 				tmp = false;
 			}
@@ -20290,7 +20300,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			}
 			if(tmp1) {
 				var _this = Tutorial.ME;
-				tmp = "missile" == _this.cur || (_this.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"missile"));
+				tmp = "missile" == _this.cur || (_this.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"missile")) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128);
 			} else {
 				tmp = false;
 			}
@@ -20330,7 +20340,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			}
 			if(tmp1) {
 				var _this = Tutorial.ME;
-				tmp = "balance" == _this.cur || (_this.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"balance"));
+				tmp = "balance" == _this.cur || (_this.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"balance")) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128);
 			} else {
 				tmp = false;
 			}
@@ -20841,7 +20851,7 @@ en_Hero.prototype = $extend(Entity.prototype,{
 			}
 		}
 		var _this = Tutorial.ME;
-		if(("shield" == _this.cur || (_this.disable ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"shield"))) && this.barriers < this.maxBarriers) {
+		if(("shield" == _this.cur || (_this.disable || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128) ? true : Object.prototype.hasOwnProperty.call(Tutorial.DONES.h,"shield")) || Game.ME.cd.fastCheck.h.hasOwnProperty(29360128)) && this.barriers < this.maxBarriers) {
 			var old = this.barriers;
 			this.barriers += 0.003 * (this.cd.fastCheck.h.hasOwnProperty(83886080) ? 0.15 : Math.pow(this.stacks[0] / en_Hero.MAX,this.curvePow));
 			if((this.cd.fastCheck.h.hasOwnProperty(83886080) ? 0.15 : Math.pow(this.stacks[0] / en_Hero.MAX,this.curvePow)) >= 1) {
@@ -21078,6 +21088,68 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 		if(allowLower == null) {
 			allowLower = true;
 		}
+		var cur = _this._getCdObject(50331648);
+		if(!(cur != null && frames < cur.frames && !allowLower)) {
+			if(frames <= 0) {
+				if(cur != null) {
+					_this.fastCheck.remove(cur.k);
+					var _this1 = _this.cds;
+					var _g = 0;
+					var _g1 = _this1.nalloc;
+					while(_g < _g1) {
+						var i = _g++;
+						if(_this1.pool[i] == cur) {
+							if(i >= 0 && i < _this1.nalloc) {
+								if(_this1.nalloc > 1) {
+									var tmp = _this1.pool[i];
+									_this1.pool[i] = _this1.pool[_this1.nalloc - 1];
+									_this1.pool[_this1.nalloc - 1] = tmp;
+									_this1.nalloc--;
+								} else {
+									_this1.nalloc = 0;
+								}
+							}
+							break;
+						}
+					}
+				}
+			} else {
+				_this.fastCheck.h[50331648] = true;
+				if(cur != null) {
+					cur.frames = frames;
+					cur.initial = frames;
+				} else {
+					var _this1 = _this.cds;
+					if(_this1.nalloc >= _this1.size) {
+						throw haxe_Exception.thrown("RecyclablePool limit reached (" + _this1.size + ")");
+					}
+					var e = _this1.pool[_this1.nalloc++];
+					e.recycle();
+					var cd = e;
+					cd.k = 50331648;
+					cd.frames = frames;
+					cd.initial = frames;
+				}
+			}
+			if(onComplete != null) {
+				if(frames <= 0) {
+					onComplete();
+				} else {
+					var cd = _this._getCdObject(50331648);
+					if(cd == null) {
+						throw haxe_Exception.thrown("cannot bind onComplete(" + 50331648 + "): cooldown " + 50331648 + " isn't running");
+					}
+					cd.onCompleteOnce = onComplete;
+				}
+			}
+		}
+		var _this = this.cd;
+		var frames = (chargeS + durationS) * this.cd.baseFps;
+		var allowLower = true;
+		var onComplete = null;
+		if(allowLower == null) {
+			allowLower = true;
+		}
 		var cur = _this._getCdObject(46137344);
 		if(!(cur != null && frames < cur.frames && !allowLower)) {
 			if(frames <= 0) {
@@ -21133,68 +21205,6 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 				}
 			}
 		}
-		var _this = this.cd;
-		var frames = (chargeS + durationS) * this.cd.baseFps;
-		var allowLower = true;
-		var onComplete = null;
-		if(allowLower == null) {
-			allowLower = true;
-		}
-		var cur = _this._getCdObject(41943040);
-		if(!(cur != null && frames < cur.frames && !allowLower)) {
-			if(frames <= 0) {
-				if(cur != null) {
-					_this.fastCheck.remove(cur.k);
-					var _this1 = _this.cds;
-					var _g = 0;
-					var _g1 = _this1.nalloc;
-					while(_g < _g1) {
-						var i = _g++;
-						if(_this1.pool[i] == cur) {
-							if(i >= 0 && i < _this1.nalloc) {
-								if(_this1.nalloc > 1) {
-									var tmp = _this1.pool[i];
-									_this1.pool[i] = _this1.pool[_this1.nalloc - 1];
-									_this1.pool[_this1.nalloc - 1] = tmp;
-									_this1.nalloc--;
-								} else {
-									_this1.nalloc = 0;
-								}
-							}
-							break;
-						}
-					}
-				}
-			} else {
-				_this.fastCheck.h[41943040] = true;
-				if(cur != null) {
-					cur.frames = frames;
-					cur.initial = frames;
-				} else {
-					var _this1 = _this.cds;
-					if(_this1.nalloc >= _this1.size) {
-						throw haxe_Exception.thrown("RecyclablePool limit reached (" + _this1.size + ")");
-					}
-					var e = _this1.pool[_this1.nalloc++];
-					e.recycle();
-					var cd = e;
-					cd.k = 41943040;
-					cd.frames = frames;
-					cd.initial = frames;
-				}
-			}
-			if(onComplete != null) {
-				if(frames <= 0) {
-					onComplete();
-				} else {
-					var cd = _this._getCdObject(41943040);
-					if(cd == null) {
-						throw haxe_Exception.thrown("cannot bind onComplete(" + 41943040 + "): cooldown " + 41943040 + " isn't running");
-					}
-					cd.onCompleteOnce = onComplete;
-				}
-			}
-		}
 		en_LazerBeam.CHARGE.play(null,0.4);
 	}
 	,dispose: function() {
@@ -21218,7 +21228,7 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 		_this.rotation = this.spr.rotation;
 	}
 	,isHitting: function(e) {
-		if(!e.destroyed && this.cd.fastCheck.h.hasOwnProperty(41943040) && !this.cd.fastCheck.h.hasOwnProperty(46137344)) {
+		if(!e.destroyed && this.cd.fastCheck.h.hasOwnProperty(46137344) && !this.cd.fastCheck.h.hasOwnProperty(50331648)) {
 			var a = this.ang;
 			var b = Math.atan2((e.cy + e.yr) * Const.GRID - (this.cy + this.yr) * Const.GRID,(e.cx + e.xr) * Const.GRID - (this.cx + this.xr) * Const.GRID);
 			var a1 = a;
@@ -21260,7 +21270,7 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 			}
 			return;
 		}
-		if(this.cd.fastCheck.h.hasOwnProperty(46137344)) {
+		if(this.cd.fastCheck.h.hasOwnProperty(50331648)) {
 			this.spr.set_visible(true);
 			this.glow.set_visible(false);
 			var sign = null;
@@ -21273,7 +21283,7 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 			var x = Math.cos(Game.ME.ftime * 0.2);
 			_this.posChanged = true;
 			_this.scaleY = 0.2 + 0.1 * (x < 0 ? -x : x);
-		} else if(this.cd.fastCheck.h.hasOwnProperty(41943040)) {
+		} else if(this.cd.fastCheck.h.hasOwnProperty(46137344)) {
 			var _this = en_LazerBeam.LOOP;
 			if(!(_this.lastChannel != null && !(_this.lastChannel != null && _this.lastChannel.pause))) {
 				en_LazerBeam.LOOP.play(true,0.7);
@@ -21374,7 +21384,7 @@ en_LazerBeam.prototype = $extend(Entity.prototype,{
 			if(!tmp) {
 				Game.ME.fx.flashBangS(33023,0.03,0.1);
 			}
-		} else if(!this.cd.fastCheck.h.hasOwnProperty(41943040)) {
+		} else if(!this.cd.fastCheck.h.hasOwnProperty(46137344)) {
 			en_LazerBeam.LOOP.stop();
 			this.glow.set_visible(false);
 			var fh = this.spr;
@@ -22091,7 +22101,7 @@ var en_bu_Homing = function(e,dmgBonus) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(41943040);
+	var cur = _this._getCdObject(46137344);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -22117,7 +22127,7 @@ var en_bu_Homing = function(e,dmgBonus) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[41943040] = true;
+			_this.fastCheck.h[46137344] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -22129,7 +22139,7 @@ var en_bu_Homing = function(e,dmgBonus) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 41943040;
+				cd.k = 46137344;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -22138,9 +22148,9 @@ var en_bu_Homing = function(e,dmgBonus) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(41943040);
+				var cd = _this._getCdObject(46137344);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 41943040 + "): cooldown " + 41943040 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 46137344 + "): cooldown " + 46137344 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -22471,7 +22481,7 @@ en_bu_Homing.prototype = $extend(en_Bullet.prototype,{
 			this.dx += Math.cos(this.ang) * s;
 			this.dy += Math.sin(this.ang) * s;
 		}
-		if(!this.cd.fastCheck.h.hasOwnProperty(41943040)) {
+		if(!this.cd.fastCheck.h.hasOwnProperty(46137344)) {
 			if(!this.destroyed) {
 				Entity.GC.push(this);
 				this.destroyed = true;
@@ -22628,7 +22638,7 @@ var en_m_Bee = function(x,y) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(33554432);
+	var cur = _this._getCdObject(37748736);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -22654,7 +22664,7 @@ var en_m_Bee = function(x,y) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[33554432] = true;
+			_this.fastCheck.h[37748736] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -22666,7 +22676,7 @@ var en_m_Bee = function(x,y) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 33554432;
+				cd.k = 37748736;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -22675,9 +22685,9 @@ var en_m_Bee = function(x,y) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(33554432);
+				var cd = _this._getCdObject(37748736);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -22749,11 +22759,11 @@ en_m_Bee.prototype = $extend(en_Mob.prototype,{
 			}
 			var frames = (sign ? (1 + Math.random() * 2) * (Std.random(2) * 2 - 1) : 1 + Math.random() * 2) * _this1.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(33554432)) {
+			if(_this.fastCheck.h.hasOwnProperty(37748736)) {
 				tmp1 = true;
 			} else {
 				var onComplete = null;
-				var cur = _this._getCdObject(33554432);
+				var cur = _this._getCdObject(37748736);
 				if(!(cur != null && frames < cur.frames && false)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -22779,7 +22789,7 @@ en_m_Bee.prototype = $extend(en_Mob.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[33554432] = true;
+						_this.fastCheck.h[37748736] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -22791,7 +22801,7 @@ en_m_Bee.prototype = $extend(en_Mob.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 33554432;
+							cd.k = 37748736;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -22800,9 +22810,9 @@ en_m_Bee.prototype = $extend(en_Mob.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(33554432);
+							var cd = _this._getCdObject(37748736);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
@@ -22899,7 +22909,7 @@ var en_m_Hammer = function(x,y) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(29360128);
+	var cur = _this._getCdObject(33554432);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -22925,7 +22935,7 @@ var en_m_Hammer = function(x,y) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[29360128] = true;
+			_this.fastCheck.h[33554432] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -22937,7 +22947,7 @@ var en_m_Hammer = function(x,y) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 29360128;
+				cd.k = 33554432;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -22946,9 +22956,9 @@ var en_m_Hammer = function(x,y) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(29360128);
+				var cd = _this._getCdObject(33554432);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 29360128 + "): cooldown " + 29360128 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -23004,7 +23014,7 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 	,postUpdate: function() {
 		en_Mob.prototype.postUpdate.call(this);
 		var _this = this.beam0;
-		if(_this.cd.fastCheck.h.hasOwnProperty(41943040) && !_this.cd.fastCheck.h.hasOwnProperty(46137344)) {
+		if(_this.cd.fastCheck.h.hasOwnProperty(46137344) && !_this.cd.fastCheck.h.hasOwnProperty(50331648)) {
 			this.spr.setFrame(1);
 		} else {
 			this.spr.setFrame(0);
@@ -23023,11 +23033,11 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 		}
 		var frames = (sign ? (9 + Math.random()) * (Std.random(2) * 2 - 1) : 9 + Math.random()) * _this1.baseFps;
 		var tmp;
-		if(_this.fastCheck.h.hasOwnProperty(29360128)) {
+		if(_this.fastCheck.h.hasOwnProperty(33554432)) {
 			tmp = true;
 		} else {
 			var onComplete = null;
-			var cur = _this._getCdObject(29360128);
+			var cur = _this._getCdObject(33554432);
 			if(!(cur != null && frames < cur.frames && false)) {
 				if(frames <= 0) {
 					if(cur != null) {
@@ -23053,7 +23063,7 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 						}
 					}
 				} else {
-					_this.fastCheck.h[29360128] = true;
+					_this.fastCheck.h[33554432] = true;
 					if(cur != null) {
 						cur.frames = frames;
 						cur.initial = frames;
@@ -23065,7 +23075,7 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 						var e = _this1.pool[_this1.nalloc++];
 						e.recycle();
 						var cd = e;
-						cd.k = 29360128;
+						cd.k = 33554432;
 						cd.frames = frames;
 						cd.initial = frames;
 					}
@@ -23074,9 +23084,9 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 					if(frames <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(29360128);
+						var cd = _this._getCdObject(33554432);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 29360128 + "): cooldown " + 29360128 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
 						}
 						cd.onCompleteOnce = onComplete;
 					}
@@ -23090,15 +23100,15 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 		}
 		var tmp;
 		var _this = this.beam0;
-		if(!(_this.cd.fastCheck.h.hasOwnProperty(41943040) || _this.cd.fastCheck.h.hasOwnProperty(46137344))) {
+		if(!(_this.cd.fastCheck.h.hasOwnProperty(46137344) || _this.cd.fastCheck.h.hasOwnProperty(50331648))) {
 			var _this = this.cd;
 			var frames = 0.7 * this.cd.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(33554432)) {
+			if(_this.fastCheck.h.hasOwnProperty(37748736)) {
 				tmp1 = true;
 			} else {
 				var onComplete = null;
-				var cur = _this._getCdObject(33554432);
+				var cur = _this._getCdObject(37748736);
 				if(!(cur != null && frames < cur.frames && false)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -23124,7 +23134,7 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[33554432] = true;
+						_this.fastCheck.h[37748736] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -23136,7 +23146,7 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 33554432;
+							cd.k = 37748736;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -23145,9 +23155,9 @@ en_m_Hammer.prototype = $extend(en_Mob.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(33554432);
+							var cd = _this._getCdObject(37748736);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
@@ -23402,7 +23412,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 		var x = this.dx;
 		var x1 = this.dy;
 		if((x < 0 ? -x : x) + (x1 < 0 ? -x1 : x1) <= 0.01) {
-			if(this.isOnScreen(-1) && !this.cd.fastCheck.h.hasOwnProperty(33554432)) {
+			if(this.isOnScreen(-1) && !this.cd.fastCheck.h.hasOwnProperty(37748736)) {
 				var e = en_bu_MobBullet.linear(this,1.57,2);
 				e.setPosPixel((this.cx + this.xr) * Const.GRID + this.side * 5,(this.cy + this.yr) * Const.GRID);
 				this.side *= -1;
@@ -23416,7 +23426,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 					if(allowLower == null) {
 						allowLower = true;
 					}
-					var cur = _this._getCdObject(33554432);
+					var cur = _this._getCdObject(37748736);
 					if(!(cur != null && frames < cur.frames && !allowLower)) {
 						if(frames <= 0) {
 							if(cur != null) {
@@ -23442,7 +23452,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 								}
 							}
 						} else {
-							_this.fastCheck.h[33554432] = true;
+							_this.fastCheck.h[37748736] = true;
 							if(cur != null) {
 								cur.frames = frames;
 								cur.initial = frames;
@@ -23454,7 +23464,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 								var e = _this1.pool[_this1.nalloc++];
 								e.recycle();
 								var cd = e;
-								cd.k = 33554432;
+								cd.k = 37748736;
 								cd.frames = frames;
 								cd.initial = frames;
 							}
@@ -23463,9 +23473,9 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 							if(frames <= 0) {
 								onComplete();
 							} else {
-								var cd = _this._getCdObject(33554432);
+								var cd = _this._getCdObject(37748736);
 								if(cd == null) {
-									throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+									throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 								}
 								cd.onCompleteOnce = onComplete;
 							}
@@ -23479,7 +23489,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 					if(allowLower == null) {
 						allowLower = true;
 					}
-					var cur = _this._getCdObject(33554432);
+					var cur = _this._getCdObject(37748736);
 					if(!(cur != null && frames < cur.frames && !allowLower)) {
 						if(frames <= 0) {
 							if(cur != null) {
@@ -23505,7 +23515,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 								}
 							}
 						} else {
-							_this.fastCheck.h[33554432] = true;
+							_this.fastCheck.h[37748736] = true;
 							if(cur != null) {
 								cur.frames = frames;
 								cur.initial = frames;
@@ -23517,7 +23527,7 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 								var e = _this1.pool[_this1.nalloc++];
 								e.recycle();
 								var cd = e;
-								cd.k = 33554432;
+								cd.k = 37748736;
 								cd.frames = frames;
 								cd.initial = frames;
 							}
@@ -23526,9 +23536,9 @@ en_m_Helicopter.prototype = $extend(en_Mob.prototype,{
 							if(frames <= 0) {
 								onComplete();
 							} else {
-								var cd = _this._getCdObject(33554432);
+								var cd = _this._getCdObject(37748736);
 								if(cd == null) {
-									throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+									throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 								}
 								cd.onCompleteOnce = onComplete;
 							}
@@ -23563,68 +23573,6 @@ var en_m_Hunter = function(x,y) {
 		sign = false;
 	}
 	var frames = (sign ? Math.random() * (Std.random(2) * 2 - 1) : Math.random()) * _this1.baseFps;
-	var allowLower = true;
-	var onComplete = null;
-	if(allowLower == null) {
-		allowLower = true;
-	}
-	var cur = _this._getCdObject(33554432);
-	if(!(cur != null && frames < cur.frames && !allowLower)) {
-		if(frames <= 0) {
-			if(cur != null) {
-				_this.fastCheck.remove(cur.k);
-				var _this1 = _this.cds;
-				var _g = 0;
-				var _g1 = _this1.nalloc;
-				while(_g < _g1) {
-					var i = _g++;
-					if(_this1.pool[i] == cur) {
-						if(i >= 0 && i < _this1.nalloc) {
-							if(_this1.nalloc > 1) {
-								var tmp = _this1.pool[i];
-								_this1.pool[i] = _this1.pool[_this1.nalloc - 1];
-								_this1.pool[_this1.nalloc - 1] = tmp;
-								_this1.nalloc--;
-							} else {
-								_this1.nalloc = 0;
-							}
-						}
-						break;
-					}
-				}
-			}
-		} else {
-			_this.fastCheck.h[33554432] = true;
-			if(cur != null) {
-				cur.frames = frames;
-				cur.initial = frames;
-			} else {
-				var _this1 = _this.cds;
-				if(_this1.nalloc >= _this1.size) {
-					throw haxe_Exception.thrown("RecyclablePool limit reached (" + _this1.size + ")");
-				}
-				var e = _this1.pool[_this1.nalloc++];
-				e.recycle();
-				var cd = e;
-				cd.k = 33554432;
-				cd.frames = frames;
-				cd.initial = frames;
-			}
-		}
-		if(onComplete != null) {
-			if(frames <= 0) {
-				onComplete();
-			} else {
-				var cd = _this._getCdObject(33554432);
-				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
-				}
-				cd.onCompleteOnce = onComplete;
-			}
-		}
-	}
-	var _this = this.cd;
-	var frames = this.cd.baseFps;
 	var allowLower = true;
 	var onComplete = null;
 	if(allowLower == null) {
@@ -23685,6 +23633,68 @@ var en_m_Hunter = function(x,y) {
 			}
 		}
 	}
+	var _this = this.cd;
+	var frames = this.cd.baseFps;
+	var allowLower = true;
+	var onComplete = null;
+	if(allowLower == null) {
+		allowLower = true;
+	}
+	var cur = _this._getCdObject(41943040);
+	if(!(cur != null && frames < cur.frames && !allowLower)) {
+		if(frames <= 0) {
+			if(cur != null) {
+				_this.fastCheck.remove(cur.k);
+				var _this1 = _this.cds;
+				var _g = 0;
+				var _g1 = _this1.nalloc;
+				while(_g < _g1) {
+					var i = _g++;
+					if(_this1.pool[i] == cur) {
+						if(i >= 0 && i < _this1.nalloc) {
+							if(_this1.nalloc > 1) {
+								var tmp = _this1.pool[i];
+								_this1.pool[i] = _this1.pool[_this1.nalloc - 1];
+								_this1.pool[_this1.nalloc - 1] = tmp;
+								_this1.nalloc--;
+							} else {
+								_this1.nalloc = 0;
+							}
+						}
+						break;
+					}
+				}
+			}
+		} else {
+			_this.fastCheck.h[41943040] = true;
+			if(cur != null) {
+				cur.frames = frames;
+				cur.initial = frames;
+			} else {
+				var _this1 = _this.cds;
+				if(_this1.nalloc >= _this1.size) {
+					throw haxe_Exception.thrown("RecyclablePool limit reached (" + _this1.size + ")");
+				}
+				var e = _this1.pool[_this1.nalloc++];
+				e.recycle();
+				var cd = e;
+				cd.k = 41943040;
+				cd.frames = frames;
+				cd.initial = frames;
+			}
+		}
+		if(onComplete != null) {
+			if(frames <= 0) {
+				onComplete();
+			} else {
+				var cd = _this._getCdObject(41943040);
+				if(cd == null) {
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 41943040 + "): cooldown " + 41943040 + " isn't running");
+				}
+				cd.onCompleteOnce = onComplete;
+			}
+		}
+	}
 };
 $hxClasses["en.m.Hunter"] = en_m_Hunter;
 en_m_Hunter.__name__ = "en.m.Hunter";
@@ -23716,7 +23726,7 @@ en_m_Hunter.prototype = $extend(en_Mob.prototype,{
 		var x = this.dx;
 		var x1 = this.dy;
 		if((x < 0 ? -x : x) + (x1 < 0 ? -x1 : x1) <= 0.01) {
-			if(this.isOnScreen(-1) && !this.cd.fastCheck.h.hasOwnProperty(37748736) && this.allow) {
+			if(this.isOnScreen(-1) && !this.cd.fastCheck.h.hasOwnProperty(41943040) && this.allow) {
 				var n = 8;
 				var _g = 0;
 				var _g1 = n;
@@ -23748,7 +23758,7 @@ var en_m_LolBall = function(x,y) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(33554432);
+	var cur = _this._getCdObject(37748736);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -23774,7 +23784,7 @@ var en_m_LolBall = function(x,y) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[33554432] = true;
+			_this.fastCheck.h[37748736] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -23786,7 +23796,7 @@ var en_m_LolBall = function(x,y) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 33554432;
+				cd.k = 37748736;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -23795,9 +23805,9 @@ var en_m_LolBall = function(x,y) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(33554432);
+				var cd = _this._getCdObject(37748736);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -23834,8 +23844,8 @@ var en_m_LolBall = function(x,y) {
 	}
 	_this._animManager.registerStateAnim("ballLol",1,0.35,function() {
 		var _this = _gthis.beams[0];
-		if(_this.cd.fastCheck.h.hasOwnProperty(41943040)) {
-			return !_this.cd.fastCheck.h.hasOwnProperty(46137344);
+		if(_this.cd.fastCheck.h.hasOwnProperty(46137344)) {
+			return !_this.cd.fastCheck.h.hasOwnProperty(50331648);
 		} else {
 			return false;
 		}
@@ -23892,11 +23902,11 @@ en_m_LolBall.prototype = $extend(en_Mob.prototype,{
 		var _this = this.cd;
 		var frames = 9 * this.cd.baseFps;
 		var tmp;
-		if(_this.fastCheck.h.hasOwnProperty(29360128)) {
+		if(_this.fastCheck.h.hasOwnProperty(33554432)) {
 			tmp = true;
 		} else {
 			var onComplete = null;
-			var cur = _this._getCdObject(29360128);
+			var cur = _this._getCdObject(33554432);
 			if(!(cur != null && frames < cur.frames && false)) {
 				if(frames <= 0) {
 					if(cur != null) {
@@ -23922,7 +23932,7 @@ en_m_LolBall.prototype = $extend(en_Mob.prototype,{
 						}
 					}
 				} else {
-					_this.fastCheck.h[29360128] = true;
+					_this.fastCheck.h[33554432] = true;
 					if(cur != null) {
 						cur.frames = frames;
 						cur.initial = frames;
@@ -23934,7 +23944,7 @@ en_m_LolBall.prototype = $extend(en_Mob.prototype,{
 						var e = _this1.pool[_this1.nalloc++];
 						e.recycle();
 						var cd = e;
-						cd.k = 29360128;
+						cd.k = 33554432;
 						cd.frames = frames;
 						cd.initial = frames;
 					}
@@ -23943,9 +23953,9 @@ en_m_LolBall.prototype = $extend(en_Mob.prototype,{
 					if(frames <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(29360128);
+						var cd = _this._getCdObject(33554432);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 29360128 + "): cooldown " + 29360128 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
 						}
 						cd.onCompleteOnce = onComplete;
 					}
@@ -23963,7 +23973,7 @@ en_m_LolBall.prototype = $extend(en_Mob.prototype,{
 			}
 		}
 		var _this = this.beams[0];
-		if(_this.cd.fastCheck.h.hasOwnProperty(41943040) && !_this.cd.fastCheck.h.hasOwnProperty(46137344)) {
+		if(_this.cd.fastCheck.h.hasOwnProperty(46137344) && !_this.cd.fastCheck.h.hasOwnProperty(50331648)) {
 			var _g = 0;
 			var _g1 = this.beams;
 			while(_g < _g1.length) {
@@ -24010,7 +24020,7 @@ var en_m_SmallHeli = function(x,y) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(33554432);
+	var cur = _this._getCdObject(37748736);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -24036,7 +24046,7 @@ var en_m_SmallHeli = function(x,y) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[33554432] = true;
+			_this.fastCheck.h[37748736] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -24048,7 +24058,7 @@ var en_m_SmallHeli = function(x,y) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 33554432;
+				cd.k = 37748736;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -24057,9 +24067,9 @@ var en_m_SmallHeli = function(x,y) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(33554432);
+				var cd = _this._getCdObject(37748736);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -24287,11 +24297,11 @@ en_m_SmallHeli.prototype = $extend(en_Mob.prototype,{
 			}
 			var frames = (sign ? (4 + Math.random() * 3) * (Std.random(2) * 2 - 1) : 4 + Math.random() * 3) * _this1.baseFps;
 			var tmp1;
-			if(_this.fastCheck.h.hasOwnProperty(33554432)) {
+			if(_this.fastCheck.h.hasOwnProperty(37748736)) {
 				tmp1 = true;
 			} else {
 				var onComplete = null;
-				var cur = _this._getCdObject(33554432);
+				var cur = _this._getCdObject(37748736);
 				if(!(cur != null && frames < cur.frames && false)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -24317,7 +24327,7 @@ en_m_SmallHeli.prototype = $extend(en_Mob.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[33554432] = true;
+						_this.fastCheck.h[37748736] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -24329,7 +24339,7 @@ en_m_SmallHeli.prototype = $extend(en_Mob.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 33554432;
+							cd.k = 37748736;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -24338,9 +24348,9 @@ en_m_SmallHeli.prototype = $extend(en_Mob.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(33554432);
+							var cd = _this._getCdObject(37748736);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
@@ -24386,7 +24396,7 @@ var en_m_Turret = function(x,y) {
 	if(allowLower == null) {
 		allowLower = true;
 	}
-	var cur = _this._getCdObject(33554432);
+	var cur = _this._getCdObject(37748736);
 	if(!(cur != null && frames < cur.frames && !allowLower)) {
 		if(frames <= 0) {
 			if(cur != null) {
@@ -24412,7 +24422,7 @@ var en_m_Turret = function(x,y) {
 				}
 			}
 		} else {
-			_this.fastCheck.h[33554432] = true;
+			_this.fastCheck.h[37748736] = true;
 			if(cur != null) {
 				cur.frames = frames;
 				cur.initial = frames;
@@ -24424,7 +24434,7 @@ var en_m_Turret = function(x,y) {
 				var e = _this1.pool[_this1.nalloc++];
 				e.recycle();
 				var cd = e;
-				cd.k = 33554432;
+				cd.k = 37748736;
 				cd.frames = frames;
 				cd.initial = frames;
 			}
@@ -24433,9 +24443,9 @@ var en_m_Turret = function(x,y) {
 			if(frames <= 0) {
 				onComplete();
 			} else {
-				var cd = _this._getCdObject(33554432);
+				var cd = _this._getCdObject(37748736);
 				if(cd == null) {
-					throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+					throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 				}
 				cd.onCompleteOnce = onComplete;
 			}
@@ -24512,7 +24522,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 	}
 	,update: function() {
 		en_Mob.prototype.update.call(this);
-		if(this.isOnScreen(-2) && !this.cd.fastCheck.h.hasOwnProperty(33554432)) {
+		if(this.isOnScreen(-2) && !this.cd.fastCheck.h.hasOwnProperty(37748736)) {
 			en_bu_MobBullet.autoAim(this);
 			this.shots++;
 			if(this.shots >= 5) {
@@ -24529,7 +24539,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 				if(allowLower == null) {
 					allowLower = true;
 				}
-				var cur = _this._getCdObject(33554432);
+				var cur = _this._getCdObject(37748736);
 				if(!(cur != null && frames < cur.frames && !allowLower)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -24555,7 +24565,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[33554432] = true;
+						_this.fastCheck.h[37748736] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -24567,7 +24577,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 33554432;
+							cd.k = 37748736;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -24576,9 +24586,9 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(33554432);
+							var cd = _this._getCdObject(37748736);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
@@ -24592,7 +24602,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 				if(allowLower == null) {
 					allowLower = true;
 				}
-				var cur = _this._getCdObject(33554432);
+				var cur = _this._getCdObject(37748736);
 				if(!(cur != null && frames < cur.frames && !allowLower)) {
 					if(frames <= 0) {
 						if(cur != null) {
@@ -24618,7 +24628,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 							}
 						}
 					} else {
-						_this.fastCheck.h[33554432] = true;
+						_this.fastCheck.h[37748736] = true;
 						if(cur != null) {
 							cur.frames = frames;
 							cur.initial = frames;
@@ -24630,7 +24640,7 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 							var e = _this1.pool[_this1.nalloc++];
 							e.recycle();
 							var cd = e;
-							cd.k = 33554432;
+							cd.k = 37748736;
 							cd.frames = frames;
 							cd.initial = frames;
 						}
@@ -24639,9 +24649,9 @@ en_m_Turret.prototype = $extend(en_Mob.prototype,{
 						if(frames <= 0) {
 							onComplete();
 						} else {
-							var cd = _this._getCdObject(33554432);
+							var cd = _this._getCdObject(37748736);
 							if(cd == null) {
-								throw haxe_Exception.thrown("cannot bind onComplete(" + 33554432 + "): cooldown " + 33554432 + " isn't running");
+								throw haxe_Exception.thrown("cannot bind onComplete(" + 37748736 + "): cooldown " + 37748736 + " isn't running");
 							}
 							cd.onCompleteOnce = onComplete;
 						}
@@ -72019,7 +72029,7 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","noCrash","lock","lazer","shoot","spread","alive","charge","coin","immune","kid","onGroundRecent","pausePlan","flash","pop","check","overheat","lockControl","jaugeBlink","immBlink","launch","targeted","turn","changeTarget","closing","emitterLife","emitterTick","cloud"]}};
+dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","noCrash","lock","kid","lazer","shoot","spread","alive","charge","coin","immune","onGroundRecent","pausePlan","flash","pop","check","overheat","lockControl","jaugeBlink","immBlink","launch","targeted","turn","changeTarget","closing","emitterLife","emitterTick","cloud"]}};
 dn_Cooldown.DEFAULT_COUNT_LIMIT = 512;
 dn_Tweenie.DEFAULT_DURATION = 1000.0;
 dn_data_GetText.VERBOSE = false;
